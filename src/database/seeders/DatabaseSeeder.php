@@ -9,6 +9,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        
+        $this->call([
+            CompetitionSeeder::class,
+            SeasonSeeder::class,
+            TeamSeeder::class,
+        ]);
     }
 }
