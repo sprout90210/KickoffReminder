@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             CompetitionSeeder::class,
             SeasonSeeder::class,
             TeamSeeder::class,
+            StandingSeeder::class,
         ]);
     }
 }
