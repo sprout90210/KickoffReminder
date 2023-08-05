@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="app">テスト</div>
+    <div id="app"></div>
     @vite('resources/js/app.js')
 
 </body>
