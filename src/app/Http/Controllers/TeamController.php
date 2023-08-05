@@ -17,6 +17,6 @@ class TeamController extends Controller
         }
 
         return response()->json($team);
-        
+
     }
 }
