@@ -8,7 +8,7 @@
             <router-link to="/privacy" class="m-2 sm:m-4 text-center hover:underline">
                 プライバシーポリシー
             </router-link>
-            <router-link to="/inquiries" class="m-2 sm:m-4 text-center hover:underline">
+            <router-link to="/inquiry" class="m-2 sm:m-4 text-center hover:underline">
                 お問合せ
             </router-link>
         </div>
