@@ -4,6 +4,7 @@ import Home from "./pages/Home.vue";
 import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/privacy.vue";
 import Inquiry from "./pages/inquiry.vue";
+import TeamDetail from "./pages/TeamDetail.vue";
 import NotFound from "./pages/NotFound.vue";
 
 
@@ -29,6 +30,11 @@ const router = createRouter({
             path: "/inquiry",
             name: "Inquiry",
             component: Inquiry,
+        },
+        {
+            path: "/teams/:teamId",
+            name: "TeamDetail",
+            component: TeamDetail,
         },
 
         {
