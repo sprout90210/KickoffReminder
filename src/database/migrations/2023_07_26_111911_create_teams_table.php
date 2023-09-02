@@ -11,12 +11,13 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('short_name')->nullable();
             $table->string('crest')->nullable();
             $table->string('venue')->nullable();
-            $table->text('website')->nullable();
-            $table->text('twitter')->nullable();
-            $table->text('youtube')->nullable();
-            $table->text('instagram')->nullable();
+            $table->string('website')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('instagram')->nullable();
             $table->timestamps();
         });
     }
