@@ -14,10 +14,10 @@ return new class extends Migration
             $table->string('short_name')->nullable();
             $table->string('crest')->nullable();
             $table->string('venue')->nullable();
-            $table->string('website')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('instagram')->nullable();
+            $table->string('website_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('youtube_url')->nullable();
+            $table->string('instagram_url')->nullable();
             $table->timestamps();
         });
     }
