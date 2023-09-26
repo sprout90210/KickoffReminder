@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('season_id');
+            $table->foreignId('season_id')->nullable();
             $table->foreignId('home_team_id')->nullable();
             $table->foreignId('away_team_id')->nullable();
             $table->unsignedInteger('home_team_score')->nullable();
@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('winner')->nullable();
             $table->string('status');
             $table->dateTime('utc_date')->nullable();
+            $table->dateTime('last_updated')->nullable();
             $table->timestamps();
         });
     }

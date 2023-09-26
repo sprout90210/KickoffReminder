@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->foreignId('competition_id');
             $table->timestamps();
         });
     }

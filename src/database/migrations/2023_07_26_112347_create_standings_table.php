@@ -10,6 +10,8 @@ return new class extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('season_id');
+            $table->foreignId('team_id');
             $table->unsignedInteger('position');
             $table->unsignedInteger('played_games')->default(0);
             $table->unsignedInteger('won')->default(0);
@@ -19,8 +21,6 @@ return new class extends Migration
             $table->unsignedInteger('goals_against')->default(0);
             $table->integer('goal_difference')->default(0);
             $table->integer('points')->default(0);
-            $table->foreignId('team_id')->nullable();
-            $table->foreignId('season_id');
             $table->timestamps();
         });
     }
