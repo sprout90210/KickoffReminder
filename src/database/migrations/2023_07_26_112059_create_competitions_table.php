@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code');
             $table->foreignId('current_season_id');
-            $table->text('emblem')->nullable();
+            $table->string('emblem')->nullable();
             $table->timestamps();
         });
     }

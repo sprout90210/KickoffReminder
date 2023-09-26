@@ -11,13 +11,13 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->foreignId('season_id');
-            $table->foreignId('hometeam_id');
-            $table->foreignId('awayteam_id');
-            $table->integer('hometeam_score')->nullable();
-            $table->integer('awayteam_score')->nullable();
+            $table->foreignId('home_team_id')->nullable();
+            $table->foreignId('away_team_id')->nullable();
+            $table->unsignedInteger('home_team_score')->nullable();
+            $table->unsignedInteger('away_team_score')->nullable();
             $table->string('winner')->nullable();
             $table->string('status');
-            $table->dateTime('kickoff_utc')->nullable();
+            $table->dateTime('utc_date')->nullable();
             $table->timestamps();
         });
     }
