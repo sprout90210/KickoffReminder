@@ -22,7 +22,7 @@ const props = defineProps({
   standings: {
     type: Array,
     required: true,
-  }
+  },
   teamId: {
     type: String,
     required: true,

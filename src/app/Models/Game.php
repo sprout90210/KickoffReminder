@@ -12,12 +12,27 @@ class Game extends Model
     protected $fillable = [
         'id',
         'season_id',
-        'hometeam_id',
-        'awayteam_id',
-        'hometeam_score',
-        'awayteam_score',
+        'home_team_id',
+        'away_team_id',
+        'home_team_score',
+        'away_team_score',
         'winner',
         'status',
-        'kickoff_utc',
+        'utc_date',
     ];
+
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
+
+    public function homeTeam()
+    {
+        return $this->belongsTo(Team::class, 'home_team_id');
+    }
+
+    public function awayTeam()
+    {
+        return $this->belongsTo(Team::class, 'away_team_id');
+    }
 }

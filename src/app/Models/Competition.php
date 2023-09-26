@@ -21,15 +21,15 @@ class Competition extends Model
         'embleme',
     ];
 
-    public function team()
+    public function seasons()
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->hasMany(Season::class);
     }
 
 
     public static function getCurrentStandings($competitionId){
 
-        $competitionId = (int) preg_replace('/[^0-9]/', '', $competitionId);
+        // $competitionId = (int) preg_replace('/[^0-9]/', '', $competitionId);
         $currentSeasonId = Season::where('competition_id', $competitionId)
             ->latest('start_date')
             ->value('id');

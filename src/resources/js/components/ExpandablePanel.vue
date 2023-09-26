@@ -77,18 +77,55 @@
         {{ standing.points }}
       </td>
     </tr>
-    <tr :class="isOpen ? 'table-row' : 'hidden'" class="h-48 border-b-2 border-gray-400">
-      <td colspan="11" >
-        <div>次の試合</div>
+    <tr :class="isOpen ? 'table-row' : 'hidden'" class="border-b-2 border-gray-400">
+      <td colspan="11">
+        <Loading v-if="isLoading" />
+        <div v-else class="m-0 py-8 h-full w-full flex justify-center">
+          <div class="m-0 p-0">
+            <div class="flex text-xs m-1 p-0 w-full">
+              <p>{{ lastGame.season.competition.name }}</p>
+              <p>{{ lastGame.utc_date }}</p>
+            </div>
+            <div class="flex">
+              <div class="flex items-center justify-center text-xs font-bold">
+                <div class="w-24 flex flex-col items-center justify-center">
+                  <img
+                    :src="generateCrestUrlDev(lastGame.home_team.crest)"
+                    alt="crest"
+                    class="w-10 h-10 m-3 p-0"
+                  />
+                  <p>{{ lastGame.home_team.name }}</p>
+                </div>
+                <div class="flex w-28 m-2 text-xl items-center justify-center">
+                  <div class="m-4">{{ lastGame.home_team_score }}</div>
+                  <div class="m-4">-</div>
+                  <div class="m-4">{{ lastGame.away_team_score }}</div>
+                </div>
+                <div class="w-24 flex flex-col items-center justify-center">
+                  <img
+                    :src="generateCrestUrlDev(lastGame.away_team.crest)"
+                    alt="crest"
+                    class="w-10 h-10 m-3 p-0"
+                  />
+                  <div>{{ lastGame.away_team.name }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import Loading from "./Loading.vue";
+import { ref, computed } from "vue";
 
 const isOpen = ref(false);
+const isLoading = ref(true);
+const lastGame = ref({});
+const nextGame = ref({});
 
 const props = defineProps({
   standing: {
@@ -98,8 +135,25 @@ const props = defineProps({
   teamId: String,
 });
 
+const convertedTime = computed(() => {
+  const utcDate = new Date(lastGame.value.utc_date);
+  const japanTime = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+    return japanTime;
+});
+
 const toggle = () => {
   isOpen.value = !isOpen.value;
+  isLoading.value = true;
+  axios
+    .get(`/api/teams/${props.standing.team_id}/recentGames`)
+    .then((res) => {
+      lastGame.value = res.data.lastGame;
+      nextGame.value = res.data.nextGame;
+      isLoading.value = false;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 const generateCrestUrlDev = (crest) => {
