@@ -14,8 +14,14 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  activeTab: String,
-  tabName: String,
+  activeTab: {
+    type: String,
+    required: true,
+  },
+  tabName: {
+    type: String,
+    required: true,
+  }
 });
 
 const isActive = computed(() => props.activeTab === props.tabName);
