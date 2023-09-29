@@ -1,6 +1,6 @@
 <template>
   <div class="relative pt-5 pb-12 sm:pb-16 bg-gradient-to-tr from-gray-300 via-gray-50 to-white">
-    <div class="flex flex-col sm:flex-row justify-center items-center">
+    <div v-if="!isLoading" class="flex flex-col sm:flex-row justify-center items-center">
       <div class="p-2 sm:pl-16">
         <img
           :src="generateImgUrlDev(team.crest)"
@@ -70,17 +70,16 @@
         </div>
       </div>
     </div>
+    <div v-else class="pt-20 pb-16 sm:py-9">
+        <Loading />
+    </div>
     <div class="flex absolute bottom-0 z-2 left-0 pl-4 sm:pl-12">
-      <TabButton
-        :activeTab="activeTab"
-        tabName="standings"
-        @click="tabChange('standings')"
-      >
+      <TabButton :activeTab="activeTab" tabName="standings" @click="tabChange('standings')" >
         順位
       </TabButton>
       <TabButton :activeTab="activeTab" tabName="results" @click="tabChange('results')" >
         結果
-      </TabButton>
+    </TabButton>
       <TabButton :activeTab="activeTab" tabName="schedule" @click="tabChange('schedule')" >
         予定
       </TabButton>
@@ -90,17 +89,34 @@
 
 <script setup>
 import TabButton from "./TabButton.vue";
+import Loading from "./Loading.vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const team = ref();
+const isLoading = ref(true);
+const teamId = computed(() => route.params.teamId);
 
 const props = defineProps({
-  team: {
-    type: Object,
-    required: true,
-  },
   activeTab: {
     type: String,
     required: true,
-  }
+  },
 });
+
+const getTeamDetail = () => {
+  isLoading.value = true;
+  axios
+    .get(`/api/teams/${teamId.value}`)
+    .then((res) => {
+      team.value = res.data;
+      isLoading.value = false;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
 const emit = defineEmits(["tabChange"]);
 const tabChange = (tabName) => {
@@ -111,4 +127,13 @@ const generateImgUrlDev = (ImgName) => {
   const ImgUrl = "/images/" + ImgName;
   return ImgUrl;
 };
+
+onMounted(() => {
+  getTeamDetail();
+});
+
+watch(route, () => {
+  getTeamDetail();
+});
+
 </script>

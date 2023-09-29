@@ -79,39 +79,12 @@
     </tr>
     <tr :class="isOpen ? 'table-row' : 'hidden'" class="border-b-2 border-gray-400">
       <td colspan="11">
-        <Loading v-if="isLoading" />
-        <div v-else class="m-0 py-8 h-full w-full flex justify-center">
-          <div class="m-0 p-0">
-            <div class="flex text-xs m-1 p-0 w-full">
-              <p>{{ lastGame.season.competition.name }}</p>
-              <p>{{ lastGame.utc_date }}</p>
-            </div>
-            <div class="flex">
-              <div class="flex items-center justify-center text-xs font-bold">
-                <div class="w-24 flex flex-col items-center justify-center">
-                  <img
-                    :src="generateCrestUrlDev(lastGame.home_team.crest)"
-                    alt="crest"
-                    class="w-10 h-10 m-3 p-0"
-                  />
-                  <p>{{ lastGame.home_team.name }}</p>
-                </div>
-                <div class="flex w-28 m-2 text-xl items-center justify-center">
-                  <div class="m-4">{{ lastGame.home_team_score }}</div>
-                  <div class="m-4">-</div>
-                  <div class="m-4">{{ lastGame.away_team_score }}</div>
-                </div>
-                <div class="w-24 flex flex-col items-center justify-center">
-                  <img
-                    :src="generateCrestUrlDev(lastGame.away_team.crest)"
-                    alt="crest"
-                    class="w-10 h-10 m-3 p-0"
-                  />
-                  <div>{{ lastGame.away_team.name }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div v-if="isLoading" class="pt-2">
+          <Loading />
+        </div>
+        <div v-else>
+          <p class="text-xs text-gray-800 text-left pl-2 pt-2 border-b">Next Match</p>
+          <Game :game="nextGame" />
         </div>
       </td>
     </tr>
@@ -120,40 +93,39 @@
 
 <script setup>
 import Loading from "./Loading.vue";
+import Game from "./Game.vue";
 import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const isOpen = ref(false);
 const isLoading = ref(true);
-const lastGame = ref({});
-const nextGame = ref({});
+const nextGame = ref();
+const teamId = computed(() => route.params.teamId);
 
 const props = defineProps({
   standing: {
     type: Object,
     required: true,
   },
-  teamId: String,
-});
-
-const convertedTime = computed(() => {
-  const utcDate = new Date(lastGame.value.utc_date);
-  const japanTime = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
-    return japanTime;
 });
 
 const toggle = () => {
   isOpen.value = !isOpen.value;
   isLoading.value = true;
-  axios
-    .get(`/api/teams/${props.standing.team_id}/recentGames`)
-    .then((res) => {
-      lastGame.value = res.data.lastGame;
-      nextGame.value = res.data.nextGame;
-      isLoading.value = false;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  if (!nextGame.value) {
+    axios
+      .get(`/api/teams/${props.standing.team_id}/recentGames`)
+      .then((res) => {
+        nextGame.value = res.data.nextGame;
+        isLoading.value = false;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    isLoading.value = false;
+  }
 };
 
 const generateCrestUrlDev = (crest) => {
