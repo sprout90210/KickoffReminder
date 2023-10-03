@@ -14,10 +14,8 @@
 <script setup>
 import TableHeader from "../layouts/TableHeader.vue";
 import ExpandablePanel from "./ExpandablePanel.vue";
-import Loading from "./Loading.vue";
 
 const props = defineProps({
-  teamId: String,
   standings: {
     type: Array,
     required: true,

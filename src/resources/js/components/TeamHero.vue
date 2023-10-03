@@ -80,7 +80,7 @@
       <TabButton :activeTab="activeTab" tabName="results" @click="tabChange('results')" >
         結果
     </TabButton>
-      <TabButton :activeTab="activeTab" tabName="schedule" @click="tabChange('schedule')" >
+      <TabButton :activeTab="activeTab" tabName="schedules" @click="tabChange('schedules')" >
         予定
       </TabButton>
     </div>

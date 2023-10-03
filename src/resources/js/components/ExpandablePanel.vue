@@ -115,9 +115,9 @@ const toggle = () => {
   isLoading.value = true;
   if (!nextGame.value) {
     axios
-      .get(`/api/teams/${props.standing.team_id}/recentGames`)
+      .get(`/api/teams/${props.standing.team_id}/nextGame`)
       .then((res) => {
-        nextGame.value = res.data.nextGame;
+        nextGame.value = res.data;
         isLoading.value = false;
       })
       .catch((e) => {
