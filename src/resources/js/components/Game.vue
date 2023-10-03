@@ -1,13 +1,19 @@
 <template>
   <div class="h-32 text-xs flex flex-col justify-center">
-    <div class="flex justify-between text-gray-500 sm:pt-2 ">
-      <span class="text-left pl-4">{{ game.season.competition.name }}</span>
-      <span v-if="game.status === 'FINISHED'" class="text-left mr-1">試合終了</span>
-      <span v-if="game.status === 'TIMED'" class="text-left mr-1">試合予定</span>
+    <div class="flex justify-between text-gray-500 p-2 sm:pl-4">
+      <span>
+        <span class="mr-3">{{ game.season.competition.name }}</span>
+        <span>{{ game.group }}</span>
+      </span>
+      <span v-if="game.status === 'FINISHED'">{{ kickoffDate }} 試合終了</span>
+      <span v-if="game.status === 'TIMED'">試合予定</span>
     </div>
 
     <div class="flex items-center sm:text-base justify-center font-bold">
-      <div class="w-28 sm:w-48 h-24 flex flex-col items-center justify-center">
+      <router-link
+        :to="{ name:'TeamDetail', params:{ teamId: game.home_team_id }}"
+        class="w-28 sm:w-48 h-24 flex flex-col items-center justify-center"
+      >
         <img
           :src="generateCrestUrlDev(game.home_team.crest)"
           alt="crest"
@@ -15,7 +21,7 @@
         />
         <p v-if="game.home_team.short_name">{{ game.home_team.short_name }}</p>
         <p v-else>{{ game.home_team.name }}</p>
-      </div>
+      </router-link>
       <div
         v-if="game.status === 'TIMED'"
         class="flex-col flex w-16 pb-8 sm:mx-10 items-center justify-center"
@@ -25,13 +31,13 @@
       </div>
       <div
         v-if="game.status === 'FINISHED'"
-        class="flex w-16 sm:mx-10 items-center justify-center"
+        class="flex w-16 text-xl sm:mx-10 items-center justify-center"
       >
         <span class="mr-3">{{ game.home_team_score }}</span>
         <span>-</span>
         <span class="ml-3">{{ game.away_team_score }}</span>
       </div>
-      <div class="w-28 sm:w-48 h-24 flex flex-col items-center justify-center">
+      <router-link :to="{ name:'TeamDetail', params:{ teamId: game.away_team_id }}" class="w-28 sm:w-48 h-24 flex flex-col items-center justify-center">
         <img
           :src="generateCrestUrlDev(game.away_team.crest)"
           alt="crest"
@@ -39,7 +45,7 @@
         />
         <p v-if="game.away_team.short_name">{{ game.away_team.short_name }}</p>
         <p v-else>{{ game.away_team.name }}</p>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

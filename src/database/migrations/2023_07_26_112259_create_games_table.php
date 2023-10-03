@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedInteger('away_team_score')->nullable();
             $table->string('winner')->nullable();
             $table->string('status');
+            $table->string('stage')->nullable();
+            $table->string('group')->nullable();
             $table->dateTime('utc_date')->nullable();
             $table->dateTime('last_updated')->nullable();
             $table->timestamps();

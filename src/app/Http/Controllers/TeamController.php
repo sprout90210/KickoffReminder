@@ -7,7 +7,7 @@ use App\Models\Team;
 
 class TeamController extends Controller
 {
-    
+
     public function show($teamId){
 
         $team = Team::find($teamId);
@@ -19,10 +19,9 @@ class TeamController extends Controller
         return response()->json($team);
     }
 
+    public function getStandings($teamId){
 
-    public function getTeamStandings($teamId){
-
-        $standings = Team::getTeamStandings($teamId);
+        $standings = Team::getStandings($teamId);
 
         if (!$standings) {
             return response()->json(['message' => 'Team standings not found'], 404);
@@ -31,15 +30,37 @@ class TeamController extends Controller
         return response()->json($standings, 200);
     }
 
+    public function getResults($teamId){
 
-    public function getTeamRecentGames($teamId){
+        $results = Team::getResults($teamId);
 
-        $recentGames = Team::getTeamRecentGames($teamId);
-
-        if (!$recentGames) {
-            return response()->json(['message' => 'Team recent games not found'], 404);
+        if (!$results) {
+            return response()->json(['message' => 'Team Results not found'], 404);
         }
 
-        return response()->json($recentGames, 200);
+        return response()->json($results, 200);
+    }
+
+    public function getSchedules($teamId){
+
+        $schedules = Team::getSchedules($teamId);
+
+        if (!$schedules) {
+            return response()->json(['message' => 'Team schedules not found'], 404);
+        }
+
+        return response()->json($schedules, 200);
+    }
+
+
+    public function getNextGame($teamId){
+
+        $nextGame = Team::getNextGame($teamId);
+
+        if (!$nextGame) {
+            return response()->json(['message' => 'Team next game not found'], 404);
+        }
+
+        return response()->json($nextGame, 200);
     }
 }

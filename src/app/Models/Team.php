@@ -24,7 +24,8 @@ class Team extends Model
         'insatgram_url',
     ];
 
-    public static function getTeamStandings($teamId){
+
+    public static function getStandings($teamId){
 
         $competitionId = Standing::join('seasons','standings.season_id','=','seasons.id')
             ->where('team_id', $teamId)
@@ -34,24 +35,42 @@ class Team extends Model
         $teamStandings = Competition::getCurrentStandings($competitionId);
 
         return $teamStandings;
-
     }
 
-    public static function getTeamRecentGames($teamId){
 
-        $lastGame = Game::where(function($query) use ($teamId) {
+    public static function getResults($teamId){
+
+        $results = Game::where(function($query) use ($teamId) {
                 $query->where('home_team_id', $teamId)
                 ->orWhere('away_team_id', $teamId);
             })
             ->where('status', 'FINISHED')
             ->orderBy('utc_date', 'desc')
-            ->with([
-                'homeTeam',
-                'awayTeam',
-                'season',
-                'season.competition'
-            ])
-            ->first();
+            ->with(['homeTeam','awayTeam','season','season.competition'])
+            ->limit(50)
+            ->get();
+
+        return $results;
+    }
+
+
+    public static function getSchedules($teamId){
+
+        $schedules = Game::where(function($query) use ($teamId) {
+                $query->where('home_team_id', $teamId)
+                ->orWhere('away_team_id', $teamId);
+            })
+            ->where('status', 'TIMED')
+            ->orderBy('utc_date', 'asc')
+            ->with(['homeTeam','awayTeam','season','season.competition'])
+            ->limit(50)
+            ->get();
+
+        return $schedules;
+    }
+
+
+    public static function getNextGame($teamId){
 
         $nextGame = Game::where(function($query) use ($teamId) {
                 $query->where('home_team_id', $teamId)
@@ -59,19 +78,10 @@ class Team extends Model
             })
             ->where('status', 'TIMED')
             ->orderBy('utc_date', 'asc')
-            ->with([
-                'homeTeam',
-                'awayTeam',
-                'season',
-                'season.competition'
-            ])
+            ->with(['homeTeam','awayTeam','season','season.competition'])
             ->first();
 
-        return [
-            'lastGame' => $lastGame,
-            'nextGame' => $nextGame,
-        ];
-
+        return $nextGame;
     }
 
 
