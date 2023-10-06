@@ -3,18 +3,18 @@
     <TeamHero :activeTab="activeTab" @tabChange="tabChange" />
     <div>
       <TeamStandings
-        v-if="!standingsLoading && activeTab === 'standings'"
+        v-show="!standingsLoading && activeTab === 'standings'"
         :standings="standings"
       />
       <TeamResults
-        v-else-if="!resultsLoading && activeTab === 'results'"
+        v-show="!resultsLoading && activeTab === 'results'"
         :results="results"
       />
       <TeamSchedules
-        v-else-if="!schedulesLoading && activeTab === 'schedules'"
+        v-show="!schedulesLoading && activeTab === 'schedules'"
         :schedules="schedules"
       />
-      <div v-else class="py-32">
+      <div v-show="standingsLoading || resultsLoading || schedulesLoading" class="py-32">
         <Loading/>
       </div>
     </div>
