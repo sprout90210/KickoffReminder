@@ -1,5 +1,5 @@
 <template>
-  <div class="relative pt-5 pb-12 sm:pb-16 bg-gradient-to-tr from-gray-300 via-gray-50 to-white">
+  <div class="relative pt-5 pb-12 sm:pb-16 text-gray-700 bg-gradient-to-tr from-gray-300 via-gray-50 to-white">
     <div v-if="!isLoading" class="flex flex-col sm:flex-row justify-center items-center">
       <div class="p-2 sm:pl-16">
         <img

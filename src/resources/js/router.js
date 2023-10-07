@@ -5,6 +5,7 @@ import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/privacy.vue";
 import Inquiry from "./pages/inquiry.vue";
 import TeamDetail from "./pages/TeamDetail.vue";
+import CompetitionDetail from "./pages/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
 
 
@@ -15,6 +16,16 @@ const router = createRouter({
             path: "/",
             name: "Home",
             component: Home,
+        },
+        {
+            path: "/teams/:teamId",
+            name: "TeamDetail",
+            component: TeamDetail,
+        },
+        {
+            path: "/competitions/:competitionId",
+            name: "CompetitonDetail",
+            component: CompetitionDetail,
         },
         {
             path: "/terms",
@@ -31,12 +42,6 @@ const router = createRouter({
             name: "Inquiry",
             component: Inquiry,
         },
-        {
-            path: "/teams/:teamId",
-            name: "TeamDetail",
-            component: TeamDetail,
-        },
-
         {
             path: "/:pathMatch(.*)*",
             name: "NotFound",

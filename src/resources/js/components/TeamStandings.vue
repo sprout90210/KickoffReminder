@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 sm:py-8 px-1 sm:px-8 md:px-16 lg:px-24">
+  <div class="py-4 px-1 sm:p-8 md:px-16 lg:px-24">
     <table class="w-full">
       <TableHeader />
       <ExpandablePanel

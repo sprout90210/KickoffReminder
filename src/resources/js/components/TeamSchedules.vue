@@ -1,12 +1,7 @@
 <template>
-  <div class="p-1 sm:p-8 border-b-purple">
-    <div class="flex justify-between text-gray-400 text-xs ml-6 pb-1">
-      <p>
-      試合日程
-      </p>
-      <p>※日本時間</p>
-    </div>
-    <div v-for="(game, index) in schedules" :key="game.id" class="border-t">
+  <div class="p-1 sm:p-8">
+    <p class="text-right text-gray-400 text-xxs border-b pr-3 mt-2">※日本時間</p>
+    <div v-for="(game, index) in schedules" :key="game.id" class="border-b">
       <Game :game="game" />
     </div>
   </div>
