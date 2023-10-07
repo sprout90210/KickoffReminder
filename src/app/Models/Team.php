@@ -45,6 +45,7 @@ class Team extends Model
                 ->orWhere('away_team_id', $teamId);
             })
             ->where('status', 'FINISHED')
+            ->orWhere('status', 'IN_PLAY')
             ->orderBy('utc_date', 'desc')
             ->with(['homeTeam','awayTeam','season','season.competition'])
             ->limit(50)
@@ -77,6 +78,7 @@ class Team extends Model
                 ->orWhere('away_team_id', $teamId);
             })
             ->where('status', 'TIMED')
+            ->orWhere('status', 'IN_PLAY')
             ->orderBy('utc_date', 'asc')
             ->with(['homeTeam','awayTeam','season','season.competition'])
             ->first();

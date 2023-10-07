@@ -83,7 +83,7 @@
           <Loading />
         </div>
         <div v-else>
-          <p class="text-xs text-gray-800 text-left pl-2 pt-2 border-b">Next Match</p>
+          <p class="text-xxs text-right text-gray-400 pr-3 mt-2 border-b">※日本時間</p>
           <Game :game="nextGame" />
         </div>
       </td>
