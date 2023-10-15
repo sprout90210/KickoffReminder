@@ -2,7 +2,7 @@
   <div class="h-28 text-xxs flex flex-col justify-center sm:px-4">
     <p class="flex justify-between text-gray-500 sm:text-xs p-2">
       <span>
-        <span class="mr-4">{{ game.season.competition.name }}</span>
+        <span class="mr-4">{{ game.competition.name }}</span>
         <span class="hidden sm:inline">{{ game.group }}</span>
       </span>
       <span v-if="game.status === 'FINISHED' || game.status === 'IN_PLAY'">{{ kickoffDate }}</span>

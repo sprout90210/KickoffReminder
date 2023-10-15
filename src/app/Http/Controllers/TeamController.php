@@ -7,7 +7,7 @@ use App\Models\Team;
 
 class TeamController extends Controller
 {
-
+    
     public function show($teamId){
 
         $team = Team::find($teamId);
@@ -18,6 +18,7 @@ class TeamController extends Controller
 
         return response()->json($team);
     }
+
 
     public function getStandings($teamId){
 
@@ -30,6 +31,7 @@ class TeamController extends Controller
         return response()->json($standings, 200);
     }
 
+
     public function getResults($teamId){
 
         $results = Team::getResults($teamId);
@@ -40,6 +42,7 @@ class TeamController extends Controller
 
         return response()->json($results, 200);
     }
+
 
     public function getSchedules($teamId){
 
