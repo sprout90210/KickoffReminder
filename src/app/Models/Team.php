@@ -47,7 +47,7 @@ class Team extends Model
             ->where('status', 'FINISHED')
             ->orWhere('status', 'IN_PLAY')
             ->orderBy('utc_date', 'desc')
-            ->with(['homeTeam','awayTeam','season','season.competition'])
+            ->with(['homeTeam','awayTeam','competition'])
             ->limit(50)
             ->get();
 
@@ -63,7 +63,7 @@ class Team extends Model
             })
             ->where('status', 'TIMED')
             ->orderBy('utc_date', 'asc')
-            ->with(['homeTeam','awayTeam','season','season.competition'])
+            ->with(['homeTeam','awayTeam','competition'])
             ->limit(50)
             ->get();
 
@@ -80,7 +80,7 @@ class Team extends Model
             ->where('status', 'TIMED')
             ->orWhere('status', 'IN_PLAY')
             ->orderBy('utc_date', 'asc')
-            ->with(['homeTeam','awayTeam','season','season.competition'])
+            ->with(['homeTeam','awayTeam','competition'])
             ->first();
 
         return $nextGame;

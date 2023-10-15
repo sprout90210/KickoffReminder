@@ -15,9 +15,10 @@ class Competition extends Model
 
     protected $fillable = [
         'id',
+        'current_season_id',
         'name',
         'code',
-        'current_season_id',
+        'competition_type',
         'embleme',
     ];
 
@@ -26,28 +27,24 @@ class Competition extends Model
         return $this->hasMany(Season::class);
     }
 
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
+
 
     public static function getCurrentStandings($competitionId){
 
-        // $competitionId = (int) preg_replace('/[^0-9]/', '', $competitionId);
         $currentSeasonId = Season::where('competition_id', $competitionId)
             ->latest('start_date')
             ->value('id');
 
-        if ($currentSeasonId) {
+        $standings = Standing::with('team')
+            ->where('season_id', $currentSeasonId)
+            ->orderBy('position', 'asc')
+            ->get();
 
-            $standings = Standing::with('team')
-                ->where('season_id', $currentSeasonId)
-                ->orderBy('position', 'asc')
-                ->get();
-
-            return response()->json($standings);
-
-        } else {
-
-            return response()->json(['message' => 'No standings found for the current season'], 404);
-
-        }
+        return $standings;
 
     }
 

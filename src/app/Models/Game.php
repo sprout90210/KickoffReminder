@@ -11,15 +11,22 @@ class Game extends Model
 
     protected $fillable = [
         'id',
+        'competition_id',
         'season_id',
         'home_team_id',
         'away_team_id',
         'home_team_score',
         'away_team_score',
-        'winner',
         'status',
+        'stage',
+        'group',
         'utc_date',
     ];
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
 
     public function season()
     {

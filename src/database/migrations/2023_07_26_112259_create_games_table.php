@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id')->nullable();
             $table->foreignId('season_id')->nullable();
             $table->foreignId('home_team_id')->nullable();
             $table->foreignId('away_team_id')->nullable();
             $table->unsignedInteger('home_team_score')->nullable();
             $table->unsignedInteger('away_team_score')->nullable();
-            $table->string('winner')->nullable();
             $table->string('status');
             $table->string('stage')->nullable();
             $table->string('group')->nullable();

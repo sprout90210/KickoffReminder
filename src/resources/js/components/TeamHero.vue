@@ -73,7 +73,7 @@
     <div v-else class="pt-20 pb-16 sm:py-9">
         <Loading />
     </div>
-    <div class="flex absolute bottom-0 z-2 left-0 pl-4 sm:pl-12">
+    <div class="flex absolute bottom-0 z-2 left-0 pl-3 sm:pl-12">
       <TabButton :activeTab="activeTab" tabName="standings" @click="tabChange('standings')" >
         順位
       </TabButton>
