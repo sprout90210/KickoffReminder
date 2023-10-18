@@ -27,6 +27,11 @@ class Competition extends Model
         return $this->hasMany(Season::class);
     }
 
+    public function standings()
+    {
+        return $this->hasMany(Standing::class);
+    }
+
     public function games()
     {
         return $this->hasMany(Game::class);
@@ -45,7 +50,32 @@ class Competition extends Model
             ->get();
 
         return $standings;
+    }
 
+
+    public static function getResults($competitionId){
+
+        $results = Game::where('competition_id', $competitionId)
+            ->whereIn('status', ['FINISHED', 'IN_PLAY'])
+            ->orderBy('utc_date', 'desc')
+            ->with(['homeTeam','awayTeam','competition'])
+            ->limit(50)
+            ->get();
+
+        return $results;
+    }
+
+
+    public static function getSchedules($competitionId){
+
+        $schedules = Game::where('competition_id', $competitionId)
+            ->where('status', 'TIMED')
+            ->orderBy('utc_date', 'asc')
+            ->with(['homeTeam','awayTeam','competition'])
+            ->limit(50)
+            ->get();
+
+        return $schedules;
     }
 
 

@@ -280,7 +280,7 @@ class TeamSeeder extends Seeder
             [
                 'id' => 86,
                 'name' => 'レアル・マドリード',
-                'short_name' => null,
+                'short_name' => 'レアルマドリード',
                 'crest' => '86.png',
                 'venue' => 'エスタディオ・サンティアゴ・ベルナベウ',
                 'website_url' => 'http://www.realmadrid.com',
@@ -291,8 +291,7 @@ class TeamSeeder extends Seeder
             [
                 'id' => 78,
                 'name' => 'アトレティコ・マドリード',
-                'short_name' => 'アトレティコ',
-                'short_name' => null,
+                'short_name' => 'Aマドリード',
                 'crest' => '78.png',
                 'venue' => 'ワンダ・メトロポリターノ',
                 'website_url' => 'http://www.clubatleticodemadrid.com',
@@ -546,7 +545,7 @@ class TeamSeeder extends Seeder
             [
                 'id' => 281,
                 'name' => 'ウニオン・ベルリン',
-                'short_name' => null,
+                'short_name' => 'ウニオンベルリン',
                 'crest' => '281.png',
                 'venue' => 'アン・デア・アルテン・フェルステライ',
                 'website_url' => 'https://www.fc-union-berlin.de/en/',
@@ -756,7 +755,7 @@ class TeamSeeder extends Seeder
             [
                 'id' => 110,
                 'name' => 'ラツィオ',
-                'short_name' => 'ラツィオ',
+                'short_name' => null,
                 'crest' => '110.png',
                 'venue' => 'スタディオ・オリンピコ・ディ・ローマ',
                 'website_url' => 'https://www.sslazio.it/',
@@ -899,7 +898,7 @@ class TeamSeeder extends Seeder
             [
                 'id' => 450,
                 'name' => 'エラス・ヴェローナ',
-                'short_name' => null,
+                'short_name' => 'エラスヴェローナ',
                 'crest' => '450.png',
                 'venue' => 'マルカントニオ・ベンテゴディ・スタジオ',
                 'website_url' => 'https://www.hellasverona.it/',

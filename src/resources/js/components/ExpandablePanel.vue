@@ -112,8 +112,8 @@ const props = defineProps({
 
 const toggle = () => {
   isOpen.value = !isOpen.value;
-  isLoading.value = true;
   if (!nextGame.value) {
+    isLoading.value = true;
     axios
       .get(`/api/teams/${props.standing.team_id}/nextGame`)
       .then((res) => {
@@ -123,8 +123,6 @@ const toggle = () => {
       .catch((e) => {
         console.log(e);
       });
-  } else {
-    isLoading.value = false;
   }
 };
 
