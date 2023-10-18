@@ -11,10 +11,22 @@ class SeasonSeeder extends Seeder
     {
         DB::table('seasons')->insert([
             [
-                'id' => 1564,
-                'competition_id' => 2021,
-                'start_date' => "2023-08-11",
-                'end_date' => "2024-05-19",
+                'id' => 734,
+                'competition_id' => 2001,
+                'start_date' => "2021-06-22",
+                'end_date' => "2022-05-28",
+            ],
+            [
+                'id' => 1491,
+                'competition_id' => 2001,
+                'start_date' => "2022-06-21",
+                'end_date' => "2023-06-10",
+            ],
+            [
+                'id' => 1630,
+                'competition_id' => 2001,
+                'start_date' => "2023-09-19",
+                'end_date' => "2024-06-01",
             ],
             [
                 'id' => 733,
@@ -29,6 +41,12 @@ class SeasonSeeder extends Seeder
                 'end_date' => "2023-05-28",
             ],
             [
+                'id' => 1564,
+                'competition_id' => 2021,
+                'start_date' => "2023-08-11",
+                'end_date' => "2024-05-29",
+            ],
+            [
                 'id' => 380,
                 'competition_id' => 2014,
                 'start_date' => "2021-08-13",
@@ -41,6 +59,12 @@ class SeasonSeeder extends Seeder
                 'end_date' => "2023-06-04",
             ],
             [
+                'id' => 1577,
+                'competition_id' => 2014,
+                'start_date' => "2023-08-13",
+                'end_date' => "2024-05-26",
+            ],
+            [
                 'id' => 746,
                 'competition_id' => 2015,
                 'start_date' => "2021-08-06",
@@ -51,6 +75,12 @@ class SeasonSeeder extends Seeder
                 'competition_id' => 2015,
                 'start_date' => "2022-08-07",
                 'end_date' => "2023-06-03",
+            ],
+            [
+                'id' => 1592,
+                'competition_id' => 2015,
+                'start_date' => "2023-08-18",
+                'end_date' => "2023-05-18",
             ],
             [
                 'id' => 757,

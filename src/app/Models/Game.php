@@ -21,6 +21,7 @@ class Game extends Model
         'stage',
         'group',
         'utc_date',
+        'last_updated',
     ];
 
     public function competition()

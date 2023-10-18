@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id');
             $table->foreignId('season_id');
             $table->foreignId('team_id');
             $table->unsignedInteger('position');
