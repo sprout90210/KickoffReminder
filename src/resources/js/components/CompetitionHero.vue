@@ -1,8 +1,8 @@
 <template>
   <div
-    class="relative pt-5 pb-12 sm:pb-16 bg-gradient-to-tr from-gray-300 via-gray-50 to-white"
+    class="relative pt-2 pb-8 bg-gradient-to-tr from-gray-300 via-gray-50 to-white"
   >
-    <div v-if="!isLoading" class="flex flex-row sm:flex-row justify-center items-center py-8">
+    <div v-if="!isLoading" class="flex flex-row sm:flex-row justify-center items-center py-4">
       <div class="p-2 pr-4 sm:pl-16">
         <img
           :src="generateImgUrlDev(competition.emblem)"
@@ -14,7 +14,7 @@
         <h1 class="text-gray-800 text-lg font-bold">{{ competition.name }}</h1>
       </div>
     </div>
-    <div v-else class="pt-10 pb-10 sm:py-9">
+    <div v-else class="py-1 sm:py-8">
       <Loading />
     </div>
     <div class="flex absolute bottom-0 z-2 left-0 pl-3 sm:pl-12">
