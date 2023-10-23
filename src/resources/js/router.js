@@ -52,12 +52,12 @@ const router = createRouter({
         if (savedPosition) {
             return savedPosition
         }
-        if (to.name === 'Terms') {
+        if (to.name === 'Terms' || to.name === 'Privacy') {
             return { top: 0 }
         }
         return false;
     }
-    
+
 })
 
 export default router;
