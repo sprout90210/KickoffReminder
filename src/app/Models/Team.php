@@ -76,7 +76,7 @@ class Team extends Model
                 $query->where('home_team_id', $teamId)
                 ->orWhere('away_team_id', $teamId);
             })
-            ->whereIn('status', ['FINISHED', 'IN_PLAY'])
+            ->where('status', 'TIMED')
             ->orderBy('utc_date', 'asc')
             ->with(['homeTeam','awayTeam','competition'])
             ->first();
