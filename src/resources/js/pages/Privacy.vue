@@ -4,7 +4,8 @@
       プライバシーポリシー
     </h1>
     <p>
-      FOOTBALL REMINDER（以下、「当事務局」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めております。
+      FOOTBALL
+      REMINDER（以下、「当事務局」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めております。
     </p>
 
     <h2 class="text-sm sm:text-lg font-semibold pt-12 pb-3">第1条（定義）</h2>
@@ -49,8 +50,13 @@
       第4条（アクセス解析ツール）
     </h2>
     <p>
-    当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」・LogRocket社の提供するサービスである「LogRocket」を使用しています。このGoogleアナリティクス・LogRocketはデータの収集のためにCookieを使用しています。
-    この機能はCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関しての詳細はGoogleアナリティクスサービス利用規約やGoogleポリシーと規約・LogRocketプライバシポリシーをご覧ください。
+      当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」・LogRocket社の提供するサービスである「LogRocket」を使用しています。このGoogleアナリティクス・LogRocketはデータの収集のためにCookieを使用しています。
+      この機能はCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関しての詳細は
+      <a href="https://marketingplatform.google.com/about/analytics/terms/jp/" target="_brank" rel="noopener noreferrer" class="underline">Googleアナリティクスサービス利用規約</a>
+      や
+      <a href="https://policies.google.com/technologies/ads?hl=ja" target="_brank" rel="noopener noreferrer" class="underline">Googleポリシーと規約</a>
+      ・
+      <a href="https://logrocket.com/privacy/" target="_brank" rel="noopener noreferrer" class="underline"> LogRocketプライバシポリシーをご覧ください。</a>
     </p>
 
     <h2 class="text-sm sm:text-lg font-semibold pt-12 pb-3">第5条（利用目的の変更）</h2>

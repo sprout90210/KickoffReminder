@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 sm:px-28 py-2 text-gray-600 text-xs sm:text-sm">
-    <h1 class="flex justify-center text-lg sm:text-2xl font-bold py-8 sm:py-12">利用規約</h1>
+    <h1 class="flex justify-center text-lg sm:text-2xl font-bold py-8 sm:py-14">利用規約</h1>
     <p>
       この利用規約（以下、「本規約」といいます。）は、FOOTBALL
       REMINDER（以下、「当事務局」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。
@@ -28,7 +28,7 @@
       <li>
         当事務局は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。
       </li>
-      <ol class="list-decimal pl-5 pt-1">
+      <ol class="list-decimal pl-5 py-1">
         <li>利用登録の申請に際して虚偽の事項を届け出た場合</li>
         <li>本規約に違反したことがある者からの申請である場合</li>
         <li>その他、当事務局が利用登録を相当でないと判断した場合</li>
@@ -51,10 +51,8 @@
     </ol>
 
     <h2 class="text-sm sm:text-lg font-semibold pt-12 pb-3">第4条（禁止事項）</h2>
-    <p class="mb-3">
-      ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。
-    </p>
-    <ol class="list-decimal pl-5">
+    <p>ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。</p>
+    <ol class="list-decimal pl-5 pt-2">
       <li>法令または公序良俗に違反する行為、犯罪行為に関連する行為、</li>
       <li>犯罪行為に関連する行為</li>
       <li>
@@ -81,7 +79,7 @@
     <ol class="list-decimal pl-5">
       <li>
         当事務局は、以下のいずれかの事由があると判断した場合、ユーザーに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。
-        <ol class="list-decimal pl-6 pt-1 pb-3">
+        <ol class="list-decimal pl-5 py-1">
           <li>本サービスにかかるコンピュータシステムの保守点検または更新を行う場合</li>
           <li>
             地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合
@@ -99,7 +97,7 @@
     <ol class="list-decimal pl-5">
       <li>
         当事務局は、ユーザーが以下のいずれかに該当する場合には、事前の通知なく、ユーザーに対して、本サービスの全部もしくは一部の利用を制限し、またはユーザーとしての登録を抹消することができるものとします。
-        <ol class="list-decimal pl-6 pt-1 pb-3">
+        <ol class="list-decimal pl-5 py-1">
           <li>本規約のいずれかの条項に違反した場合</li>
           <li>登録事項に虚偽の事実があることが判明した場合</li>
           <li>当事務局からの連絡に対し、一定期間返答がない場合</li>
@@ -145,7 +143,9 @@
 
     <h2 class="text-sm sm:text-lg font-semibold pt-12 pb-3">第11条（個人情報の取扱い）</h2>
     <p>
-      当事務局は，本サービスの利用によって取得する個人情報については，当事務局「プライバシーポリシー」に従い適切に取り扱うものとします。
+      当事務局は，本サービスの利用によって取得する個人情報については、
+      <router-link to="/privacy" class="underline">プライバシーポリシー</router-link>
+      に従い適切に取り扱うものとします。
     </p>
 
     <h2 class="text-sm sm:text-lg font-semibold pt-12 pb-3">第12条（通知または連絡）</h2>
