@@ -6,7 +6,7 @@ ps:
 	docker-compose ps
 logs:
 	docker-compose logs
-laravel:
+la:
 	docker exec -it laravel bash
 nginx:
 	docker exec -it nginx bash
