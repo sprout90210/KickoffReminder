@@ -5,3 +5,27 @@
 .text-xxs {
   font-size: 0.625rem; /* 10px */
 }
+.custom-container {
+  @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700;
+}
+.custom-form {
+  @apply flex flex-col items-center px-5 sm:w-96;
+}
+.custom-form-field {
+  @apply h-16 flex flex-col my-1 sm:my-3 w-full;
+}
+.custom-input {
+  @apply h-8 sm:h-10 rounded text-sm;
+}
+.custom-header {
+  @apply mb-7 text-xl sm:text-2xl font-bold text-center;
+}
+.section-title {
+  @apply text-sm sm:text-lg font-bold mt-12 mb-3;
+}
+.section-list {
+  @apply list-decimal ml-5 my-1;
+}
+.line-login-btn {
+  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200
+}

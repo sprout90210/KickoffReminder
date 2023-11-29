@@ -28,7 +28,7 @@ return [
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'region' => env('AWS_DEFAULT_REGION', 'ap-northeast-1'),
     ],
 
     'stripe' => [
@@ -36,5 +36,19 @@ return [
         'st_key' => env('STRIPE_SECRET'),
     ],
 
+    'line' => [
+        'client_id' => env('LINE_CLIENT_ID'),
+        'client_secret' => env('LINE_CLIENT_SECRET'),
+        'redirect' => env('LINE_REDIRECT_URI'),
+        'channel_id'=>env('LINE_MESSAGE_CHANNEL_ID'),
+        'channel_secret'=>env('LINE_MESSAGE_CHANNEL_SECRET'),
+        'channel_token'=>env('LINE_MESSAGE_CHANNEL_TOKEN')
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_CLIENT_CALLBACK')
+    ],
 
 ];
