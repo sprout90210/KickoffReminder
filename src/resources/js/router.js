@@ -13,7 +13,7 @@ import Login from "./pages/auth/Login.vue";
 import ForgotPassword from "./pages/auth/ForgotPassword.vue";
 import ResetPassword from "./pages/auth/ResetPassword.vue";
 import MyPage from "./pages/auth/MyPage.vue";
-import EditEmail from "./pages/auth/EditEmail.vue";
+import EditUser from "./pages/auth/EditUser.vue";
 import EditPassword from "./pages/auth/EditPassword.vue";
 import DeleteUser from "./pages/auth/DeleteUser.vue";
 
@@ -27,7 +27,16 @@ const router = createRouter({
 			name: "Home",
 			component: Home,
 		},
-
+		{
+			path: "/competitions/:competitionId",
+			name: "CompetitonDetail",
+			component: CompetitionDetail,
+		},
+		{
+			path: "/teams/:teamId",
+			name: "TeamDetail",
+			component: TeamDetail,
+		},
 		{
 			path: "/registration",
 			name: "Registration",
@@ -37,6 +46,11 @@ const router = createRouter({
 			path: "/login",
 			name: "Login",
 			component: Login,
+		},
+		{
+			path: "/mypage",
+			name: "MyPage",
+			component: MyPage,
 		},
 		{
 			path: "/password/forgot",
@@ -49,14 +63,19 @@ const router = createRouter({
 			component: ResetPassword,
 		},
 		{
-			path: "/teams/:teamId",
-			name: "TeamDetail",
-			component: TeamDetail,
+			path: "/password/edit",
+			name: "EditPassword",
+			component: EditPassword,
 		},
 		{
-			path: "/competitions/:competitionId",
-			name: "CompetitonDetail",
-			component: CompetitionDetail,
+			path: "/user/edit",
+			name: "EditUser",
+			component: EditUser,
+		},
+		{
+			path: "/user/delete",
+			name: "DeleteUser",
+			component: DeleteUser,
 		},
 		{
 			path: "/terms",
@@ -78,27 +97,6 @@ const router = createRouter({
 			name: "NotFound",
 			component: NotFound,
 		},
-
-		{
-			path: "/mypage",
-			name: "MyPage",
-			component: MyPage,
-		},
-		{
-			path: "/email/edit",
-			name: "EditEmail",
-			component: EditEmail,
-		},
-		{
-			path: "/password/edit",
-			name: "EditPassword",
-			component: EditPassword,
-		},
-		{
-			path: "/user/delete",
-			name: "DeleteUser",
-			component: DeleteUser,
-		},
 	],
 
 	scrollBehavior(to, from, savedPosition) {
@@ -106,17 +104,25 @@ const router = createRouter({
 	},
 });
 
-// router.beforeEach((to, from, next) => {
 
-// 	const isLoggedIn = store.state.isLoggedIn;
-// 	const authRequiredPages = [ "MyPage", "EditEmail", "EditPassword", "DeleteUser"];
-// 	const authRequired = authRequiredPages.includes(to.name);
+router.beforeEach((to, from, next) => {
+	const isLoggedIn = store.state.isLoggedIn;
+	const isLineUser = store.state.isLineUser;
+	const authRequiredPages = ["MyPage", "EditUser", "EditPassword", "DeleteUser"];
+	const noAuthPages = ["Login", "Registration"];
+	const authRequired = authRequiredPages.includes(to.name);
+	const noAuthRequired = noAuthPages.includes(to.name);
 
-	// if (authRequired && !isLoggedIn){
-	// 	next({ name: "Login" });
-	// } else {
-	// 	next();
-	// }
-// });
+	if (authRequired && !isLoggedIn) {
+		next({ path: "/login" });
+	} else if (noAuthRequired && isLoggedIn) {
+		next({ path: "/" });
+	} else if (to.name === "EditUser" && isLineUser) {
+		next({ path: "/" });
+	} else {
+		next();
+	}
+
+});
 
 export default router;

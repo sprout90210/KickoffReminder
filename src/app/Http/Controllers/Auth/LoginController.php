@@ -38,6 +38,11 @@ class LoginController extends Controller
     
     public function check(Request $request)
     {
-        return response()->json(['isLoggedIn' => Auth::check()]);
+        $user = $request->user();
+
+        return response()->json([
+            'isLoggedIn' => Auth::check(),
+            'isLineUser' => $user ? $user->isLineUser() : false,
+        ]);
     }
 }

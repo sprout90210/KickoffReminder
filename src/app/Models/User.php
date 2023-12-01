@@ -43,4 +43,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isLineUser()
+    {
+        return !is_null($this->line_user_id);
+    }
 }

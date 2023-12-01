@@ -14,6 +14,7 @@
         />
         <p class="text-red-700">{{ errors.name }}</p>
       </div>
+
       <div class="custom-form-field">
         <label for="email">メールアドレス</label>
         <input
@@ -54,44 +55,36 @@
         <p class="text-red-700">{{ errors.password_confirmation }}</p>
       </div>
 
-      <div class="mt-3">
-        <router-link to="/terms" class="underline text-blue-500 hover:text-orange-600"
-          >利用規約</router-link
-        >
+      <p class="mt-3">
+        <router-link to="/terms" class="underline text-blue-500 hover:text-orange-600">
+          利用規約
+        </router-link>
         と
-        <router-link to="/privacy" class="underline text-blue-500 hover:text-orange-600"
-          >プライバシーポリシー</router-link
-        >
+        <router-link to="/privacy" class="underline text-blue-500 hover:text-orange-600">
+          プライバシーポリシー
+        </router-link>
         に同意いただける場合はアカウントを作成してください。
-      </div>
+      </p>
 
-      <button
-        type="submit"
-        class="my-5 py-3 w-full rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40"
-      >
-        登録
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">
+        {{ buttonText }}
       </button>
     </form>
-    <div class="my-3 text-center">
+
+    <p class="my-3 text-center">
       既にアカウントをお持ちの場合は
-      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600"
-        >こちら</router-link
-      >
-    </div>
+      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+    </p>
+
     <div class="mt-3 w-full border-t flex flex-col items-center">
       <p class="my-4">外部サービスでログイン</p>
-      <button
-        @click="loginLine"
-        class="line-login-btn"
-      >
-        LINEログイン
-      </button>
+      <button @click="loginLine" class="line-login-btn">LINEログイン</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useField, useForm } from "vee-validate";
@@ -99,6 +92,9 @@ import { object, string, ref as yupRef } from "yup";
 
 const store = useStore();
 const router = useRouter();
+const isSubmitting = ref(false);
+const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "登録"));
+
 const schema = object({
   name: string().required("必須項目です"),
   email: string().required("必須項目です").email("メールアドレスの形式ではありません"),
@@ -117,7 +113,25 @@ const { value: email } = useField("email");
 const { value: password } = useField("password");
 const { value: password_confirmation } = useField("password_confirmation");
 
+// エラー処理
+const handleError = (e) => {
+  password.value = "";
+  password_confirmation.value = "";
+  isSubmitting.value = false;
+  let message;
+  if (e.response.status === 422) {
+    const errors = e.response.data.errors;
+    const errorKey = Object.keys(errors)[0];
+    message = errors[errorKey][0];
+  } else {
+    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
+  }
+  store.dispatch("triggerPopup", { message });
+};
+
+// フォーム送信
 const submitForm = handleSubmit(() => {
+  isSubmitting.value = true;
   const userData = {
     name: name.value,
     email: email.value,
@@ -128,25 +142,11 @@ const submitForm = handleSubmit(() => {
     axios
       .post("/api/register", userData)
       .then((res) => {
-        if (res.data.isLoggedIn) {
-          store.commit("setLoggedIn", true);
-          store.dispatch("triggerPopup", { message: "アカウントを作成しました。" });
-          router.push("/");
-        }
+        store.commit("setLoggedIn", true);
+        store.dispatch("triggerPopup", { message: "アカウントを作成しました。" });
+        router.push("/");
       })
-      .catch((e) => {
-        password.value = "";
-        password_confirmation.value = "";
-        if (e.response.status === 422) {
-          const errors = e.response.data.errors;
-          const errorKey = Object.keys(errors)[0];
-          store.dispatch("triggerPopup", { message: errors[errorKey][0] });
-        } else {
-          store.dispatch("triggerPopup", {
-            message: "フォーム送信時にエラーが発生しました。後でもう一度お試しください。",
-          });
-        }
-      });
+      .catch(handleError);
   });
 });
 

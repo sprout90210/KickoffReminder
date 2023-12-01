@@ -35,6 +35,9 @@ class UserController extends Controller
     {
         try {
             $user = $request->user();
+            if ($user->isLineUser()) {
+                return response()->json(['error' => '外部ログインをしている場合はユーザーは変更できません。'], 403);
+            }
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email

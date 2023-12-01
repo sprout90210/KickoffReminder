@@ -9,12 +9,11 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 
 
+
 Route::post('register', [UserController::class, 'store']);
 
 Route::post('login', [LoginController::class, 'login']);
-
 Route::post('logout', [LoginController::class, 'logout']);
-
 Route::get('check', [LoginController::class, 'check']);
 
 Route::post('password/forgot', [PasswordResetLinkController::class, 'store']);
@@ -23,12 +22,10 @@ Route::post('password/reset', [NewPasswordController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->group(function(){
-    
-    Route::get('user', [UserController::class, 'show']);
 
-    Route::put('email', [EmailController::class, 'update']);
+    Route::put('user', [UserController::class, 'update']);
+    Route::delete('user', [UserController::class, 'destroy']);
 
     Route::put('password', [PasswordController::class, 'update']);
 
-    Route::delete('user', [UserController::class, 'destroy']);
 });
