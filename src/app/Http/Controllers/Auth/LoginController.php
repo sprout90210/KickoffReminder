@@ -35,6 +35,7 @@ class LoginController extends Controller
         return response()->json(['message' => 'ログアウト成功']);
     }
 
+    
     public function check(Request $request)
     {
         return response()->json(['isLoggedIn' => Auth::check()]);

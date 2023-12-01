@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\StoreUserRequest;
+use App\Http\Requests\Auth\UpdateUserRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -26,27 +27,45 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['isLoggedIn' => true ], 200);
+        return response()->json(['isLoggedIn' => true], 200);
     }
 
-    public function show(Request $request)
+
+    public function update(Request $request)
     {
-        return response()->json(Auth::user(), 200);
-        return response()->json(['message' => 'get user data failed'], 401);
+        try {
+            $user = $request->user();
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+            return response()->json(['message' => 'ユーザー情報が更新されました。'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => '情報更新中にエラーが発生しました。'], 500);
+        }
     }
 
-    public function deleteUser(Request $request)
+
+    public function destroy(Request $request)
     {
-        $user = Auth::user();
-        $user->delete();
+        try {
+            $user = $request->user();
 
-        Auth::logout();
+            if (!$user->isLineUser()) {
+                if (!Hash::check($request->password, $user->password)) {
+                    return response()->json(['message' => 'パスワードが正しくありません。'], 403);
+                }
+            }
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return response()->json(['message' => 'Your account has been deleted.'], 200);
+            $user->delete();
+            return response()->json(['message' => 'アカウントを削除しました。'], 204);
+    
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'アカウント削除中にエラーが発生しました。'], 500);
+        }
     }
+
 
 
 }
