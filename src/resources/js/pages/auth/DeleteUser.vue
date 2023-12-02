@@ -25,7 +25,7 @@
           id="password"
           type="password"
           placeholder="外部ログインの場合は不要です"
-          autocomplete="new-password"
+          autocomplete="current-password"
           class="custom-input"
         />
       </div>

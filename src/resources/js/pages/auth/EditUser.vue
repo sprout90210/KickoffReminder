@@ -8,7 +8,7 @@
           v-model="name"
           id="name"
           type="text"
-          autocomplete="name"
+          autocomplete="username"
           required="required"
           class="custom-input"
         />

@@ -21,7 +21,7 @@
           v-model="password"
           id="password"
           type="password"
-          autocomplete="new-password"
+          autocomplete="current-password"
           required="required"
           class="custom-input"
         />
