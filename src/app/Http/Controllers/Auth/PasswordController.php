@@ -3,27 +3,45 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Password;
 
 class PasswordController extends Controller
 {
-    /**
-     * Update the user's password.
-     */
-    public function update(Request $request): RedirectResponse
+    public function sendResetLink(ForgotPasswordRequest $request)
     {
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
+        $response = Password::sendResetLink(
+            $request->only('email')
+        );
+        return $response == Password::RESET_LINK_SENT
+                    ? response()->json(['message' => 'メールを送信しました'], 200)
+                    : response()->json(['message' => 'メール送信できませんでした'], 500);
+    }
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
 
-        return back();
+    public function reset(ResetPasswordRequest $request)
+    {
+        $response = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+                
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $response == Password::PASSWORD_RESET
+                    ? response()->json(['message' => 'パスワードリセットに成功しました'], 200)
+                    : response()->json(['message' => 'パスワードリセットに失敗しました'], 500);
     }
 }

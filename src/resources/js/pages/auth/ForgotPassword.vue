@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="custom-container"
-  >
+  <div class="custom-container">
     <h1 class="custom-header">パスワード再設定</h1>
-    <p class="my-4">※ご登録のメールアドレスをご入力ください。</p>
+    <p class="my-6">※ご登録のメールアドレスをご入力ください。</p>
 
     <form @submit.prevent="submitForm" class="custom-form">
       <div class="custom-form-field">
@@ -17,34 +15,32 @@
         />
         <p class="text-red-700">{{ errors.email }}</p>
       </div>
-      <button
-        type="submit"
-        class="my-5 py-3 w-full rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40"
-      >
-        メールを送信
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">
+        {{ buttonText }}
       </button>
     </form>
     <div class="mt-3">
       アカウントの新規作成は
-      <router-link to="/register" class="underline text-blue-500 hover:text-orange-600"
-        >こちら</router-link
-      >
+      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </div>
     <div class="my-3">
       ログインは
-      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600"
-        >こちら</router-link
-      >
+      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </div>
-    {{message}}
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
+const router = useRouter();
+const store = useStore();
+const isSubmitting = ref(false);
+const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "送信"));
 const schema = object({
   email: string()
     .required("メールアドレスを入力してください")
@@ -56,29 +52,27 @@ const { errors, handleSubmit } = useForm({
 });
 
 const { value: email } = useField("email");
-const message = ref("");
 
+// エラー処理
+const handleError = (e) => {
+  isSubmitting.value = false;
+  const message =
+    e.response.status === 402
+      ? "メールアドレスに誤りがあります。"
+      : "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
+  store.dispatch("triggerPopup", { message });
+};
+// フォーム送信
 const submitForm = handleSubmit(() => {
-  message.value = "しばらくお待ちください...";
-  const userData = {
-    email: email.value,
-  };
+  isSubmitting.value = true;
   axios.get("/sanctum/csrf-cookie").then((res) => {
     axios
-      .post("/api/password/forgot", userData)
+      .post("/api/password/forgot", { email: email.value })
       .then((res) => {
-        message.value = "メールを送信しました。";
+        store.dispatch("triggerPopup", { message: "メールを送信しました。" });
+        router.push("/");
       })
-      .catch((e) => {
-        if (e.response.status === 422) {
-          message.value = 
-            "メールアドレスまたはパスワードをお確かめください。";
-        } else {
-          console.log(e.response.data.message);
-          message.value = 
-            "申し訳ありませんが、フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-        }
-      });
+      .catch(handleError);
   });
 });
 </script>

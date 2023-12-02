@@ -34,7 +34,7 @@
           v-model="password"
           id="password"
           type="password"
-          placeholder="6文字以上の英数字が必要です"
+          placeholder="最低6文字必要です"
           autocomplete="new-password"
           required="required"
           class="custom-input"
