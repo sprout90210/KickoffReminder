@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
@@ -43,5 +45,15 @@ class PasswordController extends Controller
         return $response == Password::PASSWORD_RESET
                     ? response()->json(['message' => 'パスワードリセットに成功しました'], 200)
                     : response()->json(['message' => 'パスワードリセットに失敗しました'], 500);
+    }
+
+
+    public function update(UpdatePasswordRequest $request)
+    {
+        $user = Auth::user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'パスワードが更新されました。'], 200);
     }
 }

@@ -6,19 +6,18 @@ use App\Http\Controllers\Auth\EmailController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
-// use App\Http\Controllers\Auth\PasswordResetController;
-// use App\Http\Controllers\Auth\ResetPasswordController;
-
 
 
 Route::post('register', [UserController::class, 'store']);
 
 Route::post('login', [LoginController::class, 'login']);
+
 Route::post('logout', [LoginController::class, 'logout']);
+
 Route::get('check', [LoginController::class, 'check']);
 
-
 Route::post('password/forgot', [PasswordController::class, 'sendResetLink']);
+
 Route::post('password/reset', [PasswordController::class, 'reset']);
 
 

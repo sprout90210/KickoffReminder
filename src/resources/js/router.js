@@ -108,7 +108,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.state.isLoggedIn;
 	const isLineUser = store.state.isLineUser;
-	const authRequiredPages = ["MyPage", "EditUser", "DeleteUser"];
+	const authRequiredPages = ["MyPage", "EditUser", "DeleteUser", "EditPassword"];
 	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);
@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
 		next({ path: "/login" });
 	} else if (noAuthRequired && isLoggedIn) {
 		next({ path: "/" });
-	} else if (to.name === "EditUser" && isLineUser) {
+	} else if ((to.name === "EditUser" || to.name === "EditPassword") && isLineUser) {
 		next({ path: "/" });
 	} else {
 		next();
