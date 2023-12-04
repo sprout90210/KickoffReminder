@@ -1,6 +1,6 @@
 <template>
   <div class="w-full text-gray-500">
-    <CompetitionHero :activeTab="activeTab" @tabChange="tabChange" />
+    <TeamHero :activeTab="activeTab" @tabChange="tabChange" />
     <div>
       <Standings
         v-show="!standingsLoading && activeTab === 'standings'"
@@ -14,26 +14,19 @@
         v-show="!schedulesLoading && activeTab === 'schedules'"
         :schedules="schedules"
       />
-      <div
-        v-show="
-          (standingsLoading && activeTab === 'standings') ||
-          (resultsLoading && activeTab === 'results') ||
-          (schedulesLoading && activeTab === 'schedules')
-        "
-        class="py-32"
-      >
-        <Loading />
+      <div v-show="(standingsLoading && activeTab === 'standings') || (resultsLoading && activeTab === 'results') || (schedulesLoading && activeTab === 'schedules')" class="py-32">
+        <Loading/>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import CompetitionHero from "../components/CompetitionHero.vue";
-import Standings from "../components/Standings.vue";
-import Results from "../components/Results.vue";
-import Schedules from "../components/Schedules.vue";
-import Loading from "../components/Loading.vue";
+import TeamHero from "./TeamHero.vue";
+import Standings from "../../components/Standings.vue";
+import Results from "../../components/Results.vue";
+import Schedules from "../../components/Schedules.vue";
+import Loading from "../../components/Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -45,7 +38,7 @@ const standingsLoading = ref(true);
 const resultsLoading = ref(true);
 const schedulesLoading = ref(true);
 const activeTab = ref("standings");
-const competitionId = computed(() => route.params.competitionId);
+const teamId = computed(() => route.params.teamId);
 
 const tabChange = (tabName) => {
   activeTab.value = tabName;
@@ -54,7 +47,7 @@ const tabChange = (tabName) => {
 const getStandings = () => {
   standingsLoading.value = true;
   axios
-    .get(`/api/competitions/${competitionId.value}/standings`)
+    .get(`/api/teams/${teamId.value}/standings`)
     .then((res) => {
       standings.value = res.data;
       standingsLoading.value = false;
@@ -67,7 +60,7 @@ const getStandings = () => {
 const getResults = () => {
   resultsLoading.value = true;
   axios
-    .get(`/api/competitions/${competitionId.value}/results`)
+    .get(`/api/teams/${teamId.value}/results`)
     .then((res) => {
       results.value = res.data;
       resultsLoading.value = false;
@@ -80,7 +73,7 @@ const getResults = () => {
 const getSchedules = () => {
   schedulesLoading.value = true;
   axios
-    .get(`/api/competitions/${competitionId.value}/schedules`)
+    .get(`/api/teams/${teamId.value}/schedules`)
     .then((res) => {
       schedules.value = res.data;
       schedulesLoading.value = false;

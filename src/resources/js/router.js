@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router"
 import store from "@/store/index";
 
-import Home from "./pages/Home.vue";
+import Home from "./pages/home/Home.vue";
 import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/Privacy.vue";
 import Inquiry from "./pages/Inquiry.vue";
-import TeamDetail from "./pages/TeamDetail.vue";
-import CompetitionDetail from "./pages/CompetitionDetail.vue";
+import TeamDetail from "./pages/team/TeamDetail.vue";
+import CompetitionDetail from "./pages/competition/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
 import Registration from "./pages/auth/registration.vue";
 import Login from "./pages/auth/Login.vue";

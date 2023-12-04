@@ -88,8 +88,8 @@
 </template>
 
 <script setup>
-import TabButton from "./TabButton.vue";
-import Loading from "./Loading.vue";
+import TabButton from "../../components/TabButton.vue";
+import Loading from "../../components/Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
@@ -120,7 +120,7 @@ const getTeamDetail = () => {
 
 const emit = defineEmits(["tabChange"]);
 const tabChange = (tabName) => {
-  emit('tabChange', tabName);
+  emit("tabChange", tabName);
 };
 
 const generateImgUrlDev = (ImgName) => {
