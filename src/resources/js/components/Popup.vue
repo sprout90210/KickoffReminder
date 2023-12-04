@@ -1,5 +1,8 @@
 <template>
-  <div :class="showPopup ? 'opacity-100 z-50' : 'opacity-0 -z-50'" class="transition-opacity duration-300 fixed top-16 right-8 p-4 w-56 text-sm bg-sky-200 bg-opacity-90 rounded-lg">
+  <div
+    @click="hidePopup"
+    :class="showPopup ? 'opacity-100 z-50' : 'opacity-0 -z-50'" class="transition-opacity duration-300 fixed top-16 right-8 p-4 w-56 text-sm bg-sky-200 bg-opacity-90 rounded-lg"
+  >
     {{ popupMessage }}
   </div>
 </template>
@@ -11,4 +14,7 @@ import { useStore } from "vuex";
 const store = useStore();
 const showPopup = computed(() => store.state.showPopup);
 const popupMessage = computed(() => store.state.popupMessage);
+const hidePopup = () => {
+  store.commit("hidePopup");
+};
 </script>

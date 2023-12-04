@@ -9,13 +9,13 @@
   @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700;
 }
 .custom-form {
-  @apply flex flex-col items-center px-5 sm:w-96;
+  @apply flex flex-col items-center px-6 w-full sm:w-96;
 }
 .custom-form-field {
   @apply h-16 flex flex-col my-1 sm:my-3 w-full;
 }
 .custom-input {
-  @apply h-8 sm:h-10 rounded text-sm;
+  @apply h-8 sm:h-10 rounded text-xs sm:text-sm;
 }
 .custom-header {
   @apply mb-7 text-xl sm:text-2xl font-bold text-center;
@@ -27,5 +27,8 @@
   @apply list-decimal ml-5 my-1;
 }
 .line-login-btn {
-  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200
+  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200;
+}
+.custom-submit {
+  @apply my-5 py-3 w-full block rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40;
 }

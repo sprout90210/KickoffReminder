@@ -1,6 +1,6 @@
 <template>
   <div class="custom-container">
-    <h1 class="custom-header">パスワード変更</h1>
+    <h1 class="custom-header">パスワードリセット</h1>
     <form @submit.prevent="submitForm" class="custom-form">
       <div class="custom-form-field">
         <label for="password">パスワード</label>
@@ -8,12 +8,14 @@
           v-model="password"
           id="password"
           type="password"
-          placeholder="8文字以上の英数字が必要です"
+          placeholder="最低6文字必要です"
           autocomplete="new-password"
+          required="required"
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password }}</p>
       </div>
+
       <div class="custom-form-field">
         <label for="password_confirmation">もう一度パスワードを入力してください</label>
         <input
@@ -21,32 +23,43 @@
           id="password_confirmation"
           type="password"
           autocomplete="new-password"
+          required="required"
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password_confirmation }}</p>
       </div>
 
-      <button
-        type="submit"
-        class="my-5 py-3 w-32 rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40"
-      >
-        変更
+      <button type="submit" class="custom-submit">
+        {{ buttonText }}
       </button>
     </form>
-    <div class="text-red-500">
-      {{ message }}
+    <div class="mt-3">
+      アカウントの新規作成は
+      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </div>
-      
+    <div class="my-3">
+      ログインは
+      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
 
+const store = useStore();
+const router = useRouter();
+const isSubmitting = ref(false);
+const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "パスワード変更"));
+const email = computed(() => router.currentRoute.value.query.email);
+const token = computed(() => router.currentRoute.value.query.token);
+
 const schema = object({
-  password: string().required("パスワードを入力してください").min(8, "最低8文字必要です"),
+  password: string().required("パスワードを入力してください").min(6, "最低6文字必要です"),
   password_confirmation: string()
     .required("パスワードを再入力してください")
     .oneOf([yupRef("password"), null], "パスワードが一致しません"),
@@ -58,35 +71,40 @@ const { errors, handleSubmit } = useForm({
 
 const { value: password } = useField("password");
 const { value: password_confirmation } = useField("password_confirmation");
-const message = ref();
 
+// エラー処理
+const handleError = (e) => {
+  password.value = "";
+  password_confirmation.value = "";
+  isSubmitting.value = false;
+  let message;
+  if (e.response.status === 422) {
+    const errors = e.response.data.errors;
+    const errorKey = Object.keys(errors)[0];
+    message = errors[errorKey][0];
+  } else {
+    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
+  }
+  store.dispatch("triggerPopup", { message });
+};
+
+// フォーム送信
 const submitForm = handleSubmit(() => {
-  message.value = "しばらくお待ちください...";
-  const userData = {
+  isSubmitting.value = true;
+  const resetData = {
     password: password.value,
     password_confirmation: password_confirmation.value,
+    email: email.value,
+    token: token.value,
   };
   axios.get("/sanctum/csrf-cookie").then((res) => {
     axios
-      .post("/api/password/reset", userData)
+      .post("/api/password/reset", resetData)
       .then((res) => {
-        if (res.data.isLoggedIn) {
-          location.href = "/login";
-        }
+        store.dispatch("triggerPopup", { message: "パスワードをリセットしました。" });
+        router.push("/login");
       })
-      .catch((e) => {
-        if (e.response.status === 422) {
-          const errors = e.response.data.errors;
-          const errorKey = Object.keys(errors)[0];
-          message.value = errors[errorKey][0];
-        } else {
-          console.log(e);
-          message.value =
-            "申し訳ありませんが、フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-        }
-      });
+      .catch(handleError);
   });
 });
-
-
 </script>

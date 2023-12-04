@@ -5,8 +5,22 @@ import store from './store'
 import App from './App.vue'
 import '../css/app.css';
 
-const app = createApp(App)
+async function checkAuth() {
+  try {
+    const res = await axios.get('/api/check');
+    store.commit('setLoggedIn', res.data.isLoggedIn);
+    store.commit('setLineUser', res.data.isLineUser);
+  } catch (e) {
+    console.error('認証状態の確認中にエラーが発生しました', e);
+  }
+}
 
-app.use(router)
-app.use(store)
-app.mount('#app')
+async function init() {
+  await checkAuth();
+  createApp(App)
+    .use(router)
+    .use(store)
+    .mount('#app');
+}
+
+init();

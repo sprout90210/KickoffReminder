@@ -1,16 +1,14 @@
 <template>
-  <div
-    class="custom-container"
-  >
+  <div class="custom-container">
     <h1 class="custom-header">退会</h1>
-    <div class="w-80">
+    <div class="sm:w-96 px-6">
       <p class="my-3">
         以下の注意事項をご確認して頂き、同意した上でパスワードを入力、退会するをクリックしてください。
       </p>
       <p class="text-gray-500 my-3">
         ※外部認証で作成されたアカウントはパスワード入力不要です。
       </p>
-      <ol class="list-decimal text-red-600 p-3">
+      <ol class="list-decimal text-red-600 m-5">
         <li class="my-1">
           アカウント削除後に、ユーザに紐づく全てのデータが削除されます。削除後に、復元することはできません。
         </li>
@@ -19,80 +17,58 @@
         </li>
       </ol>
     </div>
-    <form @submit.prevent="submitForm" class="custom-form">
+    <form @submit.prevent="deleteUser" class="custom-form">
       <div class="custom-form-field">
         <label for="password">パスワード</label>
         <input
           v-model="password"
           id="password"
           type="password"
-          placeholder="最低8文字必要です"
-          autocomplete="new-password"
+          placeholder="外部ログインの場合は不要です"
+          autocomplete="current-password"
           class="custom-input"
         />
-        <p class="text-red-700">{{ errors.password }}</p>
       </div>
-
-      <button
-        type="submit"
-        class="my-5 py-3 w-full rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40"
-      >
-        退会する
+      <button type="submit" class="custom-submit" :disabled="isSubmitting">
+        {{ buttonText }}
       </button>
-      <div class="my-3">
-        パスワードを忘れの方は
-        <router-link to="/mypage" class="underline text-blue-500 hover:text-orange-600"
-          >戻る</router-link
-        >
-      </div>
     </form>
-    <div class="text-red-500">
-      {{ message }}
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useField, useForm } from "vee-validate";
-import { object, string, ref as yupRef } from "yup";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-const schema = object({
-  password: string().required("パスワードを入力してください").min(8, "最低8文字必要です"),
-});
+const router = useRouter();
+const store = useStore();
+const password = ref("");
+const isSubmitting = ref(false);
+const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "退会"));
 
-const { errors, handleSubmit } = useForm({
-  validationSchema: schema,
-});
+// エラー処理
+const handleError = (e) => {
+  isSubmitting.value = false;
+  const message =
+    e.response.status === 403
+      ? "パスワードに誤りがあります。"
+      : "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
+  store.dispatch("triggerPopup", { message });
+};
 
-const { value: password } = useField("password");
-const message = ref();
-
-const submitForm = handleSubmit(() => {
-  message.value = "しばらくお待ちください...";
-  const userData = {
-    password: password.value,
-  };
+// フォーム送信
+const deleteUser = () => {
+  isSubmitting.value = true;
   axios.get("/sanctum/csrf-cookie").then((res) => {
     axios
-      .delete("/api/user", userData)
+      .delete("/api/user", { data: { password: password.value } })
       .then((res) => {
-        if (res.data.isLoggedIn) {
-          localStorage.setItem("isLoggedIn", "false");
-          location.href = "/";
-        }
+        store.dispatch("logout");
+        store.dispatch("triggerPopup", { message: "退会しました。" });
+        router.push("/");
       })
-      .catch((e) => {
-        if (e.response.status === 422) {
-          const errors = e.response.data.errors;
-          const errorKey = Object.keys(errors)[0];
-          message.value = errors[errorKey][0];
-        } else {
-          console.log(e);
-          message.value =
-            "申し訳ありませんが、フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-        }
-      });
+      .catch(handleError);
   });
-});
+};
 </script>
