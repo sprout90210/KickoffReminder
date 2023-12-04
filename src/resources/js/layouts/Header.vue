@@ -10,18 +10,16 @@
     </header>
     <div
       v-if="isMenuOpen"
-      class="fixed inset-0 bg-black bg-opacity-70 z-40"
+      class="fixed inset-0 bg-black bg-opacity-70 z-30"
       @click="toggleMenu"
     ></div>
-    <Popup />
     <HamburgerMenu />
   </div>
 </template>
 
 <script setup>
-import HamburgerMenu from "../layouts/HamburgerMenu.vue";
-import Popup from "../components/Popup.vue";
-import { computed, watch, onMounted } from "vue";
+import HamburgerMenu from "./HamburgerMenu.vue";
+import { computed, watch } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();

@@ -1,7 +1,7 @@
 <template>
   <div
     @click="hidePopup"
-    :class="showPopup ? 'opacity-100 z-50' : 'opacity-0 -z-50'" class="transition-opacity duration-300 fixed top-16 right-8 p-4 w-56 text-sm bg-sky-200 bg-opacity-90 rounded-lg"
+    :class="showPopup ? 'opacity-100 z-20' : 'opacity-0 -z-50'" class="transition-opacity duration-300 fixed top-16 left-4 sm:left-12 p-4 text-xs sm:text-sm bg-sky-200 bg-opacity-90 rounded-lg"
   >
     {{ popupMessage }}
   </div>

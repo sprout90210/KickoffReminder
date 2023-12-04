@@ -6,7 +6,7 @@
   font-size: 0.625rem; /* 10px */
 }
 .custom-container {
-  @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700;
+  @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700 flex-grow;
 }
 .custom-form {
   @apply flex flex-col items-center px-6 w-full sm:w-96;

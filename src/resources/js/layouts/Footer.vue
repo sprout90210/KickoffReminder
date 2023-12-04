@@ -1,5 +1,5 @@
 <template>
-  <footer class="w-full flex flex-col items-center justify-center bg-gray-100 text-xs">
+  <footer class="w-full flex flex-col items-center p-5 bg-gray-100 text-xs">
     <div class="pt-3 flex flex-col sm:flex-row text-gray-500">
       <router-link
         to="/terms"
@@ -24,8 +24,3 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: "Footer",
-};
-</script>
