@@ -1,10 +1,10 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-final class ResetPasswordRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * @return bool
