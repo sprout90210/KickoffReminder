@@ -9,8 +9,7 @@
 
 
 <script setup>
-import Header from './layouts/Header.vue';
+import Header from "./layouts/Header.vue";
 import Popup from "./layouts/Popup.vue";
-import Footer from './layouts/Footer.vue';
-
+import Footer from "./layouts/Footer.vue";
 </script>
