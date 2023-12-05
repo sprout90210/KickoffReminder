@@ -13,7 +13,7 @@ class UpdatePasswordRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() :bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ class UpdatePasswordRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules() :array
     {
         return [
             'current_password' => [
@@ -34,7 +34,7 @@ class UpdatePasswordRequest extends FormRequest
                     }
                 },
             ],
-            'new_password' => 'required|string|min:6|confirmed',
+            'new_password' => ['required','string','min:6','confirmed'],
         ];
     }
 }

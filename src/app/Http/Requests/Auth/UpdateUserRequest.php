@@ -21,11 +21,17 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules() :array
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$this->user()->id,
+            'name' => ['required', 'string'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email,' . $this->user()->id,
+            ],
         ];
     }
 }
