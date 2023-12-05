@@ -5,7 +5,8 @@
     >
       <router-link to="/" class="ml-5 p-1 inline-block text-md font-semibold">Kickoff Reminder</router-link>
       <button @click="toggleMenu" class="z-50 w-8 h-9 bg-gray-800 fixed top-2.5 sm:top-3.5 right-3 sm:right-6 rounded border border-gray-600 hover:border-gray-500">
-        <i class="fas duration-300" :class="isMenuOpen ? 'fa-times -rotate-90' : 'fa-bars'"></i>
+        <CloseIcon v-show="isMenuOpen" class="m-auto" />
+        <MenuIcon v-show="!isMenuOpen" class="m-auto" />
       </button>
     </header>
     <div
@@ -18,6 +19,8 @@
 </template>
 
 <script setup>
+import MenuIcon from "../icons/MenuIcon.vue";
+import CloseIcon from "../icons/CloseIcon.vue";
 import HamburgerMenu from "./HamburgerMenu.vue";
 import { computed, watch } from "vue";
 import { useStore } from "vuex";

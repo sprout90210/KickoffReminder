@@ -20,8 +20,8 @@
         <div
           class="transform transition-transform h-full w-full flex justify-center items-center"
         >
-          <div class="duration-300" :class="isOpen ? 'rotate-90' : '-rotate-90'">
-            &Lt;
+          <div class="duration-300" :class="isOpen ? 'rotate-180' : 'rotate-0'">
+            <ChevronDownIcon />
           </div>
         </div>
       </td>
@@ -92,6 +92,7 @@
 </template>
 
 <script setup>
+import ChevronDownIcon from "../icons/ChevronDownIcon.vue";
 import Loading from "./Loading.vue";
 import Game from "./Game.vue";
 import { ref, computed } from "vue";
