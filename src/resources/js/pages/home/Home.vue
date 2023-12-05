@@ -8,7 +8,7 @@
           class="flex-grow sm:flex-basis-0 sm:flex-1 h-32 sm:h-44 py-4 sm:py-5 bg-orange-200 hover:bg-orange-300 duration-300 flex flex-col items-center"
         >
           <p class="font-bold">ラ・リーガ</p>
-          <img src="images/PD.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/PD.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
 
         <router-link
@@ -16,7 +16,7 @@
           class="flex-grow sm:flex-basis-0 sm:flex-1 h-32 sm:h-44 py-4 sm:py-5 bg-purple-200 hover:bg-purple-300 duration-300 flex flex-col items-center"
         >
           <p class="font-bold">プレミアリーグ</p>
-          <img src="images/PL.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/PL.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
 
         <router-link
@@ -24,21 +24,21 @@
           class="flex-grow sm:flex-basis-0 sm:flex-1 h-32 sm:h-44 py-4 sm:py-5 bg-sky-200 hover:bg-sky-300 duration-300 flex flex-col items-center"
         >
           <p class="font-bold">セリエ A</p>
-          <img src="images/SA.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/SA.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
 
         <router-link
           to="/competitions/2002"
           class="flex-grow sm:flex-basis-0 sm:flex-1 h-32 sm:h-44 py-4 sm:py-5 bg-red-200 hover:bg-red-300 duration-300 flex flex-col items-center"
           ><p class="font-bold">ブンデスリーガ</p>
-          <img src="images/BL1.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/BL1.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
 
         <router-link
           to="/competitions/2015"
           class="flex-grow sm:flex-basis-0 sm:flex-1 h-32 sm:h-44 py-4 sm:py-5 bg-blue-200 hover:bg-blue-300 duration-300 flex flex-col items-center"
           ><p class="font-bold">リーグ・アン</p>
-          <img src="images/FL1.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/FL1.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
 
         <router-link
@@ -47,7 +47,7 @@
           >
           <p class="font-bold sm:hidden">UEFA CL</p>
           <p class="font-bold hidden sm:block">チャンピオンズリーグ</p>
-          <img src="images/CL.png" alt="" class="w-16 sm:w-24 m-3" />
+          <img src="images/CL.png" alt="emblem" class="w-16 sm:w-24 m-3" />
         </router-link>
       </div>
     </div>
