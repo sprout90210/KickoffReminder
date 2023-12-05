@@ -20,7 +20,7 @@
         お問合せ
       </router-link>
     </div>
-    <strong class="p-6 text-gray-700">&copy; Football Reminder</strong>
+    <strong class="p-6 text-gray-700">&copy; Kickoff Reminder</strong>
   </footer>
 </template>
 

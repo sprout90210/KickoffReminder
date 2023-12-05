@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LineLoginController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\ContactController;
 
 
 Route::prefix('teams/{teamId}')->group(function () {
@@ -31,6 +32,8 @@ Route::prefix('competitions/{competitionId}')->group(function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('contact', [ContactController::class, 'send']);
 
 Route::post('send-line', [LineLoginController::class, 'sendLine']);
 
