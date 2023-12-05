@@ -23,7 +23,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_DATABASE=footballreminder
+      - DB_DATABASE=kickoffreminder
       - DB_USERNAME=test
       - DB_PASSWORD=test123
     env_file:
@@ -38,7 +38,7 @@ services:
       - 3306:3306
     restart: always
     environment:
-      MYSQL_DATABASE: footballreminder
+      MYSQL_DATABASE: kickoffreminder
       MYSQL_USER: test
       MYSQL_PASSWORD: test123
       MYSQL_ROOT_PASSWORD: root
