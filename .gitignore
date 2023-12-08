@@ -4,3 +4,5 @@
 .vscode/
 src/public/images/
 src/database/seeders/GameSeeder.php
+src/.DS_Store
+.DS_Store
