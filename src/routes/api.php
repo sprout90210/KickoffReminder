@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LineLoginController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FavoriteController;
 
 
 Route::prefix('teams/{teamId}')->group(function () {
@@ -36,6 +37,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('contact', [ContactController::class, 'send']);
 
 Route::post('send-line', [LineLoginController::class, 'sendLine']);
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('favorites', [FavoriteController::class, 'index']);
+    Route::post('favorites', [FavoriteController::class, 'store']);
+    Route::delete('favorites/{team_id}', [FavoriteController::class, 'destroy']);
+
+
+});
 
 
 require __DIR__.'/auth.php';

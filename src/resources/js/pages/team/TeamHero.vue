@@ -11,7 +11,8 @@
         />
       </div>
       <div class="flex flex-col items-center sm:mx-10">
-        <h1 class="my-2 sm:my-6 sm:text-xl font-bold">{{ team.name }}</h1>
+        <h1 class="my-2 sm:my-6 text-sm sm:text-xl font-semibold">{{ team.name }}</h1>
+        <FavoriteButton :teamId="teamId" />
         <div class="m-2 flex text-xs items-center" v-if="team.venue">
           <StadiumIcon />
           <span class="ml-1">{{ team.venue }}</span>
@@ -61,7 +62,7 @@
     <div v-else class="pt-20 pb-16 sm:py-9">
       <Loading />
     </div>
-    <div class="flex absolute bottom-0 z-2 left-0 pl-3 sm:pl-12">
+    <div class="flex absolute bottom-0 left-0 pl-3 sm:pl-12">
       <TabButton
         :activeTab="activeTab"
         tabName="standings"
@@ -88,15 +89,19 @@ import StadiumIcon from "../../icons/StadiumIcon.vue";
 import YoutubeIcon from "../../icons/YoutubeIcon.vue";
 import TwitterIcon from "../../icons/TwitterIcon.vue";
 import InstagramIcon from "../../icons/InstagramIcon.vue";
+import FavoriteButton from "./FavoriteButton.vue";
 import TabButton from "../../components/TabButton.vue";
 import Loading from "../../components/Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
+const store = useStore();
 const team = ref();
 const isLoading = ref(true);
 const teamId = computed(() => route.params.teamId);
+const isFavorite = ref(false);
 
 const props = defineProps({
   activeTab: {
@@ -114,7 +119,7 @@ const getTeamDetail = () => {
       isLoading.value = false;
     })
     .catch((e) => {
-      console.log(e);
+      store.dispatch("triggerPopup", { message: "エラーが発生しました。" });
     });
 };
 
@@ -124,7 +129,7 @@ const tabChange = (tabName) => {
 };
 
 const generateImgUrlDev = (ImgName) => {
-  const ImgUrl = "/images/" + ImgName;
+  const ImgUrl = "/images/crest/" + ImgName;
   return ImgUrl;
 };
 
