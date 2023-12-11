@@ -8,6 +8,7 @@ import Inquiry from "./pages/Inquiry.vue";
 import TeamDetail from "./pages/team/TeamDetail.vue";
 import CompetitionDetail from "./pages/competition/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
+import Reminders from "./pages/reminders/Reminders.vue";
 import Favorites from "./pages/favorites/Favorites.vue";
 import MyPage from "./pages/auth/MyPage.vue";
 import Registration from "./pages/auth/registration.vue";
@@ -52,6 +53,11 @@ const router = createRouter({
 			path: "/mypage",
 			name: "MyPage",
 			component: MyPage,
+		},
+		{
+			path: "/reminders",
+			name: "Reminders",
+			component: Reminders,
 		},
 		{
 			path: "/favorites",
