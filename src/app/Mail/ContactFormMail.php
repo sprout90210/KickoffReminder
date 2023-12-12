@@ -3,28 +3,32 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ContactFormMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $formData;
+    protected $formData;
+    protected $name;
+    protected $fromEmail;
+    protected $toEmail;
 
     public function __construct($formData)
     {
         $this->formData = $formData;
+        $this->name = config('mail.from.name');
+        $this->fromEmail = config('mail.from.address');
+        $this->toEmail = config('mail.to.developer_address');
     }
 
     public function build()
     {
-        return $this->from($this->formData['email'])
+        return $this->to($this->toEmail)
+            ->from($this->fromEmail, $this->name) 
             ->subject('お問い合わせがありました')
-            ->view('emails.inquiry')
+            ->view('emails.contact')
             ->with(['formData' => $this->formData]);
     }
 
