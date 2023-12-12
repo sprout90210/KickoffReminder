@@ -30,7 +30,7 @@
 
 <script setup>
 import CompetitionHero from "./CompetitionHero.vue";
-import Standings from "../../components/Standings.vue";
+import Standings from "../../components/standings/Standings.vue";
 import Results from "../../components/Results.vue";
 import Schedules from "../../components/Schedules.vue";
 import Loading from "../../components/Loading.vue";

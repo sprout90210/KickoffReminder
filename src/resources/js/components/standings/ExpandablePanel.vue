@@ -79,11 +79,11 @@
     </tr>
     <tr :class="isOpen ? 'table-row' : 'hidden'" class="border-b-2 border-gray-400">
       <td colspan="11">
-        <div v-if="isLoading" class="pt-2">
+        <div v-if="isLoading">
           <Loading />
         </div>
         <div v-else>
-          <p class="text-xxs text-right text-gray-400 pr-3 mt-2 border-b">※日本時間</p>
+          <p class="text-xxs text-right text-gray-400 pr-3 mt-4 border-b">※日本時間</p>
           <Game :game="nextGame" />
         </div>
       </td>
@@ -92,9 +92,9 @@
 </template>
 
 <script setup>
-import ChevronDownIcon from "../icons/ChevronDownIcon.vue";
-import Loading from "./Loading.vue";
-import Game from "./Game.vue";
+import ChevronDownIcon from "../../icons/ChevronDownIcon.vue";
+import Loading from "../Loading.vue";
+import Game from "../game/Game.vue";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 
@@ -128,7 +128,7 @@ const toggle = () => {
 };
 
 const generateCrestUrlDev = (crest) => {
-  const crestUrl = "/images/" + crest;
+  const crestUrl = "/images/crest/" + crest;
   return crestUrl;
 };
 </script>
