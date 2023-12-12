@@ -16,6 +16,8 @@
 <body>
     <h2 class="game-details">試合開始が近づいています!</h2>
     <br>
+    <p>{{ $name }}さん</p>
+    <br>
     <p>
         <span>{{ $formattedDate }}</span>
         <span>
