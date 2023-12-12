@@ -4,13 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use App\Services\LineMessagingService;
 use Socialite;
 
@@ -39,19 +34,4 @@ class LineLoginController extends Controller
             return redirect('/?line_login=failed');
         }
     }
-
-
-    public function sendLine(Request $request)
-    {   
-        $user = $request->user();
-        $lineUserId = $user->line_user_id;
-        $lineService = new LineMessagingService();
-        $lineService->sendMessage($lineUserId, 'メッセージの内容daaaえ');
-        
-        return response()->json(['message' => 'Message sent successfully']);
-    }
-
-
-
-
 }
