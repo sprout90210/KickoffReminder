@@ -14,7 +14,7 @@
         プライバシーポリシー
       </router-link>
       <router-link
-        to="/inquiry"
+        to="/contact"
         class="m-2 sm:m-4 text-center hover:underline hover:text-gray-800"
       >
         お問合せ

@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import TableHeader from "../layouts/TableHeader.vue";
+import TableHeader from "../../layouts/TableHeader.vue";
 import ExpandablePanel from "./ExpandablePanel.vue";
 
 const props = defineProps({
