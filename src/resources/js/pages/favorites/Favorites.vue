@@ -2,7 +2,7 @@
   <div class="flex flex-col flex-grow items-center p-2 sm:px-5">
     <h1 class="my-3 sm:my-10 p-2 border-b-2 border-gray-400 w-full text-gray-600 font-semibold">お気に入り</h1>
     <Loading v-if="isLoading" />
-    <div v-if="favorites && favorites.length !== 0" class="flex flex-wrap justify-center max-w-4xl" >
+    <div v-else-if="favorites && favorites.length !== 0" class="flex flex-wrap justify-center max-w-4xl" >
       <Team v-for="favorite in favorites" :key="favorite.team_id" :favorite="favorite" @deleteFavorite="deleteFavorite" />
     </div>
     <div v-else class="text-gray-400 my-12 text-xs sm:text-lg">
@@ -24,7 +24,6 @@ const favorites = ref([]);
 
 const deleteFavorite = (teamId) => {
   favorites.value = favorites.value.filter(favorite => favorite.team_id !== teamId);
-  console.log(favorites.value)
 };
 
 const getFavorites = () => {
