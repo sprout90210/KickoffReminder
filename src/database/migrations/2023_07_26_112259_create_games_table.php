@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('away_team_id')->nullable();
             $table->unsignedInteger('home_team_score')->nullable();
             $table->unsignedInteger('away_team_score')->nullable();
+            $table->unsignedInteger('matchday')->nullable();
             $table->string('status');
             $table->string('stage')->nullable();
             $table->string('group')->nullable();
