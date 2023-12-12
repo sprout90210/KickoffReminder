@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorite;
-use Symfony\Component\HttpFoundation\Response;
 
 class FavoriteController extends Controller
 {

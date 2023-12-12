@@ -6,13 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\StoreUserRequest;
 use App\Http\Requests\Auth\UpdateUserRequest;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 
 class UserController extends Controller
@@ -31,7 +27,7 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(UpdateUserRequest $request)
     {
         try {
             $user = $request->user();
@@ -57,7 +53,7 @@ class UserController extends Controller
 
             if (!$user->isLineUser()) {
                 if (!Hash::check($request->password, $user->password)) {
-                    return response()->json(['message' => 'パスワードが正しくありません。'], 403);
+                    return response()->json(['error' => 'パスワードが正しくありません。'], 403);
                 }
             }
 

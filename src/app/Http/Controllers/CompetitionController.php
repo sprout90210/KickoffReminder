@@ -14,7 +14,7 @@ class CompetitionController extends Controller
         $competition = Competition::find($competitionId);
 
         if (!$competition) {
-            return response()->json(['message' => 'competition not found'], 404);
+            return response()->json(['error' => 'competitionが取得出来ませんでした。'], 404);
         }
 
         return  response()->json($competition, 200);
@@ -26,7 +26,7 @@ class CompetitionController extends Controller
         $standings = Competition::getCurrentStandings($competitionId);
 
         if (!$standings) {
-            return response()->json(['message' => 'Current standings not found'], 404);
+            return response()->json(['error' => 'standingsが取得出来ませんでした。'], 404);
         }
 
         return  response()->json($standings, 200);
@@ -38,7 +38,7 @@ class CompetitionController extends Controller
         $results = Competition::getResults($competitionId);
 
         if (!$results) {
-            return response()->json(['message' => 'Competition Results not found'], 404);
+            return response()->json(['error' => 'resultsが取得出来ませんでした。'], 404);
         }
 
         return response()->json($results, 200);
@@ -50,7 +50,7 @@ class CompetitionController extends Controller
         $schedules = Competition::getSchedules($competitionId);
 
         if (!$schedules) {
-            return response()->json(['message' => 'Competition schedules not found'], 404);
+            return response()->json(['error' => 'schedulesが取得出来ませんでした。'], 404);
         }
 
         return response()->json($schedules, 200);

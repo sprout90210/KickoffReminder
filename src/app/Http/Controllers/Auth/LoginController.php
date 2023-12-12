@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
 {
@@ -22,7 +19,7 @@ class LoginController extends Controller
             return response()->json(['message' => 'ログイン成功']);
         }
         
-        return response()->json(['message' => 'ログイン失敗'], 401);
+        return response()->json(['error' => 'ログイン失敗'], 401);
     }
 
 
