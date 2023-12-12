@@ -20,6 +20,7 @@ class Game extends Model
         'status',
         'stage',
         'group',
+        'matchday',
         'utc_date',
         'last_updated',
     ];

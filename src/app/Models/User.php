@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'line_user_id',
+        'reminder_time',
     ];
 
     /**
@@ -47,5 +48,10 @@ class User extends Authenticatable
     public function isLineUser()
     {
         return !is_null($this->line_user_id);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
     }
 }
