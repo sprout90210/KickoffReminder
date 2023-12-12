@@ -29,15 +29,15 @@
       </div>
 
       <div class="flex flex-col w-full h-72">
-        <label for="inquiry">お問い合わせ内容</label>
+        <label for="contact">お問い合わせ内容</label>
         <textarea
-          v-model="inquiry"
-          id="inquiry"
+          v-model="contact"
+          id="contact"
           required
           class="rounded text-xs sm:text-sm h-56"
         >
         </textarea>
-        <p class="text-red-700">{{ errors.inquiry }}</p>
+        <p class="text-red-700">{{ errors.contact }}</p>
       </div>
 
       <button type="submit" :disabled="isSubmitting" class="custom-submit">
@@ -62,7 +62,7 @@ const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "送信
 const schema = object({
   name: string().required("必須項目です"),
   email: string().required("必須項目です").email("メールアドレスの形式ではありません"),
-  inquiry: string().required("必須項目です"),
+  contact: string().required("必須項目です"),
 });
 
 const { errors, handleSubmit } = useForm({
@@ -71,11 +71,10 @@ const { errors, handleSubmit } = useForm({
 
 const { value: name } = useField("name");
 const { value: email } = useField("email");
-const { value: inquiry } = useField("inquiry");
+const { value: contact } = useField("contact");
 
 // エラー処理
 const handleError = (e) => {
-  console.log(e)
   isSubmitting.value = false;
   let message;
   if (e.response.status === 422) {
@@ -94,7 +93,7 @@ const submitForm = handleSubmit(() => {
   const formData = {
     name: name.value,
     email: email.value,
-    inquiry: inquiry.value,
+    contact: contact.value,
   };
   axios.get("/sanctum/csrf-cookie").then((res) => {
     axios

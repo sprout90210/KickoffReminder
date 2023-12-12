@@ -8,6 +8,6 @@
     <p><strong>お名前：</strong> {{ $formData['name'] }}</p>
     <p><strong>メールアドレス：</strong> {{ $formData['email'] }}</p>
     <p><strong>お問い合わせ内容：</strong></p>
-    <p>{{ $formData['inquiry'] }}</p>
+    <p>{{ $formData['contact'] }}</p>
 </body>
 </html>

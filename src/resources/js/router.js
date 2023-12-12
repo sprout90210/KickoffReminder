@@ -4,7 +4,7 @@ import store from "@/store/index";
 import Home from "./pages/home/Home.vue";
 import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/Privacy.vue";
-import Inquiry from "./pages/Inquiry.vue";
+import Contact from "./pages/Contact.vue";
 import TeamDetail from "./pages/team/TeamDetail.vue";
 import CompetitionDetail from "./pages/competition/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
@@ -100,9 +100,9 @@ const router = createRouter({
 			component: Privacy,
 		},
 		{
-			path: "/inquiry",
-			name: "Inquiry",
-			component: Inquiry,
+			path: "/Contact",
+			name: "Contact",
+			component: Contact,
 		},
 		{
 			path: "/:pathMatch(.*)*",
