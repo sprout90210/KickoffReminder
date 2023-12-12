@@ -17,7 +17,7 @@
     <div v-else class="py-1 sm:py-8">
       <Loading />
     </div>
-    <div class="flex absolute bottom-0 z-2 left-0 pl-3 sm:pl-12">
+    <div class="flex absolute bottom-0 left-0 pl-3 sm:pl-12">
       <TabButton
         v-for="tab in tabs"
         :key="tab.tabName"
@@ -78,7 +78,7 @@ const tabChange = (tabName) => {
 };
 
 const generateImgUrlDev = (ImgName) => {
-  const ImgUrl = "/images/" + ImgName;
+  const ImgUrl = "/images/emblem/" + ImgName;
   return ImgUrl;
 };
 

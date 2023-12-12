@@ -1,10 +1,15 @@
 <template>
   <div>
     <header
-      class="top-0 left-0 h-14 sm:h-16 z-30 text-white flex items-center bg-gray-800"
+      class="top-0 left-0 z-20 h-14 sm:h-16 text-white flex items-center bg-gray-800"
     >
-      <router-link to="/" class="ml-5 p-1 inline-block text-md font-semibold">Kickoff Reminder</router-link>
-      <button @click="toggleMenu" class="z-50 w-8 h-9 bg-gray-800 fixed top-2.5 sm:top-3.5 right-3 sm:right-6 rounded border border-gray-600 hover:border-gray-500">
+      <router-link to="/" class="ml-5 p-1 inline-block text-md font-semibold">
+        Kickoff Reminder
+      </router-link>
+      <button
+        @click="toggleMenu"
+        class="z-50 w-8 h-9 bg-gray-800 fixed top-2.5 sm:top-3.5 right-3 sm:right-6 rounded border border-gray-600 hover:border-gray-500"
+      >
         <CloseIcon v-show="isMenuOpen" class="m-auto" />
         <MenuIcon v-show="!isMenuOpen" class="m-auto" />
       </button>

@@ -3,11 +3,11 @@
     class="relative pt-5 pb-12 sm:pb-16 text-gray-700 bg-gradient-to-tr from-gray-300 via-gray-50 to-white"
   >
     <div v-if="!isLoading" class="flex flex-col sm:flex-row justify-center items-center">
-      <div class="p-2 sm:pl-16">
+      <div class="w-24 h-24 sm:h-32 sm:w-32 flex items-center">
         <img
-          :src="generateImgUrlDev(team.crest)"
           alt="crest"
-          class="w-24 h-24 sm:h-32 sm:w-32"
+          :src="generateImgUrlDev(team.crest)"
+          class="w-full h-auto max-h-full object-contain"
         />
       </div>
       <div class="flex flex-col items-center sm:mx-10">
