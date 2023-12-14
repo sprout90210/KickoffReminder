@@ -10,7 +10,6 @@ import CompetitionDetail from "./pages/competition/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
 import Reminders from "./pages/reminders/Reminders.vue";
 import Favorites from "./pages/favorites/Favorites.vue";
-import MyPage from "./pages/auth/MyPage.vue";
 import Registration from "./pages/auth/registration.vue";
 import Login from "./pages/auth/Login.vue";
 import ForgotPassword from "./pages/auth/ForgotPassword.vue";
@@ -48,11 +47,6 @@ const router = createRouter({
 			path: "/login",
 			name: "Login",
 			component: Login,
-		},
-		{
-			path: "/mypage",
-			name: "MyPage",
-			component: MyPage,
 		},
 		{
 			path: "/reminders",
@@ -120,7 +114,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.state.isLoggedIn;
 	const isLineUser = store.state.isLineUser;
-	const authRequiredPages = ["MyPage", "EditUser", "DeleteUser", "EditPassword", "Favorites"];
+	const authRequiredPages = ["EditUser", "DeleteUser", "EditPassword", "Favorites"];
 	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);
