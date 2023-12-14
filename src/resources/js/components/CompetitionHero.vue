@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-import TabButton from "../../components/TabButton.vue";
-import Loading from "../../components/Loading.vue";
+import TabButton from "./TabButton.vue";
+import Loading from "./Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
@@ -59,7 +59,7 @@ const toggle = () => {
   isOpen.value = !isOpen.value;
 };
 
-const getCompetitionDetail = () => {
+const getCompetition = () => {
   isLoading.value = true;
   axios
     .get(`/api/competitions/${competitionId.value}`)
@@ -83,10 +83,10 @@ const generateImgUrlDev = (ImgName) => {
 };
 
 onMounted(() => {
-  getCompetitionDetail();
+  getCompetition();
 });
 
 watch(route, () => {
-  getCompetitionDetail();
+  getCompetition();
 });
 </script>

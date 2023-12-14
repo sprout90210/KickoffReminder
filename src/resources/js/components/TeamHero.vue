@@ -85,13 +85,13 @@
 </template>
 
 <script setup>
-import StadiumIcon from "../../icons/StadiumIcon.vue";
-import YoutubeIcon from "../../icons/YoutubeIcon.vue";
-import TwitterIcon from "../../icons/TwitterIcon.vue";
-import InstagramIcon from "../../icons/InstagramIcon.vue";
+import StadiumIcon from "./icons/StadiumIcon.vue";
+import YoutubeIcon from "./icons/YoutubeIcon.vue";
+import TwitterIcon from "./icons/TwitterIcon.vue";
+import InstagramIcon from "./icons/InstagramIcon.vue";
 import FavoriteButton from "./FavoriteButton.vue";
-import TabButton from "../../components/TabButton.vue";
-import Loading from "../../components/Loading.vue";
+import TabButton from "./TabButton.vue";
+import Loading from "./Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
@@ -110,7 +110,7 @@ const props = defineProps({
   },
 });
 
-const getTeamDetail = () => {
+const getTeam = () => {
   isLoading.value = true;
   axios
     .get(`/api/teams/${teamId.value}`)
@@ -134,10 +134,10 @@ const generateImgUrlDev = (ImgName) => {
 };
 
 onMounted(() => {
-  getTeamDetail();
+  getTeam();
 });
 
 watch(route, () => {
-  getTeamDetail();
+  getTeam();
 });
 </script>

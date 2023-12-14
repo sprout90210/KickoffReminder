@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-img {
+  @apply bg-cover bg-center h-52 sm:h-72;
+  background-image: url("/images/home.jpeg");
+}
+
 .text-xxs {
   font-size: 0.625rem; /* 10px */
 }
@@ -26,9 +31,15 @@
 .section-list {
   @apply list-decimal ml-5 my-1;
 }
-.line-login-btn {
-  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200;
-}
 .custom-submit {
   @apply my-5 py-3 w-full block rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40;
+}
+.line-login-link {
+  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200;
+}
+.login-link {
+  @apply py-2.5 w-24 mr-5 text-center block rounded border border-gray-300 hover:border-white text-gray-300 hover:text-white duration-200;
+}
+.registration-link {
+  @apply py-2.5 w-24 text-center block rounded bg-sky-500 hover:bg-sky-600 duration-200;
 }
