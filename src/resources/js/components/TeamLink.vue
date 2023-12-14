@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow-hidden flex-1 min-w-[100px] sm:min-w-[150px] h-32 sm:h-40">
+  <div class="overflow-hidden flex-1 min-w-[100px] sm:min-w-[140px] h-24 sm:h-40">
     <router-link
-      :to="detailUrl"
+      :to="teamUrl"
       class="h-full w-full hover:scale-110 transition-transform duration-300 flex flex-col justify-center items-center"
     >
       <p class="font-semibold text-xxs sm:text-sm">{{ team.name }}</p>
@@ -22,5 +22,5 @@ const props = defineProps({
   },
 });
 const crestUrlDev = computed(() => `images/crest/${props.team.id}.png`);
-const detailUrl = computed(() => `/teams/${props.team.id}`);
+const teamUrl = computed(() => `/teams/${props.team.id}`);
 </script>

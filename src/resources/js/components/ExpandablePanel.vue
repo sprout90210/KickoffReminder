@@ -31,7 +31,7 @@
       </td>
       <td class="text-left">
         <router-link
-          :to="{ name: 'TeamDetail', params: { teamId: standing.team_id } }"
+          :to="{ name: 'Team', params: { teamId: standing.team_id } }"
           class="flex items-center"
           :class="
             teamId == standing.team_id
@@ -92,9 +92,9 @@
 </template>
 
 <script setup>
-import ChevronDownIcon from "../../icons/ChevronDownIcon.vue";
-import Loading from "../Loading.vue";
-import Game from "../game/Game.vue";
+import ChevronDownIcon from "./icons/ChevronDownIcon.vue";
+import Loading from "./Loading.vue";
+import Game from "./Game.vue";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 

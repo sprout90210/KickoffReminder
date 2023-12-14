@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import Game from "./game/Game.vue";
+import Game from "./Game.vue";
 
 const props = defineProps({
   results: {

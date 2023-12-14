@@ -60,7 +60,7 @@
 
     <div class="my-8 py-4 w-full border-t flex flex-col items-center">
       <p class="my-4">外部サービスでログイン</p>
-      <button @click="loginLine" class="line-login-btn">LINEログイン</button>
+      <button @click="loginLine" class="line-login-link">LINEログイン</button>
     </div>
   </div>
 </template>

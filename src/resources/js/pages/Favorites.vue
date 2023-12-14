@@ -3,7 +3,7 @@
     <h1 class="my-3 sm:my-10 p-2 border-b-2 border-gray-400 w-full text-gray-600 font-semibold">お気に入り</h1>
     <Loading v-if="isLoading" />
     <div v-else-if="favorites && favorites.length !== 0" class="flex flex-wrap justify-center max-w-4xl" >
-      <Team v-for="favorite in favorites" :key="favorite.team_id" :favorite="favorite" @deleteFavorite="deleteFavorite" />
+      <FavoriteTeam v-for="favorite in favorites" :key="favorite.team_id" :favorite="favorite" @deleteFavorite="deleteFavorite" />
     </div>
     <div v-else class="text-gray-400 my-12 text-xs sm:text-lg">
       お気に入りチームを見つけましょう！
@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import Loading from "../../components/Loading.vue";
-import Team from "./Team.vue";
+import Loading from "../components/Loading.vue";
+import FavoriteTeam from "../components/FavoriteTeam.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 

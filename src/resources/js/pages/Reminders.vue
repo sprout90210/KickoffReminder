@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import Loading from "../../components/Loading.vue";
-import Game from "../../components/game/Game.vue";
+import Loading from "../components/Loading.vue";
+import Game from "../components/Game.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 

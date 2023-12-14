@@ -8,7 +8,7 @@
       <span v-if="game.status === 'FINISHED' || game.status === 'IN_PLAY'">
         {{ kickoff.date }}
       </span>
-      <span v-if="game.status === 'TIMED'">試合予定</span>
+      <span v-else-if="game.status === 'TIMED'">試合予定</span>
     </p>
 
     <div class="h-20 flex items-center justify-center mb-1 sm:text-sm text-gray-600">

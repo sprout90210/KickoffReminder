@@ -1,16 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router"
 import store from "@/store/index";
 
-import Home from "./pages/home/Home.vue";
+import Home from "./pages/Home.vue";
+import Team from "./pages/Team.vue";
+import Competition from "./pages/Competition.vue";
+import Reminders from "./pages/Reminders.vue";
+import Favorites from "./pages/Favorites.vue";
 import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/Privacy.vue";
 import Contact from "./pages/Contact.vue";
-import TeamDetail from "./pages/team/TeamDetail.vue";
-import CompetitionDetail from "./pages/competition/CompetitionDetail.vue";
 import NotFound from "./pages/NotFound.vue";
-import Reminders from "./pages/reminders/Reminders.vue";
-import Favorites from "./pages/favorites/Favorites.vue";
-import MyPage from "./pages/auth/MyPage.vue";
 import Registration from "./pages/auth/registration.vue";
 import Login from "./pages/auth/Login.vue";
 import ForgotPassword from "./pages/auth/ForgotPassword.vue";
@@ -18,7 +17,6 @@ import ResetPassword from "./pages/auth/ResetPassword.vue";
 import EditUser from "./pages/auth/EditUser.vue";
 import EditPassword from "./pages/auth/EditPassword.vue";
 import DeleteUser from "./pages/auth/DeleteUser.vue";
-
 
 
 const router = createRouter({
@@ -31,13 +29,13 @@ const router = createRouter({
 		},
 		{
 			path: "/competitions/:competitionId",
-			name: "CompetitonDetail",
-			component: CompetitionDetail,
+			name: "Competiton",
+			component: Competition,
 		},
 		{
 			path: "/teams/:teamId",
-			name: "TeamDetail",
-			component: TeamDetail,
+			name: "Team",
+			component: Team,
 		},
 		{
 			path: "/registration",
@@ -48,11 +46,6 @@ const router = createRouter({
 			path: "/login",
 			name: "Login",
 			component: Login,
-		},
-		{
-			path: "/mypage",
-			name: "MyPage",
-			component: MyPage,
 		},
 		{
 			path: "/reminders",
@@ -120,7 +113,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.state.isLoggedIn;
 	const isLineUser = store.state.isLineUser;
-	const authRequiredPages = ["MyPage", "EditUser", "DeleteUser", "EditPassword", "Favorites"];
+	const authRequiredPages = ["EditUser", "DeleteUser", "EditPassword", "Favorites"];
 	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);

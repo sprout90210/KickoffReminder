@@ -2,7 +2,7 @@
   <div class="w-24 sm:w-32 flex items-center justify-center flex-col">
     <router-link
       v-if="team"
-      :to="{ name: 'TeamDetail', params: { teamId: team.id } }"
+      :to="{ name: 'Team', params: { teamId: team.id } }"
       class="flex flex-col items-center hover:underline"
     >
       <div class="w-7 h-7 sm:w-9 sm:h-9 mb-2 flex items-center">

@@ -4,31 +4,40 @@
     :class="isMenuOpen ? 'right-0' : 'right-[-100%]'"
   >
     <div class="mb-5 flex flex-col items-center" v-if="!isLoggedIn">
-      <div class="flex mb-4">
+      <div class="flex mb-10">
         <router-link
           to="/login"
           @click="toggleMenu"
-          class="py-3 w-24 text-center block rounded border border-gray-300 hover:border-white text-gray-300 hover:text-white duration-200"
+          class="login-link"
           >ログイン</router-link
         >
         <router-link
           to="/registration"
           @click="toggleMenu"
-          class="py-3 w-24 ml-4 text-center block rounded bg-sky-500 hover:bg-sky-600 duration-200"
+          class="registration-link"
         >
           新規登録
         </router-link>
       </div>
-      <button @click="loginLine" class="line-login-btn">LINEログイン</button>
+      <button @click="loginLine" class="line-login-link">LINEログイン</button>
     </div>
     <ul class="flex flex-col items-center"  v-if="isLoggedIn">
       <li class="my-3 hover:underline">
-        <router-link to="/mypage" @click="toggleMenu">マイページ</router-link>
+        <router-link to="/favorites" @click="toggleMenu">お気に入りチーム</router-link>
+      </li>
+      <li class="my-3 hover:underline">
+        <router-link to="/reminders" @click="toggleMenu">通知リスト</router-link>
+      </li>
+      <li v-if="!isLineUser" class="my-3 hover:underline">
+        <router-link to="/user/edit" @click="toggleMenu">ユーザー情報変更</router-link>
+      </li>
+      <li class="my-3 hover:underline">
+        <router-link to="/user/delete" @click="toggleMenu">退会</router-link>
       </li>
       <li class="my-3">
         <button
           type="button"
-          class="hover:cursor-pointer hover:underline"
+          class="cursor-pointer hover:underline"
           @click="logout"
         >
           ログアウト
@@ -46,6 +55,7 @@ import { useRouter } from "vue-router";
 const store = useStore();
 const router = useRouter();
 const isLoggedIn = computed(() => store.state.isLoggedIn);
+const isLineUser = computed(() => store.state.isLineUser);
 const isMenuOpen = computed(() => store.state.isMenuOpen);
 
 const toggleMenu = () => {
