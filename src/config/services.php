@@ -51,4 +51,7 @@ return [
         'redirect' => env('TWITTER_CLIENT_CALLBACK')
     ],
 
+    'api' => [
+        'X_AUTH_TOKEN' => env('X_AUTH_TOKEN'),
+    ],
 ];

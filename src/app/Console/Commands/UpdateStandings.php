@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use GuzzleHttp\Client;
 use App\Models\Standing;
+use GuzzleHttp\Client;
+use Illuminate\Console\Command;
 
 class UpdateStandings extends Command
 {
@@ -29,7 +29,7 @@ class UpdateStandings extends Command
      */
     public function handle()
     {
-        $token = config('api.X_AUTH_TOKEN');
+        $token = config('services.api.X_AUTH_TOKEN');
         $client = new Client([
             'base_uri' => 'http://api.football-data.org/v4/',
             'headers' => [
@@ -61,10 +61,14 @@ class UpdateStandings extends Command
                         'points' => $standing->points,
                     ];
                 }
+
                 Standing::upsert($bulkData, ['season_id', 'team_id'], ['competition_id', 'position', 'played_games', 'won', 'draw', 'lost', 'goals_for', 'goals_against', 'goal_difference', 'points']);
 
+                return 0;
+
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-                $this->error('リクエストに失敗しました: ' . $e->getMessage());
+                $this->error('リクエストに失敗しました: '.$e->getMessage());
+                return 1;
             }
         }
     }

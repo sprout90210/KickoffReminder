@@ -19,7 +19,7 @@ class SendReminder extends Command
     public function handle()
     {
         $lineService = new LineMessagingService();
-        $reminderTimes = [0, 15, 60, 180];
+        $reminderTimes = [1, 15, 60, 180];
 
         foreach ($reminderTimes as $minute) {
             $startOfMinute = Carbon::now('UTC')->addMinutes($minute)->startOfMinute();
