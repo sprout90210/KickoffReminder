@@ -7,9 +7,12 @@ RUN apt-get update && apt-get install -y \
   vim \
   zip \
   unzip \
+  git \
   && docker-php-ext-install pdo pdo_mysql \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* 
+
+RUN pecl install redis-5.3.4 && docker-php-ext-enable redis
 
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
   && apt-get install -y nodejs \

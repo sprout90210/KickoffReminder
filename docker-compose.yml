@@ -30,6 +30,9 @@ services:
       - ./src/.env
     ports:
       - 5173:5173
+    depends_on:
+      - db
+      - redis
 
   db:
     container_name: db
@@ -59,3 +62,12 @@ services:
       - ./docker/phpmyadmin/sessions:/sessions
     depends_on:
       - db
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - "./docker/redis/data:/data"
+    command: redis-server
