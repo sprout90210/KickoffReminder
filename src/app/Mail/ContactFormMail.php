@@ -11,8 +11,11 @@ class ContactFormMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $formData;
+
     protected $name;
+
     protected $fromEmail;
+
     protected $toEmail;
 
     public function __construct($formData)
@@ -26,10 +29,9 @@ class ContactFormMail extends Mailable
     public function build()
     {
         return $this->to($this->toEmail)
-            ->from($this->fromEmail, $this->name) 
+            ->from($this->fromEmail, $this->name)
             ->subject('お問い合わせがありました')
             ->view('emails.contact')
             ->with(['formData' => $this->formData]);
     }
-
 }

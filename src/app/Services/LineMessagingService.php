@@ -1,37 +1,40 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
 
 class LineMessagingService
 {
-  protected $client;
-  protected $accessToken;
-  protected $apiEndpoint = 'https://api.line.me/v2/bot/message/push';
+    protected $client;
 
-  public function __construct()
-  {
-    $this->client = new Client();
-    $this->accessToken = env('LINE_MESSAGE_CHANNEL_TOKEN');
-  }
+    protected $accessToken;
 
-  public function sendMessage($lineUserId, $message)
-  {
-    $data = [
-        'to' => $lineUserId,
-        'messages' => [
-            ['type' => 'text', 'text' => $message]
-        ]
-    ];
+    protected $apiEndpoint = 'https://api.line.me/v2/bot/message/push';
 
-    $response = $this->client->post($this->apiEndpoint, [
-        'headers' => [
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Content-Type' => 'application/json',
-        ],
-        'body' => json_encode($data),
-    ]);
+    public function __construct()
+    {
+        $this->client = new Client();
+        $this->accessToken = env('LINE_MESSAGE_CHANNEL_TOKEN');
+    }
 
-    return $response;
-  }
+    public function sendMessage($lineUserId, $message)
+    {
+        $data = [
+            'to' => $lineUserId,
+            'messages' => [
+                ['type' => 'text', 'text' => $message],
+            ],
+        ];
+
+        $response = $this->client->post($this->apiEndpoint, [
+            'headers' => [
+                'Authorization' => 'Bearer '.$this->accessToken,
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode($data),
+        ]);
+
+        return $response;
+    }
 }

@@ -40,15 +40,15 @@ return [
         'client_id' => env('LINE_CLIENT_ID'),
         'client_secret' => env('LINE_CLIENT_SECRET'),
         'redirect' => env('LINE_REDIRECT_URI'),
-        'channel_id'=>env('LINE_MESSAGE_CHANNEL_ID'),
-        'channel_secret'=>env('LINE_MESSAGE_CHANNEL_SECRET'),
-        'channel_token'=>env('LINE_MESSAGE_CHANNEL_TOKEN')
+        'channel_id' => env('LINE_MESSAGE_CHANNEL_ID'),
+        'channel_secret' => env('LINE_MESSAGE_CHANNEL_SECRET'),
+        'channel_token' => env('LINE_MESSAGE_CHANNEL_TOKEN'),
     ],
 
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect' => env('TWITTER_CLIENT_CALLBACK')
+        'redirect' => env('TWITTER_CLIENT_CALLBACK'),
     ],
 
     'api' => [

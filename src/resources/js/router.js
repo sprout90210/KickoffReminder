@@ -29,7 +29,7 @@ const router = createRouter({
 		},
 		{
 			path: "/competitions/:competitionId",
-			name: "Competiton",
+			name: "Competition",
 			component: Competition,
 		},
 		{
@@ -113,7 +113,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.state.isLoggedIn;
 	const isLineUser = store.state.isLineUser;
-	const authRequiredPages = ["EditUser", "DeleteUser", "EditPassword", "Favorites"];
+	const authRequiredPages = ["EditUser", "DeleteUser", "EditPassword", "Favorites", "Reminders"];
 	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);

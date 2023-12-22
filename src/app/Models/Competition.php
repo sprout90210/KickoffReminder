@@ -4,10 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use App\Models\Season;
-use App\Models\Standing;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Competition extends Model
 {
@@ -22,24 +19,23 @@ class Competition extends Model
         'embleme',
     ];
 
-    public function seasons()
+    public function seasons(): HasMany
     {
         return $this->hasMany(Season::class);
     }
 
-    public function standings()
+    public function standings(): HasMany
     {
         return $this->hasMany(Standing::class);
     }
 
-    public function games()
+    public function games(): HasMany
     {
         return $this->hasMany(Game::class);
     }
 
-
-    public static function getCurrentStandings($competitionId){
-
+    public static function getCurrentStandings($competitionId)
+    {
         $currentSeasonId = Season::where('competition_id', $competitionId)
             ->latest('start_date')
             ->value('id');
@@ -52,33 +48,27 @@ class Competition extends Model
         return $standings;
     }
 
-
-    public static function getResults($competitionId){
-
+    public static function getResults($competitionId)
+    {
         $results = Game::where('competition_id', $competitionId)
             ->whereIn('status', ['FINISHED', 'IN_PLAY'])
             ->orderBy('utc_date', 'desc')
-            ->with(['homeTeam','awayTeam','competition'])
+            ->with(['homeTeam', 'awayTeam', 'competition'])
             ->limit(50)
             ->get();
 
         return $results;
     }
 
-
-    public static function getSchedules($competitionId){
-
+    public static function getSchedules($competitionId)
+    {
         $schedules = Game::where('competition_id', $competitionId)
-            ->where('status', 'TIMED')
+            ->whereIn('status', ['TIMED', 'SCHEDULED'])
             ->orderBy('utc_date', 'asc')
-            ->with(['homeTeam','awayTeam','competition'])
+            ->with(['homeTeam', 'awayTeam', 'competition'])
             ->limit(50)
             ->get();
 
         return $schedules;
     }
-
-
-
-
 }

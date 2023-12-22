@@ -5,15 +5,17 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Game;
 
 class GameReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     protected $name;
+
     protected $fromEmail;
+
     protected $toEmail;
+
     protected $reminder;
 
     public function __construct($toEmail, $reminder)
@@ -27,15 +29,15 @@ class GameReminderMail extends Mailable
     public function build()
     {
         return $this->to($this->toEmail)
-                    ->from($this->fromEmail, $this->name)
-                    ->subject('試合時刻のお知らせ')
-                    ->view('emails.reminder')
-                    ->with([
-                        'name' => $this->reminder['name'],
-                        'game' => $this->reminder['game'],
-                        'stage' => $this->reminder['stage'],
-                        'remainingTimeMessage' => $this->reminder['remainingTimeMessage'],
-                        'formattedDate' => $this->reminder['formattedDate'],
-                    ]);
+            ->from($this->fromEmail, $this->name)
+            ->subject('試合時刻のお知らせ')
+            ->view('emails.reminder')
+            ->with([
+                'name' => $this->reminder['name'],
+                'game' => $this->reminder['game'],
+                'stage' => $this->reminder['stage'],
+                'remainingTimeMessage' => $this->reminder['remainingTimeMessage'],
+                'formattedDate' => $this->reminder['formattedDate'],
+            ]);
     }
 }

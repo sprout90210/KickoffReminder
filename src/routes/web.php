@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LineLoginController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('line/login', [LineLoginController::class, 'redirectToLine']);
 Route::get('line/login/callback', [LineLoginController::class, 'handleLineCallback']);

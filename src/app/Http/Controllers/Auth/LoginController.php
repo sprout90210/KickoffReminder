@@ -11,17 +11,18 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $request->session()->regenerate();
         $credentials = $request->only('email', 'password');
         $remember = $request->filled('remember');
+        $request->session()->invalidate();
 
-        if(Auth::attempt($credentials, $remember)){
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+
             return response()->json(['message' => 'ログイン成功']);
         }
-        
+
         return response()->json(['error' => 'ログイン失敗'], 401);
     }
-
 
     public function logout(Request $request)
     {
@@ -32,7 +33,6 @@ class LoginController extends Controller
         return response()->json(['message' => 'ログアウト成功']);
     }
 
-    
     public function check(Request $request)
     {
         $user = $request->user();
