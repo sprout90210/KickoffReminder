@@ -1,29 +1,23 @@
 <template>
-  <div class="w-full text-gray-700">
-    <CompetitionHero :activeTab="activeTab" @tabChange="tabChange" />
-    <div>
+  <div class="flex flex-col flex-grow">
+    <CompetitionHero />
+    <div class="w-full flex flex-col items-center">
       <Standings
         v-show="!standingsLoading && activeTab === 'standings'"
         :standings="standings"
       />
-      <Results
-        v-show="!resultsLoading && activeTab === 'results'"
-        :results="results"
-      />
-      <Schedules
+      <Games v-show="!resultsLoading && activeTab === 'results'" :games="results" />
+      <Games
         v-show="!schedulesLoading && activeTab === 'schedules'"
-        :schedules="schedules"
+        :games="schedules"
       />
-      <div
+      <Loading
         v-show="
           (standingsLoading && activeTab === 'standings') ||
           (resultsLoading && activeTab === 'results') ||
           (schedulesLoading && activeTab === 'schedules')
         "
-        class="py-32"
-      >
-        <Loading />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -31,74 +25,40 @@
 <script setup>
 import CompetitionHero from "../components/CompetitionHero.vue";
 import Standings from "../components/Standings.vue";
-import Results from "../components/Results.vue";
-import Schedules from "../components/Schedules.vue";
+import Games from "../components/Games.vue";
 import Loading from "../components/Loading.vue";
-import { ref, computed, watch, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 const route = useRoute();
-const standings = ref();
-const results = ref();
-const schedules = ref();
+const store = useStore();
+const standings = ref([]);
+const results = ref([]);
+const schedules = ref([]);
 const standingsLoading = ref(true);
 const resultsLoading = ref(true);
 const schedulesLoading = ref(true);
-const activeTab = ref("standings");
 const competitionId = computed(() => route.params.competitionId);
+const activeTab = computed(() => store.state.activeTab );
 
-const tabChange = (tabName) => {
-  activeTab.value = tabName;
-};
-
-const getStandings = () => {
-  standingsLoading.value = true;
+const fetchData = (type, loadingRef, dataRef, endpoint) => {
+  loadingRef.value = true;
   axios
-    .get(`/api/competitions/${competitionId.value}/standings`)
+    .get(`/api/competitions/${competitionId.value}/${endpoint}`)
     .then((res) => {
-      standings.value = res.data;
-      standingsLoading.value = false;
+      dataRef.value = res.data;
+      loadingRef.value = false;
     })
     .catch((e) => {
-      console.log(e);
+      loadingRef.value = false;
+      store.dispatch("triggerPopup", { message: "データ取得に失敗しました。", color: "red" });
     });
 };
 
-const getResults = () => {
-  resultsLoading.value = true;
-  axios
-    .get(`/api/competitions/${competitionId.value}/results`)
-    .then((res) => {
-      results.value = res.data;
-      resultsLoading.value = false;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
-const getSchedules = () => {
-  schedulesLoading.value = true;
-  axios
-    .get(`/api/competitions/${competitionId.value}/schedules`)
-    .then((res) => {
-      schedules.value = res.data;
-      schedulesLoading.value = false;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
-onMounted(() => {
-  getStandings();
-  getResults();
-  getSchedules();
-});
-
-watch(route, () => {
-  getStandings();
-  getResults();
-  getSchedules();
-});
+watch(() => route.params.competitionId, () => {
+  fetchData('standings', standingsLoading, standings, 'standings');
+  fetchData('results', resultsLoading, results, 'results');
+  fetchData('schedules', schedulesLoading, schedules, 'schedules');
+}, { immediate: true });
 </script>

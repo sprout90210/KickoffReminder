@@ -2,24 +2,25 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Console\Command;
 use App\Mail\GameReminderMail;
-use App\Services\LineMessagingService;
-use App\Models\User;
 use App\Models\Game;
+use App\Models\User;
+use App\Services\LineMessagingService;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SendReminder extends Command
 {
     protected $signature = 'command:sendReminder';
+
     protected $description = 'Send reminder for users favorite team games';
 
     public function handle()
     {
         $lineService = new LineMessagingService();
-        $reminderTimes = [0, 15, 60, 180];
+        $reminderTimes = [1, 15, 60, 180];
 
         foreach ($reminderTimes as $minute) {
             $startOfMinute = Carbon::now('UTC')->addMinutes($minute)->startOfMinute();
@@ -47,27 +48,27 @@ class SendReminder extends Command
         }
     }
 
-
     private function getStage($game)
     {
         $stageTranslations = [
-            "LAST_16" => "ベスト16",
-            "QUARTER_FINALS" => "準々決勝",
-            "SEMI_FINALS" => "準決勝",
-            "FINAL" => "決勝",
+            'LAST_16' => 'ベスト16',
+            'QUARTER_FINALS' => '準々決勝',
+            'SEMI_FINALS' => '準決勝',
+            'FINAL' => '決勝',
         ];
 
-        if ($game->competition->competition_type === "LEAGUE") {
-            return "第" . $game->matchday . "節";
-        } else if ($game->competition->competition_type === "CUP") {
+        if ($game->competition->competition_type === 'LEAGUE') {
+            return '第'.$game->matchday.'節';
+        } elseif ($game->competition->competition_type === 'CUP') {
             return $stageTranslations[$game->stage] ?? '';
         }
+
         return '';
     }
 
     private function getRemainingTimeMessage($minute)
     {
-        return $minute === 0 ? "まもなく試合が始まります！" : "残り" . $minute . "分でキックオフ！";
+        return $minute === 0 ? 'まもなく試合が始まります！' : '残り'.$minute.'分でキックオフ！';
     }
 
     private function sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage)
@@ -77,7 +78,7 @@ class SendReminder extends Command
             try {
                 $lineService->sendMessage($user->line_user_id, $message);
             } catch (\Exception $e) {
-                Log::error("LINE message sending failed: " . $e->getMessage());
+                Log::error('LINE message sending failed: '.$e->getMessage());
             }
         } else {
             try {
@@ -89,19 +90,19 @@ class SendReminder extends Command
                     'formattedDate' => $formattedDate,
                 ]));
             } catch (\Exception $e) {
-                Log::error("Mail sending failed: " . $e->getMessage());
+                Log::error('Mail sending failed: '.$e->getMessage());
             }
         }
     }
 
     private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
     {
-        return $user->name . "さん" . "\n" . "\n" .
-            "試合が近づいています！" . "\n" . "\n" .
-            $game->competition->name . $stage . "\n" .
-            $game->homeTeam->name . " vs " . $game->awayTeam->name . "\n" . "\n" .
-            $formattedDate . "\n" . "\n" .
-            $remainingTimeMessage . "\n" . "\n" .
-            "お見逃しなく！";
+        return $user->name.'さん'."\n"."\n".
+            '試合が近づいています！'."\n"."\n".
+            $game->competition->name.$stage."\n".
+            $game->homeTeam->name.' vs '.$game->awayTeam->name."\n"."\n".
+            $formattedDate."\n"."\n".
+            $remainingTimeMessage."\n"."\n".
+            'お見逃しなく！';
     }
 }

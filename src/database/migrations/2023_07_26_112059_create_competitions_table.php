@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('code');
             $table->string('competition_type');
             $table->string('emblem')->nullable();
-            $table->timestamps();
         });
     }
 

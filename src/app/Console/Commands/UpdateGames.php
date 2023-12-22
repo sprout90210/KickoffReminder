@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use GuzzleHttp\Client;
 use App\Models\Game;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Console\Command;
 
 class UpdateGames extends Command
 {
@@ -30,7 +30,7 @@ class UpdateGames extends Command
      */
     public function handle()
     {
-        $token = config('api.X_AUTH_TOKEN');
+        $token = config('services.api.X_AUTH_TOKEN');
         $client = new Client([
             'base_uri' => 'http://api.football-data.org/v4/',
             'headers' => [
@@ -63,8 +63,11 @@ class UpdateGames extends Command
                 }
                 Game::upsert($bulkData, ['id'], ['competition_id', 'season_id', 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score', 'status', 'stage', 'group', 'utc_date', 'last_updated']);
 
+                return 0;
+
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-                $this->error('リクエストに失敗しました: ' . $e->getMessage());
+                $this->error('リクエストに失敗しました: '.$e->getMessage());
+                return 1;
             }
         }
     }

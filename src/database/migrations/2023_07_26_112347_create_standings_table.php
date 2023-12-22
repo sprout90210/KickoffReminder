@@ -9,7 +9,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('standings', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('competition_id');
             $table->foreignId('season_id');
             $table->foreignId('team_id');
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->integer('goal_difference')->default(0);
             $table->integer('points')->default(0);
             $table->timestamps();
+            $table->primary(['season_id', 'team_id']);
         });
     }
 

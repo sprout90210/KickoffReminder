@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-
 class UserController extends Controller
 {
     public function store(StoreUserRequest $request)
@@ -26,7 +25,6 @@ class UserController extends Controller
         return response()->json(['isLoggedIn' => true], 200);
     }
 
-
     public function update(UpdateUserRequest $request)
     {
         try {
@@ -36,8 +34,9 @@ class UserController extends Controller
             }
             $user->update([
                 'name' => $request->name,
-                'email' => $request->email
+                'email' => $request->email,
             ]);
+
             return response()->json(['message' => 'ユーザー情報が更新されました。'], 200);
 
         } catch (\Exception $e) {
@@ -45,26 +44,23 @@ class UserController extends Controller
         }
     }
 
-
     public function destroy(Request $request)
     {
         try {
             $user = $request->user();
 
-            if (!$user->isLineUser()) {
-                if (!Hash::check($request->password, $user->password)) {
+            if (! $user->isLineUser()) {
+                if (! Hash::check($request->password, $user->password)) {
                     return response()->json(['error' => 'パスワードが正しくありません。'], 403);
                 }
             }
 
             $user->delete();
+
             return response()->json(['message' => 'アカウントを削除しました。'], 204);
-    
+
         } catch (\Exception $e) {
             return response()->json(['error' => 'アカウント削除中にエラーが発生しました。'], 500);
         }
     }
-
-
-
 }
