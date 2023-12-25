@@ -22,7 +22,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['isLoggedIn' => true], 200);
+        return response()->json(['isLoggedIn' => true], 201);
     }
 
     public function update(UpdateUserRequest $request)

@@ -8,7 +8,6 @@ class TeamController extends Controller
 {
     public function show($teamId)
     {
-
         $team = Team::find($teamId);
 
         if (! $team) {
@@ -20,7 +19,6 @@ class TeamController extends Controller
 
     public function getStandings($teamId)
     {
-
         $standings = Team::getStandings($teamId);
 
         return response()->json($standings, 200);
@@ -28,7 +26,6 @@ class TeamController extends Controller
 
     public function getResults($teamId)
     {
-
         $results = Team::getResults($teamId);
 
         return response()->json($results, 200);
@@ -36,7 +33,6 @@ class TeamController extends Controller
 
     public function getSchedules($teamId)
     {
-
         $schedules = Team::getSchedules($teamId);
 
         return response()->json($schedules, 200);
@@ -44,7 +40,6 @@ class TeamController extends Controller
 
     public function getNextGame($teamId)
     {
-
         $nextGame = Team::getNextGame($teamId);
 
         if (! $nextGame) {
