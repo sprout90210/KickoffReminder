@@ -10,6 +10,8 @@ class Competition extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'id',
         'current_season_id',

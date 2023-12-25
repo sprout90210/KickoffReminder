@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateRemindTimeRequest;
 use App\Models\Game;
 use Illuminate\Support\Facades\Auth;
 
 class ReminderController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $user = Auth::user();
+        $remindTime = $user->remind_time;
         $favoriteTeamIds = $user->favorites->pluck('team_id');
+        $reminders = Game::getReminders($favoriteTeamIds);
 
-        $reminders = Game::with(['homeTeam', 'awayTeam', 'competition'])
-            ->where(function ($query) use ($favoriteTeamIds) {
-                $query->whereIn('home_team_id', $favoriteTeamIds)
-                    ->orWhereIn('away_team_id', $favoriteTeamIds);
-            })
-            ->whereIn('status', ['SCHEDULED', 'TIMED'])
-            ->orderBy('utc_date', 'asc')
-            ->limit(30)
-            ->get();
+        return response()->json([
+            'reminders' => $reminders,
+            'remindTime' => $remindTime,
+        ], 200);
+    }
 
-        if ($reminders->isEmpty()) {
-            return response()->json(['error' => '通知リストに登録されていません。'], 404);
-        }
-        return response()->json($reminders, 200);
+    public function updateRemindTime(UpdateRemindTimeRequest $request)
+    {
+        $user = $request->user();
+        $user->remind_time = $request->remindTime;
+        $user->save();
+
+        return response()->json(['message' => 'remind_time更新成功'], 200);
     }
 }

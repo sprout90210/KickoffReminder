@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('favorites', [FavoriteController::class, 'index']);
     Route::post('favorites', [FavoriteController::class, 'store']);
     Route::delete('favorites/{team_id}', [FavoriteController::class, 'destroy']);
-    Route::put('update-remind-time', [ReminderController::class, 'updateRemindTime']);
+    Route::put('remind-time', [ReminderController::class, 'updateRemindTime']);
 });
 
 Route::get('upcoming-games', [GameController::class, 'getUpcomingGames']);

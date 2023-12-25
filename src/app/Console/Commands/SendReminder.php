@@ -26,15 +26,17 @@ class SendReminder extends Command
             $startOfMinute = Carbon::now('UTC')->addMinutes($minute)->startOfMinute();
             $endOfMinute = Carbon::now('UTC')->addMinutes($minute)->endOfMinute();
 
+            // 通知する試合を取得
             $gamesToRemind = Game::where('utc_date', '>=', $startOfMinute)
                 ->where('utc_date', '<=', $endOfMinute)
                 ->with('homeTeam', 'awayTeam', 'competition')
                 ->get();
 
             foreach ($gamesToRemind as $game) {
+                // 通知するユーザーを取得
                 $usersToRemind = User::whereHas('favorites', function ($query) use ($game) {
                     $query->whereIn('team_id', [$game->home_team_id, $game->away_team_id]);
-                })->where('reminder_time', $minute)
+                })->where('remind_time', $minute)
                     ->get();
 
                 $formattedDate = Carbon::parse($game->utc_date)->timezone('Asia/Tokyo')->format('m月d日 - H:i');
@@ -68,7 +70,16 @@ class SendReminder extends Command
 
     private function getRemainingTimeMessage($minute)
     {
-        return $minute === 0 ? 'まもなく試合が始まります！' : '残り'.$minute.'分でキックオフ！';
+        switch ($minute) {
+            case 1:
+                return 'まもなく試合が始まります！';
+            case 60:
+                return '残り1時間でキックオフ！';
+            case 180:
+                return '残り3時間でキックオフ！';
+            default:
+                return '残り'.$minute.'分でキックオフ！';
+        }
     }
 
     private function sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage)
@@ -97,12 +108,12 @@ class SendReminder extends Command
 
     private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
     {
-        return $user->name.'さん'."\n"."\n".
-            '試合が近づいています！'."\n"."\n".
-            $game->competition->name.$stage."\n".
-            $game->homeTeam->name.' vs '.$game->awayTeam->name."\n"."\n".
-            $formattedDate."\n"."\n".
-            $remainingTimeMessage."\n"."\n".
+        return "$user->name さん\n\n".
+            "試合が近づいています！\n\n".
+            "{$game->competition->name}{$stage}\n".
+            "{$game->homeTeam->name} vs {$game->awayTeam->name}\n\n".
+            "$formattedDate\n\n".
+            "$remainingTimeMessage\n\n".
             'お見逃しなく！';
     }
 }
