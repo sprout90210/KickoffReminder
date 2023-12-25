@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store/index";
 
 import Home from "./pages/Home.vue";
@@ -17,7 +17,6 @@ import ResetPassword from "./pages/auth/ResetPassword.vue";
 import EditUser from "./pages/auth/EditUser.vue";
 import EditPassword from "./pages/auth/EditPassword.vue";
 import DeleteUser from "./pages/auth/DeleteUser.vue";
-
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -105,15 +104,20 @@ const router = createRouter({
 	],
 
 	scrollBehavior(to, from, savedPosition) {
-		return savedPosition ? savedPosition : { top: 0 }
+		return savedPosition ? savedPosition : { top: 0 };
 	},
 });
-
 
 router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.state.isLoggedIn;
 	const isLineUser = store.state.isLineUser;
-	const authRequiredPages = ["EditUser", "DeleteUser", "EditPassword", "Favorites", "Reminders"];
+	const authRequiredPages = [
+		"EditUser",
+		"DeleteUser",
+		"EditPassword",
+		"Favorites",
+		"Reminders",
+	];
 	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);
@@ -122,12 +126,14 @@ router.beforeEach((to, from, next) => {
 		next({ path: "/login" });
 	} else if (noAuthRequired && isLoggedIn) {
 		next({ path: "/" });
-	} else if ((to.name === "EditUser" || to.name === "EditPassword") && isLineUser) {
+	} else if (
+		(to.name === "EditUser" || to.name === "EditPassword") &&
+		isLineUser
+	) {
 		next({ path: "/" });
 	} else {
 		next();
 	}
-
 });
 
 export default router;
