@@ -11,7 +11,7 @@ class CompetitionController extends Controller
         $competition = Competition::find($competitionId);
 
         if (! $competition) {
-            return response()->json(['error' => 'competitionが取得出来ませんでした。'], 404);
+            return response()->json(['message' => 'データが見つかりませんでした。'], 404);
         }
 
         return response()->json($competition, 200);

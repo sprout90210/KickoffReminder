@@ -27,6 +27,6 @@ class ReminderController extends Controller
         $user->remind_time = $request->remindTime;
         $user->save();
 
-        return response()->json(['message' => 'remind_time更新成功'], 200);
+        return response()->json(['message' => '通知時間を更新しました。'], 200);
     }
 }

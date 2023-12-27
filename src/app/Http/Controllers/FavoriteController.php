@@ -12,11 +12,11 @@ class FavoriteController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $favoriteTeams = Favorite::where('user_id', $user_id)
+        $favorites = Favorite::where('user_id', $user_id)
             ->with('team')
             ->get();
 
-        return response()->json($favoriteTeams, 200);
+        return response()->json($favorites, 200);
     }
 
     public function store(StoreFavoriteRequest $request)
@@ -25,11 +25,11 @@ class FavoriteController extends Controller
         $team_id = $request->team_id;
 
         if ($this->isAlreadyFavorited($user_id, $team_id)) {
-            return response()->json(['error' => 'お気に入り登録済みです。'], 409);
+            return response()->json(['message' => 'すでにお気に入り登録済みです。'], 409);
         }
 
         if ($this->isFavoritesLimitReached($user_id)) {
-            return response()->json(['error' => 'お気に入りの登録上限に達しました。'], 422);
+            return response()->json(['message' => 'お気に入り登録数の上限に達しました。'], 422);
         }
 
         Favorite::create([
@@ -46,10 +46,10 @@ class FavoriteController extends Controller
         $deleted = Favorite::where('user_id', $user_id)->where('team_id', $team_id)->delete();
 
         if ($deleted > 0) {
-            return response()->json(['message' => 'お気に入り解除しました。'], 204);
+            return response()->json(['message' => 'お気に入りを解除しました。'], 200);
         }
 
-        return response()->json(['error' => 'お気に入りが見つかりません。'], 404);
+        return response()->json(['message' => 'お気に入り削除に失敗しました。'], 404);
     }
 
     protected function isAlreadyFavorited($userId, $teamId)

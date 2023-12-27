@@ -30,7 +30,7 @@ class UserController extends Controller
         try {
             $user = $request->user();
             if ($user->isLineUser()) {
-                return response()->json(['error' => '外部ログインをしている場合はユーザーは変更できません。'], 403);
+                return response()->json(['message' => '外部ログインをしているユーザー情報は変更できません。'], 403);
             }
             $user->update([
                 'name' => $request->name,
@@ -40,7 +40,7 @@ class UserController extends Controller
             return response()->json(['message' => 'ユーザー情報が更新されました。'], 200);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => '情報更新中にエラーが発生しました。'], 500);
+            return response()->json(['message' => '情報更新中にエラーが発生しました。'], 500);
         }
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
 
             if (! $user->isLineUser()) {
                 if (! Hash::check($request->password, $user->password)) {
-                    return response()->json(['error' => 'パスワードが正しくありません。'], 403);
+                    return response()->json(['message' => 'パスワードが正しくありません。'], 403);
                 }
             }
 
@@ -60,7 +60,7 @@ class UserController extends Controller
             return response()->json(['message' => 'アカウントを削除しました。'], 204);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'アカウント削除中にエラーが発生しました。'], 500);
+            return response()->json(['message' => 'エラーが発生しました。'], 500);
         }
     }
 }
