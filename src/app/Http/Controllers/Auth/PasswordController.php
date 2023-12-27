@@ -21,8 +21,8 @@ class PasswordController extends Controller
         );
 
         return $response == Password::RESET_LINK_SENT
-            ? response()->json(['message' => 'メールを送信しました'], 200)
-            : response()->json(['error' => 'メール送信できませんでした'], 400);
+            ? response()->json(['message' => 'メールを送信しました。'], 200)
+            : response()->json(['message' => 'メールアドレスを確認できませんでした。'], 400);
     }
 
     public function reset(ResetPasswordRequest $request)
@@ -42,8 +42,8 @@ class PasswordController extends Controller
         );
 
         return $response == Password::PASSWORD_RESET
-            ? response()->json(['message' => 'パスワードリセットに成功しました'], 200)
-            : response()->json(['error' => 'パスワードリセットに失敗しました'], 400);
+            ? response()->json(['message' => 'パスワードリセットに成功しました。'], 200)
+            : response()->json(['message' => 'パスワードリセットに失敗しました。'], 400);
     }
 
     public function update(UpdatePasswordRequest $request)

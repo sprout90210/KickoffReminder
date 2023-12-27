@@ -15,13 +15,12 @@ class ContactController extends Controller
             $formData = $request->all();
             Mail::send(new ContactFormMail($formData));
 
-            return response()->json(['message' => 'お問合せ送信に成功しました。'], 200);
+            return response()->json(['message' => 'お問合せを送信しました。'], 200);
 
         } catch (\Exception $e) {
             Log::error('Mail sending failed: '.$e->getMessage());
 
-            return response()->json(['error' => 'お問合せ送信に失敗しました。'], 500);
-
+            return response()->json(['message' => 'お問合せ送信に失敗しました。'], 500);
         }
     }
 }

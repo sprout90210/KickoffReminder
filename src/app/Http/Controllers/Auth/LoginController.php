@@ -18,10 +18,12 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return response()->json(['message' => 'ログイン成功'], 200);
+            return response()->json(['message' => 'ログインに成功しました。']);
         }
 
-        return response()->json(['error' => 'ログイン失敗'], 401);
+        $request->session()->regenerate();
+
+        return response()->json(['message' => 'ログイン情報が正しくありません。'], 401);
     }
 
     public function logout(Request $request)
@@ -30,7 +32,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'ログアウト成功'], 204);
+        return response()->json(['message' => 'ログアウトしました。']);
     }
 
     public function check(Request $request)
