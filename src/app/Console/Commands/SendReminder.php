@@ -19,6 +19,7 @@ class SendReminder extends Command
 
     public function handle()
     {
+        $errorOccurred = false;
         $lineService = new LineMessagingService();
         $reminderTimes = [1, 15, 60, 180];
 
@@ -47,6 +48,12 @@ class SendReminder extends Command
                     $this->sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage);
                 }
             }
+        }
+
+        if ($errorOccurred) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -82,6 +89,17 @@ class SendReminder extends Command
         }
     }
 
+    private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
+    {
+        return "$user->name さん\n\n".
+            "試合が近づいています！\n\n".
+            "{$game->competition->name}{$stage}\n".
+            "{$game->homeTeam->name} vs {$game->awayTeam->name}\n\n".
+            "$formattedDate\n\n".
+            "$remainingTimeMessage\n\n".
+            'お見逃しなく！';
+    }
+
     private function sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage)
     {
         if ($user->line_user_id) {
@@ -90,7 +108,9 @@ class SendReminder extends Command
                 $lineService->sendMessage($user->line_user_id, $message);
             } catch (\Exception $e) {
                 Log::error('LINE message sending failed: '.$e->getMessage());
+                $errorOccurred = true;
             }
+
         } else {
             try {
                 Mail::send(new GameReminderMail($user->email, [
@@ -102,18 +122,8 @@ class SendReminder extends Command
                 ]));
             } catch (\Exception $e) {
                 Log::error('Mail sending failed: '.$e->getMessage());
+                $errorOccurred = true;
             }
         }
-    }
-
-    private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
-    {
-        return "$user->name さん\n\n".
-            "試合が近づいています！\n\n".
-            "{$game->competition->name}{$stage}\n".
-            "{$game->homeTeam->name} vs {$game->awayTeam->name}\n\n".
-            "$formattedDate\n\n".
-            "$remainingTimeMessage\n\n".
-            'お見逃しなく！';
     }
 }

@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:updateStandings')->everyFiveMinutes();
-        $schedule->command('command:updateGames')->everyFiveMinutes();
+        $schedule->command('command:updateStandings')->everyFifteenMinutes();
+        $schedule->command('command:updateGames')->everyTenMinutes();
         $schedule->command('command:sendReminder')->everyMinute();
 
     }
