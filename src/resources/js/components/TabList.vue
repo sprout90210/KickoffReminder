@@ -1,5 +1,5 @@
 <template>
-  <div class="flex absolute bottom-0 left-0 pl-3 sm:pl-12">
+  <div class="flex absolute bottom-0 left-0 sm:pl-12">
     <TabButton
       v-for="tab in tabs"
       :key="tab.tabName"

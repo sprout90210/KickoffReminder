@@ -1,7 +1,7 @@
 <template>
   <tbody>
     <tr
-      class="text-center text-xs sm:text-sm font-light h-9 sm:h-10"
+      class="text-center text-sm font-light h-10"
       :class="
         isOpen
           ? 'bg-gradient-to-r from-violet-600 via-purple-500 to-fuchsia-500 text-white'
@@ -17,18 +17,14 @@
             : 'bg-zinc-100 text-gray-400 hover:bg-fuchsia-500 hover:text-white'
         "
       >
-        <div
-          class="transform transition-transform h-full w-full flex justify-center items-center"
-        >
+        <div class="transform transition-transform h-full w-full flex justify-center items-center">
           <div class="duration-200" :class="isOpen ? 'rotate-180' : 'rotate-0'">
             <ChevronDownIcon />
           </div>
         </div>
       </td>
 
-      <td>
-        {{ standing.position }}
-      </td>
+      <td>{{ standing.position }}</td>
       <td class="text-left">
         <router-link
           :to="{ name: 'Team', params: { teamId: standing.team_id } }"
@@ -39,7 +35,7 @@
               : 'hover:underline'
           "
         >
-          <div class="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex items-center">
+          <div class="w-6 h-6 mr-2 flex items-center">
             <img
               :src="generateCrestUrlDev(standing.team.crest)"
               alt="crest"

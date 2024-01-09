@@ -1,5 +1,5 @@
 <template>
-  <p class="text-sm cursor-pointer my-2">
+  <p class="text-base cursor-pointer my-2">
     <button v-if="!isFavorite" @click="toggleFavorite" type="submit" :disabled="isSubmitting" class="underline text-gray-500 hover:text-yellow-600">
       &#9734;
       <span class="hover:underline"> お気に入り登録 </span>

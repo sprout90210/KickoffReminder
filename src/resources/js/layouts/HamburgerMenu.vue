@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 z-40 duration-300 pt-24 w-5/6 md:w-4/12 h-screen flex flex-col bg-gray-800 text-sm md:text-base text-white"
+    class="fixed top-0 z-40 duration-300 pt-24 w-5/6 md:w-5/12 h-screen flex flex-col bg-gray-800 text-sm md:text-base text-white"
     :class="
       isMenuOpen
         ? 'left-0 md:left-auto md:right-0'
@@ -8,8 +8,8 @@
     "
   >
     <div v-if="!isLoggedIn" class="flex flex-wrap mb-10 justify-center items-center">
-      <router-link to="/login" @click="toggleMenu" class="login-link m-3">ログイン</router-link>
       <router-link to="/registration" @click="toggleMenu" class="registration-link m-3">新規登録</router-link>
+      <router-link to="/login" @click="toggleMenu" class="login-link m-3">ログイン</router-link>
       <button @click="loginLine" class="line-login-link m-3">LINEログイン</button>
     </div>
     
