@@ -3,11 +3,7 @@
     <Loading v-if="isLoading" />
     <div v-else class="flex flex-col sm:flex-row justify-center items-center">
       <div class="hero-img-container">
-        <img
-          alt="crest"
-          :src="generateImgUrlDev(team.crest)"
-          class="custom-img"
-        />
+        <img alt="crest" :src="generateImgUrlDev(team.crest)" class="custom-img" />
       </div>
       <div class="flex flex-col items-center sm:mx-10">
         <h1 class="my-2 sm:my-6 text-sm sm:text-xl lg:text-2xl font-semibold">{{ team.name }}</h1>
@@ -63,6 +59,7 @@
 </template>
 
 <script setup>
+import handleError from "../modules/HandleError.js";
 import StadiumIcon from "./icons/StadiumIcon.vue";
 import YoutubeIcon from "./icons/YoutubeIcon.vue";
 import TwitterIcon from "./icons/TwitterIcon.vue";
@@ -87,26 +84,24 @@ const generateImgUrlDev = (ImgName) => {
   return ImgUrl;
 };
 
-const handleError = (e) => {
-  if (e.response.status === 404) {
-    router.push("/not-found");
-  } else {
-    store.dispatch("triggerPopup", { message: "データ取得に失敗しました。" });
-  }
-};
-
 const getTeam = () => {
   isLoading.value = true;
   axios
     .get(`/api/teams/${teamId.value}`)
     .then((res) => {
       team.value = res.data;
-      isLoading.value = false;
     })
-    .catch(handleError);
+    .catch((e) => {
+      handleError(e);
+      router.push("/not-found");
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
-watch(() => route.params.teamId, () => {
-  getTeam();
-}, { immediate: true });
+watch(() => route.params.teamId,() => {
+    getTeam();
+  },{ immediate: true }
+);
 </script>

@@ -10,7 +10,7 @@
           type="password"
           placeholder="最低6文字必要です"
           autocomplete="new-password"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password }}</p>
@@ -23,15 +23,13 @@
           id="password_confirmation"
           type="password"
           autocomplete="new-password"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password_confirmation }}</p>
       </div>
 
-      <button type="submit" class="custom-submit">
-        {{ buttonText }}
-      </button>
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
     <div class="mt-3">
       アカウントの新規作成は
@@ -45,6 +43,7 @@
 </template>
 
 <script setup>
+import handleError from "../../modules/HandleError.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -68,27 +67,9 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: password } = useField("password");
 const { value: password_confirmation } = useField("password_confirmation");
 
-// エラー処理
-const handleError = (e) => {
-  password.value = "";
-  password_confirmation.value = "";
-  isSubmitting.value = false;
-  let message;
-  if (e.response.status === 422) {
-    const errors = e.response.data.errors;
-    const errorKey = Object.keys(errors)[0];
-    message = errors[errorKey][0];
-  } else {
-    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  }
-  store.dispatch("triggerPopup", { message });
-};
-
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
   const resetData = {
@@ -97,14 +78,18 @@ const submitForm = handleSubmit(() => {
     email: email.value,
     token: token.value,
   };
-  axios.get("/sanctum/csrf-cookie").then((res) => {
-    axios
-      .post("/api/password/reset", resetData)
-      .then((res) => {
-        store.dispatch("triggerPopup", { message: "パスワードをリセットしました。" });
-        router.push("/login");
-      })
-      .catch(handleError);
-  });
+  axios
+    .post("/api/password/reset", resetData)
+    .then((res) => {
+      store.dispatch("triggerPopup", {
+        message: "パスワードをリセットしました。",
+        color: "green",
+      });
+      router.push("/login");
+    })
+    .catch((e) => {
+      isSubmitting.value = false;
+      handleError(e);
+    });
 });
 </script>

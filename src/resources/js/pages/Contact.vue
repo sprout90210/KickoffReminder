@@ -1,9 +1,10 @@
 <template>
   <div class="custom-container">
     <h1 class="custom-header">お問い合わせ</h1>
+    <p class="my-2">※お問合せ、ご要望はこちらにお願いします。</p>
     <form @submit.prevent="submitForm" class="custom-form">
       <div class="custom-form-field">
-        <label for="password">ネーム</label>
+        <label for="password">お名前</label>
         <input
           v-model="name"
           id="name"
@@ -22,13 +23,12 @@
           id="email"
           type="email"
           autocomplete="email"
-          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.email }}</p>
       </div>
 
-      <div class="flex flex-col w-full h-72">
+      <div class="flex flex-col h-72 w-full">
         <label for="contact">お問い合わせ内容</label>
         <textarea
           v-model="contact"
@@ -48,6 +48,7 @@
 </template>
 
 <script setup>
+import handleError from "../modules/handleError.js";
 import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -61,7 +62,7 @@ const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "送信
 
 const schema = object({
   name: string().required("必須項目です"),
-  email: string().required("必須項目です").email("メールアドレスの形式ではありません"),
+  email: string().email("メールアドレスの形式ではありません"),
   contact: string().required("必須項目です"),
 });
 
@@ -73,21 +74,6 @@ const { value: name } = useField("name");
 const { value: email } = useField("email");
 const { value: contact } = useField("contact");
 
-// エラー処理
-const handleError = (e) => {
-  isSubmitting.value = false;
-  let message;
-  if (e.response.status === 422) {
-    const errors = e.response.data.errors;
-    const errorKey = Object.keys(errors)[0];
-    message = errors[errorKey][0];
-  } else {
-    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  }
-  store.dispatch("triggerPopup", { message });
-};
-
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
   const formData = {
@@ -95,14 +81,15 @@ const submitForm = handleSubmit(() => {
     email: email.value,
     contact: contact.value,
   };
-  axios.get("/sanctum/csrf-cookie").then((res) => {
-    axios
-      .post("/api/contact", formData)
-      .then((res) => {
-        store.dispatch("triggerPopup", { message: "お問い合わせを送信しました。" });
-        router.push("/");
-      })
-      .catch(handleError);
-  });
+  axios
+    .post("/api/contact", formData)
+    .then((res) => {
+      store.dispatch("triggerPopup", { message: "お問い合わせを送信しました。", color: "green" });
+      router.push("/");
+    })
+    .catch((e) => {
+      isSubmitting.value = false;
+      handleError(e);
+    });
 });
 </script>

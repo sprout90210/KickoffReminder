@@ -2,7 +2,7 @@
     <div
       role="alert"
       @click="hidePopup"
-      class="transition-transform opacity-90 z-10 duration-300 p-3.5 mr-20 rounded-md fixed top-16 sm:top-20 left-0 text-xs sm:text-sm cursor-pointer"
+      class="transition-transform opacity-90 z-10 duration-300 p-3.5 mr-20 rounded-md fixed top-20 md:top-24 left-0 text-xs sm:text-sm cursor-pointer"
       :class="[isShow ? 'translate-x-3 sm:translate-x-10' : '-translate-x-full', backgroundColorClass]"
     >
       {{ message }}
@@ -21,6 +21,8 @@ const backgroundColorClass = computed(() => {
   switch (color.value) {
     case 'red':
       return 'bg-red-400';
+    case 'blue':
+      return 'bg-blue-300';
     case 'green':
       return 'bg-green-400';
     default:

@@ -4,8 +4,8 @@
       class="text-center text-xs sm:text-sm font-light h-9 sm:h-10"
       :class="
         isOpen
-          ? 'bg-gradient-to-r from-violet-600 via-purple-400 to-fuchsia-400 text-white'
-          : 'text-gray-500 border-b border-gray-200'
+          ? 'bg-gradient-to-r from-violet-600 via-purple-500 to-fuchsia-500 text-white'
+          : 'text-gray-600 border-b border-gray-200'
       "
     >
       <td
@@ -14,13 +14,13 @@
         :class="
           isOpen
             ? 'bg-purple-900 text-white'
-            : 'bg-zinc-100 text-gray-400 hover:bg-fuchsia-400 hover:text-white'
+            : 'bg-zinc-100 text-gray-400 hover:bg-fuchsia-500 hover:text-white'
         "
       >
         <div
           class="transform transition-transform h-full w-full flex justify-center items-center"
         >
-          <div class="duration-300" :class="isOpen ? 'rotate-180' : 'rotate-0'">
+          <div class="duration-200" :class="isOpen ? 'rotate-180' : 'rotate-0'">
             <ChevronDownIcon />
           </div>
         </div>
@@ -39,11 +39,13 @@
               : 'hover:underline'
           "
         >
-          <img
-            :src="generateCrestUrlDev(standing.team.crest)"
-            alt="crest"
-            class="w-5 h-5 sm:h-6 sm:w-6 mr-2 sm:mr-4 block"
-          />
+          <div class="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex items-center">
+            <img
+              :src="generateCrestUrlDev(standing.team.crest)"
+              alt="crest"
+              class="custom-img"
+            />
+          </div>
           <span v-if="standing.team.short_name">
             {{ standing.team.short_name }}
           </span>
@@ -79,9 +81,8 @@
     </tr>
     <tr :class="isOpen ? 'table-row' : 'hidden'" class="border-b-2 border-gray-400">
       <td colspan="11">
-        <div v-if="isLoading">
-          <Loading />
-        </div>
+        <Loading v-if="isLoading" />
+        <NotFound v-else-if="!nextGame" />
         <div v-else>
           <p class="text-xxs text-right text-gray-400 pr-3 mt-4 border-b">※日本時間</p>
           <Game :game="nextGame" />
@@ -95,9 +96,12 @@
 import ChevronDownIcon from "./icons/ChevronDownIcon.vue";
 import Loading from "./Loading.vue";
 import Game from "./Game.vue";
+import NotFound from "./NotFound.vue";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
+const store = useStore();
 const route = useRoute();
 const isOpen = ref(false);
 const isLoading = ref(true);
@@ -119,10 +123,12 @@ const toggle = () => {
       .get(`/api/teams/${props.standing.team_id}/nextGame`)
       .then((res) => {
         nextGame.value = res.data;
-        isLoading.value = false;
       })
       .catch((e) => {
-        console.log(e);
+        nextGame.value = false;
+      })
+      .finally(() => {
+        isLoading.value = false;
       });
   }
 };

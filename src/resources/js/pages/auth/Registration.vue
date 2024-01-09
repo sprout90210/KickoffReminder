@@ -9,7 +9,7 @@
           id="name"
           type="text"
           autocomplete="username"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.name }}</p>
@@ -22,7 +22,7 @@
           id="email"
           type="email"
           autocomplete="email"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.email }}</p>
@@ -36,7 +36,7 @@
           type="password"
           placeholder="最低6文字必要です"
           autocomplete="new-password"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password }}</p>
@@ -49,20 +49,16 @@
           id="password_confirmation"
           type="password"
           autocomplete="new-password"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password_confirmation }}</p>
       </div>
 
       <p class="mt-3">
-        <router-link to="/terms" class="underline text-blue-500 hover:text-orange-600">
-          利用規約
-        </router-link>
+        <router-link to="/terms" class="underline text-blue-500 hover:text-orange-600">利用規約</router-link>
         と
-        <router-link to="/privacy" class="underline text-blue-500 hover:text-orange-600">
-          プライバシーポリシー
-        </router-link>
+        <router-link to="/privacy" class="underline text-blue-500 hover:text-orange-600">プライバシーポリシー</router-link>
         に同意いただける場合はアカウントを作成してください。
       </p>
 
@@ -84,6 +80,7 @@
 </template>
 
 <script setup>
+import handleError from "../../modules/HandleError.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -107,29 +104,11 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: name } = useField("name");
 const { value: email } = useField("email");
 const { value: password } = useField("password");
 const { value: password_confirmation } = useField("password_confirmation");
 
-// エラー処理
-const handleError = (e) => {
-  password.value = "";
-  password_confirmation.value = "";
-  isSubmitting.value = false;
-  let message;
-  if (e.response.status === 422) {
-    const errors = e.response.data.errors;
-    const errorKey = Object.keys(errors)[0];
-    message = errors[errorKey][0];
-  } else {
-    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  }
-  store.dispatch("triggerPopup", { message });
-};
-
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
   const userData = {
@@ -143,10 +122,13 @@ const submitForm = handleSubmit(() => {
       .post("/api/register", userData)
       .then((res) => {
         store.commit("setLoggedIn", true);
-        store.dispatch("triggerPopup", { message: "アカウントを作成しました。" });
+        store.dispatch("triggerPopup", { message: "アカウントを作成しました。", color: "green" });
         router.push("/");
       })
-      .catch(handleError);
+      .catch((e) => {
+        isSubmitting.value = false;
+        handleError(e);
+      });
   });
 });
 

@@ -12,6 +12,7 @@ async function checkAuth() {
 		store.commit("setLineUser", res.data.isLineUser);
 	} catch (e) {
 		console.error("認証状態の確認中にエラーが発生しました", e);
+		store.dispatch("triggerPopup", { message: "認証状態の確認中にエラーが発生しました。ページをリロードしてください。", color: "red" });
 	}
 }
 

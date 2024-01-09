@@ -11,13 +11,12 @@
           id="email"
           type="email"
           autocomplete="email"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.email }}</p>
       </div>
-      <button type="submit" :disabled="isSubmitting" class="custom-submit">
-        {{ buttonText }}
-      </button>
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
     <div class="mt-3">
       アカウントの新規作成は
@@ -31,6 +30,7 @@
 </template>
 
 <script setup>
+import handleError from "../../modules/HandleError.js";
 import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -50,29 +50,19 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: email } = useField("email");
 
-// エラー処理
-const handleError = (e) => {
-  isSubmitting.value = false;
-  const message =
-    e.response.status === 402
-      ? "メールアドレスに誤りがあります。"
-      : "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  store.dispatch("triggerPopup", { message });
-};
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
-  axios.get("/sanctum/csrf-cookie").then((res) => {
-    axios
-      .post("/api/password/forgot", { email: email.value })
-      .then((res) => {
-        store.dispatch("triggerPopup", { message: "メールを送信しました。" });
-        router.push("/");
-      })
-      .catch(handleError);
-  });
+  axios
+    .post("/api/password/forgot", { email: email.value })
+    .then((res) => {
+      store.dispatch("triggerPopup", { message: "メールを送信しました。", color: "green" });
+      router.push("/");
+    })
+    .catch((e) => {
+      isSubmitting.value = false;
+      handleError(e);
+    });
 });
 </script>
