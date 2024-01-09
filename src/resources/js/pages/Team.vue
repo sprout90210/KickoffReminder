@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-grow">
     <TeamHero />
-    <div class="w-full flex flex-col items-center">
+    <div class="flex flex-col items-center">
       <Standings
         v-show="!standingsLoading && activeTab === 'standings'"
         :standings="standings"
@@ -49,11 +49,12 @@ const fetchData = (type, loadingRef, dataRef, endpoint) => {
     .get(`/api/teams/${teamId.value}/${endpoint}`)
     .then((res) => {
       dataRef.value = res.data;
-      loadingRef.value = false;
     })
     .catch((e) => {
-      loadingRef.value = false;
       store.dispatch("triggerPopup", { message: "データ取得に失敗しました。", color: "red" });
+    })
+    .finally(() => {
+      loadingRef.value = false;
     });
 };
 

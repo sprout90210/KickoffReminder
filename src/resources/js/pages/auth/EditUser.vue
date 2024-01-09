@@ -9,7 +9,7 @@
           id="name"
           type="text"
           autocomplete="username"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.name }}</p>
@@ -22,26 +22,23 @@
           id="email"
           type="email"
           autocomplete="email"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.email }}</p>
       </div>
 
-      <button type="submit" :disabled="isSubmitting" class="custom-submit">
-        {{ buttonText }}
-      </button>
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
     <p class="my-3 text-center">
       退会する方は
-      <router-link to="/user/delete" class="underline text-blue-500 hover:text-orange-600"
-        >こちら</router-link
-      >
+      <router-link to="/user/delete" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
   </div>
 </template>
 
 <script setup>
+import handleError from "../../modules/HandleError.js";
 import { ref, computed, onMounted } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -65,50 +62,34 @@ const { errors, handleSubmit } = useForm({
 const { value: name } = useField("name");
 const { value: email } = useField("email");
 
-// エラー処理
-const handleError = (e) => {
-  isSubmitting.value = false;
-  let message;
-  if (e.response.status === 422) {
-    const errors = e.response.data.errors;
-    const errorKey = Object.keys(errors)[0];
-    message = errors[errorKey][0];
-  } else {
-    message = "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  }
-  store.dispatch("triggerPopup", { message });
-};
-
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
   const userData = {
     name: name.value,
     email: email.value,
   };
-  axios.get("/sanctum/csrf-cookie").then((res) => {
-    axios
-      .put("/api/user", userData)
-      .then((res) => {
-        store.dispatch("triggerPopup", { message: "ユーザー情報を変更しました。" });
-        router.push("/");
-      })
-      .catch(handleError);
-  });
+  axios
+    .put("/api/user", userData)
+    .then((res) => {
+      store.dispatch("triggerPopup", { message: "ユーザー情報を変更しました。", color: "green" });
+      router.push("/");
+    })
+    .catch((e) => {
+      isSubmitting.value = false;
+      handleError(e);
+    });
 });
 
 const getUserData = () => {
-  axios.get("/sanctum/csrf-cookie").then((res) => {
-    axios
-      .get("/api/user")
-      .then((res) => {
-        name.value = res.data.name;
-        email.value = res.data.email;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
+  axios
+    .get("/api/user")
+    .then((res) => {
+      name.value = res.data.name;
+      email.value = res.data.email;
+    })
+    .catch((e) => {
+      handleError(e);
+    });
 };
 
 onMounted(() => {

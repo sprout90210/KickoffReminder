@@ -1,0 +1,38 @@
+<template>
+  <div class="bg-home-1">
+    <h1 class="text-5xl sm:text-8xl font-black">Kickoff Reminder</h1>
+    <div class="text-lg sm:text-xl my-12 sm:mt-24 flex flex-col">
+      <p>サッカーのスケジュールを常に把握しよう。</p>
+      <p>簡単な登録だけで、好きなチームの試合通知が受け取れます。</p>
+    </div>
+    <div v-if="!isLoggedIn" class="flex flex-wrap items-center justify-center">
+      <router-link to="/registration" class="registration-link m-3 sm:m-3">新規登録</router-link>
+      <router-link to="/login" class="login-link m-3 sm:m-3">ログイン</router-link>
+      <button @click="loginLine" class="line-login-link m-2 sm:m-3">LINEログイン</button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+
+const route = useRoute();
+const store = useStore();
+const isLoggedIn = computed(() => store.state.isLoggedIn);
+
+onMounted(() => {
+  if (route.query.line_login === "success") {
+    store.dispatch("triggerPopup", {
+      message: "LINEログインに成功しました。",
+      color: "green",
+    });
+  } else if (route.query.line_login === "faild") {
+    store.dispatch("triggerPopup", {
+      message: "LINEログインに失敗しました。",
+      color: "red",
+    });
+  }
+});
+</script>

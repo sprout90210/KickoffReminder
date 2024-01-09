@@ -9,7 +9,7 @@
           id="email"
           type="email"
           autocomplete="email"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.email }}</p>
@@ -22,40 +22,28 @@
           id="password"
           type="password"
           autocomplete="current-password"
-          required="required"
+          required
           class="custom-input"
         />
         <p class="text-red-700">{{ errors.password }}</p>
       </div>
 
       <p class="mt-2">
-        <input type="checkbox" id="remember" v-model="remember" />
+        <input v-model="remember" id="remember" type="checkbox" />
         <label for="remember"> ログインしたままにする </label>
       </p>
 
-      <button type="submit" :disabled="isSubmitting" class="custom-submit">
-        {{ buttonText }}
-      </button>
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
 
     <p class="mt-3">
       パスワードを忘れの方は
-      <router-link
-        to="/password/forgot"
-        class="underline text-blue-500 hover:text-orange-600"
-      >
-        こちら
-      </router-link>
+      <router-link to="/password/forgot" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
 
     <p class="my-3">
       アカウントを新規作成する方は
-      <router-link
-        to="/registration"
-        class="underline text-blue-500 hover:text-orange-600"
-      >
-        こちら
-      </router-link>
+      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
 
     <div class="my-8 py-4 w-full border-t flex flex-col items-center">
@@ -66,6 +54,7 @@
 </template>
 
 <script setup>
+import handleAuthError from "../../modules/HandleAuthError.js";
 import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -90,18 +79,6 @@ const { value: email } = useField("email");
 const { value: password } = useField("password");
 const remember = ref(false);
 
-// エラー処理
-const handleError = (e) => {
-  password.value = "";
-  isSubmitting.value = false;
-  const message =
-    e.response.status === 401
-      ? "メールアドレスもしくはパスワードに誤りがあります。"
-      : "フォーム送信時にエラーが発生しました。後でもう一度お試しください。";
-  store.dispatch("triggerPopup", { message });
-};
-
-// フォーム送信
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;
   const credentials = {
@@ -114,10 +91,16 @@ const submitForm = handleSubmit(() => {
       .post("/api/login", credentials)
       .then(() => {
         store.commit("setLoggedIn", true);
-        store.dispatch("triggerPopup", { message: "ログインに成功しました。" });
+        store.dispatch("triggerPopup", {
+          message: "ログインに成功しました。", color: "green"
+        });
         router.push("/");
       })
-      .catch(handleError);
+      .catch((e) => {
+        password.value = "";
+        isSubmitting.value = false;
+        handleAuthError(e);
+      });
   });
 });
 
