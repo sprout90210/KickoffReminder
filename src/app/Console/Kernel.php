@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('command:insertTeams')->monthly();
         $schedule->command('command:updateSeasons')->weekly();
-        $schedule->command('command:updateStandings')->everyFifteenMinutes();
+        $schedule->command('command:updateStandings')->cron('1,16,31,46 * * * *');;
         $schedule->command('command:updateGames')->everyTenMinutes();
         $schedule->command('command:sendReminder')->everyMinute();
 
