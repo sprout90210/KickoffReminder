@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Standing;
 use GuzzleHttp\Client;
+use \GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -30,7 +31,6 @@ class UpdateStandings extends Command
      */
     public function handle()
     {
-        $errorOccurred = false;
         $token = config('services.api.X_AUTH_TOKEN');
         $client = new Client([
             'base_uri' => 'http://api.football-data.org/v4/',
@@ -38,8 +38,8 @@ class UpdateStandings extends Command
                 'X-Auth-Token' => $token,
             ],
         ]);
-
-        $competition_ids = [2021, 2014, 2015, 2002, 2019];
+        $hasErrors = false;
+        $competition_ids = [2002, 2014, 2015, 2019, 2021];
 
         foreach ($competition_ids as $competition_id) {
             try {
@@ -65,20 +65,16 @@ class UpdateStandings extends Command
                 }
                 Standing::upsert($bulkData, ['season_id', 'team_id'], ['competition_id', 'position', 'played_games', 'won', 'draw', 'lost', 'goals_for', 'goals_against', 'goal_difference', 'points']);
 
-            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            } catch (GuzzleException $e) {
                 $this->error('リクエストに失敗しました: '.$e->getMessage());
                 Log::error('UpdateStandings failed', [
                     'exception' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
-                $errorOccurred = true;
+                $hasErrors = true;
             }
         }
-
-        if ($errorOccurred) {
-            return 1;
-        } else {
-            return 0;
-        }
+        
+        return $hasErrors ? 1 : 0;
     }
 }
