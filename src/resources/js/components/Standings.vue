@@ -1,17 +1,19 @@
 <template>
-  <div class="py-4 px-1 sm:p-8 md:px-16 lg:px-24">
+  <div v-if="standings.length" class="p-1 sm:py-10 w-full max-w-3xl">
     <table class="w-full">
       <TableHeader />
       <ExpandablePanel
-        v-for="(standing, index) in standings"
-        :key="standing.id"
+        v-for="standing in standings"
+        :key="standing.team_id"
         :standing="standing"
       />
     </table>
   </div>
+  <NotFound v-else />
 </template>
 
 <script setup>
+import NotFound from "./NotFound.vue";
 import TableHeader from "./TableHeader.vue";
 import ExpandablePanel from "./ExpandablePanel.vue";
 

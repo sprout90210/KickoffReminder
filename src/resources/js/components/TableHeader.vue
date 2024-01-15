@@ -1,7 +1,7 @@
 <template>
   <thead>
     <tr class="text-gray-500 text-xs italic bg-zinc-100 h-8 border-gray border-b-2">
-      <th class="w-9 sm:w-12"></th>
+      <th class="w-12"></th>
       <th class="w-6 sm:w-12"></th>
       <th class="pl-3 sm:pl-12 text-left sm:w-2/5">チーム</th>
       <th class="hidden sm:table-cell w-8">試合</th>

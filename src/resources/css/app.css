@@ -2,20 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-img {
-  @apply bg-cover bg-center h-52 sm:h-72;
-  background-image: url("/images/home.jpeg");
-}
-
 .text-xxs {
   font-size: 0.625rem; /* 10px */
 }
+
+.bg-home-1 {
+  @apply bg-cover bg-center flex flex-col items-center justify-center text-white h-[35rem] sm:h-[45rem] p-5 sm:p-10;
+  background-image: url("/images/bg2.jpeg");
+}
+.bg-home-2 {
+  @apply bg-cover bg-center h-40 sm:h-60;
+  background-image: url("/images/home.jpeg");
+}
+
 .custom-container {
   @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700 flex-grow;
 }
-
 .hero-container {
-  @apply relative pt-5 pb-12 sm:pb-16 text-gray-700 bg-gradient-to-tr from-gray-300 via-gray-50 to-white;
+  @apply relative pt-8 pb-16 sm:pb-16 text-gray-700 bg-gradient-to-tr from-gray-300 via-gray-50 to-white;
 }
 .hero-img-container {
   @apply w-24 h-24 sm:h-32 sm:w-32 flex items-center;
@@ -27,10 +31,6 @@
 .sns-logo-container {
   @apply block w-8 h-8 mx-2 rounded-full;
 }
-.sns-logo {
-  @apply block w-8 h-8 mx-2 rounded-full;
-}
-
 
 .custom-form {
   @apply flex flex-col items-center px-6 w-full sm:w-96;
@@ -54,12 +54,19 @@
   @apply my-5 py-3 w-full block rounded bg-fuchsia-500 hover:bg-fuchsia-600 text-white duration-200 shadow-lg shadow-gray-600/40;
 }
 
-.line-login-link {
-  @apply py-3 w-52 text-center block rounded text-sm text-white bg-green-400 hover:bg-green-500 duration-200;
-}
-.login-link {
-  @apply py-2.5 w-24 mr-5 text-center block rounded border border-gray-300 hover:border-white text-gray-300 hover:text-white duration-200;
+.auth-link {
+  @apply py-3 px-7 text-center block rounded duration-200 text-base;
 }
 .registration-link {
-  @apply py-2.5 w-24 text-center block rounded bg-sky-500 hover:bg-sky-600 duration-200;
+  @apply auth-link text-white hover:text-gray-200 border border-white hover:border-gray-300;
+}
+.login-link {
+  @apply auth-link text-white bg-purple-500 hover:bg-purple-600;
+}
+.line-login-link {
+  @apply auth-link text-white bg-green-400 hover:bg-green-500;
+}
+
+.home-section-header {
+  @apply py-5 lg:py-7 text-xl text-center font-bold;
 }

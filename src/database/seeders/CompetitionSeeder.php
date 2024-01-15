@@ -16,7 +16,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'チャンピオンズリーグ',
                 'code' => 'CL',
                 'competition_type' => 'CUP',
-                'emblem' => 'CL.png',
+                'emblem' => '2001.png',
             ],
             [
                 'id' => 2002,
@@ -24,7 +24,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'ブンデスリーガ',
                 'code' => 'BL1',
                 'competition_type' => 'LEAGUE',
-                'emblem' => 'BL1.png',
+                'emblem' => '2002.png',
             ],
             [
                 'id' => 2014,
@@ -32,7 +32,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'リーガエスパニョーラ',
                 'code' => 'PD',
                 'competition_type' => 'LEAGUE',
-                'emblem' => 'PD.png',
+                'emblem' => '2014.png',
             ],
             [
                 'id' => 2015,
@@ -40,7 +40,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'リーグアン',
                 'code' => 'FL1',
                 'competition_type' => 'LEAGUE',
-                'emblem' => 'FL1.png',
+                'emblem' => '2015.png',
             ],
             [
                 'id' => 2019,
@@ -48,7 +48,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'セリエA',
                 'code' => 'SA',
                 'competition_type' => 'LEAGUE',
-                'emblem' => 'SA.png',
+                'emblem' => '2019.png',
             ],
             [
                 'id' => 2021,
@@ -56,7 +56,7 @@ class CompetitionSeeder extends Seeder
                 'name' => 'プレミアリーグ',
                 'code' => 'PL',
                 'competition_type' => 'LEAGUE',
-                'emblem' => 'PL.png',
+                'emblem' => '2021.png',
             ],
         ]);
     }

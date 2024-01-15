@@ -18,6 +18,7 @@
 </template>
 
 <script setup>
+import handleError from "../modules/HandleError.js";
 import TabList from "./TabList.vue";
 import Loading from "./Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
@@ -36,26 +37,27 @@ const generateImgUrlDev = (ImgName) => {
   return ImgUrl;
 };
 
-const handleError = (e) => {
-  if (e.response.status === 404) {
-    router.push("/not-found");
-  } else{
-    store.dispatch("triggerPopup", { message: "データ取得に失敗しました。" });
-  }
-};
-
 const getCompetition = () => {
   isLoading.value = true;
   axios
     .get(`/api/competitions/${competitionId.value}`)
     .then((res) => {
       competition.value = res.data;
-      isLoading.value = false;
     })
-    .catch(handleError);
+    .catch((e) => {
+      handleError(e);
+      router.push("/not-found");
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
-watch(() => route.params.competitionId, () => {
-  getCompetition();
-}, { immediate: true });
+watch(
+  () => route.params.competitionId,
+  () => {
+    getCompetition();
+  },
+  { immediate: true }
+);
 </script>

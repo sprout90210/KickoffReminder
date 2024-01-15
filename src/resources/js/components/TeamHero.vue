@@ -3,16 +3,12 @@
     <Loading v-if="isLoading" />
     <div v-else class="flex flex-col sm:flex-row justify-center items-center">
       <div class="hero-img-container">
-        <img
-          alt="crest"
-          :src="generateImgUrlDev(team.crest)"
-          class="custom-img"
-        />
+        <img :src="generateImgUrlDev(team.crest)" alt="crest" class="custom-img" />
       </div>
       <div class="flex flex-col items-center sm:mx-10">
-        <h1 class="my-2 sm:my-6 text-sm sm:text-xl lg:text-2xl font-semibold">{{ team.name }}</h1>
+        <h1 class="my-2 sm:my-6 text-lg lg:text-2xl font-semibold">{{ team.name }}</h1>
         <FavoriteButton :teamId="teamId" />
-        <p class="my-2 flex text-xs items-center" v-if="team.venue">
+        <p v-if="team.venue" class="my-2 flex text-sm items-center">
           <StadiumIcon />
           <span class="ml-1">{{ team.venue }}</span>
         </p>
@@ -45,7 +41,7 @@
             <InstagramIcon class="w-8 h-8 rounded-full text-amber-600 hover:text-amber-700" />
           </a>
         </div>
-        <p class="text-xs sm:text-sm my-2" v-if="team.website_url">
+        <p v-if="team.website_url" class="text-sm my-2">
           <span> website: </span>
           <a
             :href="team.website_url"
@@ -63,6 +59,7 @@
 </template>
 
 <script setup>
+import handleError from "../modules/HandleError.js";
 import StadiumIcon from "./icons/StadiumIcon.vue";
 import YoutubeIcon from "./icons/YoutubeIcon.vue";
 import TwitterIcon from "./icons/TwitterIcon.vue";
@@ -87,26 +84,24 @@ const generateImgUrlDev = (ImgName) => {
   return ImgUrl;
 };
 
-const handleError = (e) => {
-  if (e.response.status === 404) {
-    router.push("/not-found");
-  } else {
-    store.dispatch("triggerPopup", { message: "データ取得に失敗しました。" });
-  }
-};
-
 const getTeam = () => {
   isLoading.value = true;
   axios
     .get(`/api/teams/${teamId.value}`)
     .then((res) => {
       team.value = res.data;
-      isLoading.value = false;
     })
-    .catch(handleError);
+    .catch((e) => {
+      handleError(e);
+      router.push("/not-found");
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
-watch(() => route.params.teamId, () => {
-  getTeam();
-}, { immediate: true });
+watch(() => route.params.teamId,() => {
+    getTeam();
+  },{ immediate: true }
+);
 </script>
