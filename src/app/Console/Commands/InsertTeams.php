@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Team;
 use GuzzleHttp\Client;
-use \GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -60,7 +60,7 @@ class InsertTeams extends Command
                     ]);
                 }
             } catch (GuzzleException $e) {
-                $this->error('リクエストに失敗しました: ' . $e->getMessage());
+                $this->error('リクエストに失敗しました: '.$e->getMessage());
                 Log::error('insertTeams failed', [
                     'exception' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),

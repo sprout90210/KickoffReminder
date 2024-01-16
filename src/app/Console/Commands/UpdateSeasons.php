@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Season;
 use GuzzleHttp\Client;
-use \GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -66,7 +66,7 @@ class UpdateSeasons extends Command
                 $hasErrors = true;
             }
         }
-        
+
         return $hasErrors ? 1 : 0;
     }
 }

@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Game;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use \GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
