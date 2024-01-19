@@ -19,6 +19,7 @@ class SendReminder extends Command
 
     public function handle()
     {
+        $hasErrors = false;
         $lineService = new LineMessagingService();
         $reminderTimes = [1, 15, 60, 180];
 
@@ -37,8 +38,10 @@ class SendReminder extends Command
                 $usersToRemind = User::whereHas('favorites', function ($query) use ($game) {
                     $query->whereIn('team_id', [$game->home_team_id, $game->away_team_id]);
                 })->where('remind_time', $minute)
+                    ->where('receive_reminder', true)
                     ->get();
 
+                // リマインダー生成
                 $formattedDate = Carbon::parse($game->utc_date)->timezone('Asia/Tokyo')->format('m月d日 - H:i');
                 $stage = $this->getStage($game);
                 $remainingTimeMessage = $this->getRemainingTimeMessage($minute);
@@ -47,6 +50,12 @@ class SendReminder extends Command
                     $this->sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage);
                 }
             }
+        }
+
+        if ($hasErrors) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -82,6 +91,17 @@ class SendReminder extends Command
         }
     }
 
+    private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
+    {
+        return "$user->name さん\n\n".
+            "試合が近づいています！\n\n".
+            "{$game->competition->name}{$stage}\n".
+            "{$game->homeTeam->name} vs {$game->awayTeam->name}\n\n".
+            "$formattedDate\n\n".
+            "$remainingTimeMessage\n\n".
+            'お見逃しなく！';
+    }
+
     private function sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage)
     {
         if ($user->line_user_id) {
@@ -90,7 +110,9 @@ class SendReminder extends Command
                 $lineService->sendMessage($user->line_user_id, $message);
             } catch (\Exception $e) {
                 Log::error('LINE message sending failed: '.$e->getMessage());
+                $hasErrors = true;
             }
+
         } else {
             try {
                 Mail::send(new GameReminderMail($user->email, [
@@ -102,18 +124,8 @@ class SendReminder extends Command
                 ]));
             } catch (\Exception $e) {
                 Log::error('Mail sending failed: '.$e->getMessage());
+                $hasErrors = true;
             }
         }
-    }
-
-    private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
-    {
-        return "$user->name さん\n\n".
-            "試合が近づいています！\n\n".
-            "{$game->competition->name}{$stage}\n".
-            "{$game->homeTeam->name} vs {$game->awayTeam->name}\n\n".
-            "$formattedDate\n\n".
-            "$remainingTimeMessage\n\n".
-            'お見逃しなく！';
     }
 }

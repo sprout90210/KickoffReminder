@@ -45,7 +45,7 @@ class TeamController extends Controller
         if (! $nextGame) {
             return response()->json(['message' => 'データが見つかりませんでした。'], 404);
         }
-        
+
         return response()->json($nextGame, 200);
     }
 }

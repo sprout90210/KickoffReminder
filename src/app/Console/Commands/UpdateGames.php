@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Game;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateGames extends Command
 {
@@ -37,8 +39,8 @@ class UpdateGames extends Command
                 'X-Auth-Token' => $token,
             ],
         ]);
-
-        $competition_ids = [2014, 2021, 2015, 2002, 2019, 2001];
+        $hasErrors = false;
+        $competition_ids = [2001, 2002, 2014, 2015, 2019, 2021];
 
         foreach ($competition_ids as $competition_id) {
             try {
@@ -63,12 +65,16 @@ class UpdateGames extends Command
                 }
                 Game::upsert($bulkData, ['id'], ['competition_id', 'season_id', 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score', 'status', 'stage', 'group', 'utc_date', 'last_updated']);
 
-                return 0;
-
-            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-                $this->error('リクエストに失敗しました: '.$e->getMessage());
-                return 1;
+            } catch (GuzzleException $e) {
+                $this->error("Request failed for competition ID {$competition_id}: {$e->getMessage()}");
+                Log::error('UpdateGames failed', [
+                    'exception' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                $hasErrors = true;
             }
         }
+
+        return $hasErrors ? 1 : 0;
     }
 }
