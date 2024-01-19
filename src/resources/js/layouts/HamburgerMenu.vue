@@ -46,9 +46,9 @@ import { useRouter } from "vue-router";
 
 const store = useStore();
 const router = useRouter();
-const isLoggedIn = computed(() => store.state.isLoggedIn);
-const isLineUser = computed(() => store.state.isLineUser);
-const isMenuOpen = computed(() => store.state.isMenuOpen);
+const isLoggedIn = computed(() => store.state.auth.isLoggedIn);
+const isLineUser = computed(() => store.state.auth.isLineUser);
+const isMenuOpen = computed(() => store.state.ui.isMenuOpen);
 
 const toggleMenu = () => {
   store.commit("toggleMenu");
@@ -58,8 +58,12 @@ const logout = () => {
   axios
     .post("/api/logout")
     .then((res) => {
+      store.dispatch("userStatusUpdate", {
+        isLoggedIn: false,
+        isLineUser: false,
+        receiveReminder: false,
+      });
       store.dispatch("triggerPopup", { message: "ログアウトしました。" });
-      store.dispatch("logout");
       router.push("/");
     })
     .catch((e) => {

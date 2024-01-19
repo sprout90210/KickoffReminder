@@ -22,10 +22,8 @@ import handleError from "../modules/HandleError.js";
 import Loading from "../components/Loading.vue";
 import FavoriteTeam from "../components/FavoriteTeam.vue";
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
-const store = useStore();
 const router = useRouter();
 const isLoading = ref(true);
 const favorites = ref([]);

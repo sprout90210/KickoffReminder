@@ -29,9 +29,8 @@ class TeamStandingsTest extends TestCase
         $response->assertJsonStructure([
             '*' => [
                 'competition_id', 'season_id', 'team_id',
-                'position', 'played_games', 'won', 'draw', 'lost',
-                'goals_for', 'goals_against', 'goal_difference', 'points',
-                'team' => ['id', 'name', 'short_name', 'crest', 'website_url', 'youtube_url', 'instagram_url', 'twitter_url'],
+                'position', 'played_games', 'won', 'draw', 'lost', 'goals_for', 'goals_against', 'goal_difference', 'points',
+                'team' => ['id', 'name', 'short_name', 'crest'],
             ],
         ]);
     }

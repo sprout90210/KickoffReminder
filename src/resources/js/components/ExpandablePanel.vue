@@ -95,9 +95,7 @@ import Game from "./Game.vue";
 import NotFound from "./NotFound.vue";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { useStore } from "vuex";
 
-const store = useStore();
 const route = useRoute();
 const isOpen = ref(false);
 const isLoading = ref(true);

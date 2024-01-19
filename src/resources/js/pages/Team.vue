@@ -6,7 +6,10 @@
         v-show="!standingsLoading && activeTab === 'standings'"
         :standings="standings"
       />
-      <Games v-show="!resultsLoading && activeTab === 'results'" :games="results" />
+      <Games
+        v-show="!resultsLoading && activeTab === 'results'"
+        :games="results"
+      />
       <Games
         v-show="!schedulesLoading && activeTab === 'schedules'"
         :games="schedules"
@@ -41,7 +44,7 @@ const standingsLoading = ref(true);
 const resultsLoading = ref(true);
 const schedulesLoading = ref(true);
 const teamId = computed(() => route.params.teamId);
-const activeTab = computed(() => store.state.activeTab);
+const activeTab = computed(() => store.state.ui.activeTab);
 
 const fetchData = (type, loadingRef, dataRef, endpoint) => {
   loadingRef.value = true;

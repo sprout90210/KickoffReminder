@@ -20,7 +20,7 @@ import { useStore } from "vuex";
 
 const route = useRoute();
 const store = useStore();
-const isLoggedIn = computed(() => store.state.isLoggedIn);
+const isLoggedIn = computed(() => store.state.auth.isLoggedIn);
 
 onMounted(() => {
   if (route.query.line_login === "success") {

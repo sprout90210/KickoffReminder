@@ -121,7 +121,12 @@ const submitForm = handleSubmit(() => {
     axios
       .post("/api/register", userData)
       .then((res) => {
-        store.commit("setLoggedIn", true);
+        store.dispatch("userStatusUpdate", {
+          isLoggedIn: res.data.isLoggedIn,
+          isLineUser: res.data.isLineUser,
+          remindTime: res.data.remindTime,
+          receiveReminder: res.data.receiveReminder,
+        });
         store.dispatch("triggerPopup", { message: "アカウントを作成しました。", color: "green" });
         router.push("/");
       })

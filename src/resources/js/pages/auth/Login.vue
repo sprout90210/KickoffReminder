@@ -89,8 +89,13 @@ const submitForm = handleSubmit(() => {
   axios.get("/sanctum/csrf-cookie").then(() => {
     axios
       .post("/api/login", credentials)
-      .then(() => {
-        store.commit("setLoggedIn", true);
+      .then((res) => {
+        store.dispatch("userStatusUpdate", {
+          isLoggedIn: res.data.isLoggedIn,
+          isLineUser: res.data.isLineUser,
+          remindTime: res.data.remindTime,
+          receiveReminder: res.data.receiveReminder,
+        });
         store.dispatch("triggerPopup", {
           message: "ログインに成功しました。", color: "green"
         });

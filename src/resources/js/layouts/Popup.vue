@@ -14,9 +14,9 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const isShow = computed(() => store.state.showPopup);
-const message = computed(() => store.state.popupMessage);
-const color= computed(() => store.state.popupColor);
+const isShow = computed(() => store.state.ui.showPopup);
+const message = computed(() => store.state.ui.popupMessage);
+const color = computed(() => store.state.ui.popupColor);
 const backgroundColorClass = computed(() => {
   switch (color.value) {
     case 'red':

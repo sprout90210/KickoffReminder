@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\reminder;
 
+use App\Models\Competition;
 use App\Models\Favorite;
 use App\Models\Game;
 use App\Models\Team;
@@ -17,7 +18,8 @@ class IndexReminderTest extends TestCase
     {
         $user = User::factory()->create();
         $team = Team::factory()->create();
-        $game = Game::factory()->create(['home_team_id' => $team->id, 'away_team_id' => $team->id, 'status' => 'TIMED']);
+        $competition = Competition::factory()->create();
+        $game = Game::factory()->create(['home_team_id' => $team->id, 'away_team_id' => $team->id, 'competition_id' => $competition->id, 'status' => 'TIMED']);
         Favorite::create([
             'user_id' => $user->id,
             'team_id' => $team->id,
@@ -26,6 +28,13 @@ class IndexReminderTest extends TestCase
         $response = $this->actingAs($user)->getJson('/api/reminders');
 
         $response->assertStatus(200);
+        $response->assertJsonStructure(['reminders' => [
+            '*' => ['id', 'home_team_score', 'away_team_score', 'matchday', 'status', 'stage', 'group', 'utc_date', 'last_updated', 'competition_id', 'home_team_id', 'away_team_id',
+                'competition' => ['id', 'name', 'competition_type', 'current_season_id', 'emblem'],
+                'home_team' => ['id', 'name', 'short_name', 'crest', 'venue'],
+                'away_team' => ['id', 'name', 'short_name', 'crest', 'venue'],
+            ],
+        ]]);
     }
 
     public function testReminderIndexWithoutReminders()
@@ -37,7 +46,6 @@ class IndexReminderTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'reminders' => [],
-            'remindTime' => $user->remind_time,
         ]);
     }
 }

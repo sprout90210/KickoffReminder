@@ -22,7 +22,12 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['isLoggedIn' => true], 201);
+        return response()->json([
+            'isLoggedIn' => true,
+            'isLineUser' => false,
+            'remindTime' => $user->remind_time,
+            'receiveReminder' => true,
+        ], 201);
     }
 
     public function update(UpdateUserRequest $request)

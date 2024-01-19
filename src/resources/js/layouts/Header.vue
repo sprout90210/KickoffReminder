@@ -29,7 +29,7 @@ import { computed, watch } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const isMenuOpen = computed(() => store.state.isMenuOpen);
+const isMenuOpen = computed(() => store.state.ui.isMenuOpen);
 
 const toggleMenu = () => {
   store.commit("toggleMenu");
