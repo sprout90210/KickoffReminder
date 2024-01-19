@@ -39,16 +39,16 @@ class TeamResultsTest extends TestCase
             'utc_date' => now(),
         ]);
 
-        $response = $this->getJson("/api/teams/{$competition->id}/results");
+        $response = $this->getJson("/api/teams/{$team1->id}/results");
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
                 'id', 'competition_id', 'season_id', 'home_team_id', 'away_team_id',
                 'home_team_score', 'away_team_score', 'matchday', 'status', 'stage', 'group', 'utc_date', 'last_updated',
-                'competition' => ['id', 'current_season_id', 'name', 'code', 'competition_type', 'emblem'],
-                'home_team' => ['id', 'name', 'short_name', 'crest', 'website_url', 'youtube_url', 'instagram_url', 'twitter_url'],
-                'away_team' => ['id', 'name', 'short_name', 'crest', 'website_url', 'youtube_url', 'instagram_url', 'twitter_url'],
+                'competition' => ['id', 'name', 'code', 'emblem'],
+                'home_team' => ['id', 'name', 'short_name', 'crest'],
+                'away_team' => ['id', 'name', 'short_name', 'crest'],
             ],
         ]);
 

@@ -109,8 +109,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	const isLoggedIn = store.state.isLoggedIn;
-	const isLineUser = store.state.isLineUser;
+	const isLoggedIn = store.state.auth.isLoggedIn;
+	const isLineUser = store.state.auth.isLineUser;
 	const authRequiredPages = [
 		"EditUser",
 		"DeleteUser",

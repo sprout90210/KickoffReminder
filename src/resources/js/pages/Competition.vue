@@ -40,7 +40,7 @@ const standingsLoading = ref(true);
 const resultsLoading = ref(true);
 const schedulesLoading = ref(true);
 const competitionId = computed(() => route.params.competitionId);
-const activeTab = computed(() => store.state.activeTab );
+const activeTab = computed(() => store.state.ui.activeTab );
 
 const fetchData = (type, loadingRef, dataRef, endpoint) => {
   loadingRef.value = true;

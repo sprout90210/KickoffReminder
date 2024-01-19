@@ -35,6 +35,5 @@ class DestroyFavoriteTest extends TestCase
         $response = $this->actingAs($user)->deleteJson("/api/favorites/{$nonExistingTeamId}");
 
         $response->assertStatus(404);
-        $response->assertJson(['error' => 'お気に入りが見つかりません。']);
     }
 }

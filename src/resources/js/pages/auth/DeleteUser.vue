@@ -40,7 +40,7 @@ const router = useRouter();
 const store = useStore();
 const password = ref("");
 const isSubmitting = ref(false);
-const isLineUser = computed(() => store.state.isLineUser);
+const isLineUser = computed(() => store.state.auth.isLineUser);
 const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "退会する"));
 
 const deleteUser = () => {
@@ -48,7 +48,12 @@ const deleteUser = () => {
   axios
     .delete("/api/user", { data: { password: password.value } })
     .then((res) => {
-      store.dispatch("logout");
+      store.dispatch("userStatusUpdate", {
+        isLoggedIn: false,
+        isLineUser: false,
+        receiveReminder: false,
+        remindTime: false,
+      });
       store.dispatch("triggerPopup", { message: "退会しました。", color: "green" });
       router.push("/");
     })

@@ -18,7 +18,7 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const activeTab = computed(() => store.state.activeTab );
+const activeTab = computed(() => store.state.ui.activeTab );
 const tabs = [
   { tabName: "standings", label: "順位" },
   { tabName: "results", label: "結果" },

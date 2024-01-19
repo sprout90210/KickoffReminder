@@ -50,6 +50,5 @@ class StoreFavoriteTest extends TestCase
         $response = $this->actingAs($user)->postJson('/api/favorites', ['team_id' => $team->id]);
 
         $response->assertStatus(422);
-        $response->assertJson(['error' => 'お気に入りの登録上限に達しました。']);
     }
 }

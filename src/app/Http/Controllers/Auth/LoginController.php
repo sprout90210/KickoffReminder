@@ -17,8 +17,15 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
-            return response()->json(['message' => 'ログインに成功しました。'], 200);
+            return response()->json([
+                'message' => 'ログインに成功しました。',
+                'isLoggedIn' => true,
+                'isLineUser' => false,
+                'receiveReminder' => $user->receive_reminder,
+                'remindTime' => $user->remind_time,
+            ], 200);
         }
 
         $request->session()->regenerate();
@@ -42,6 +49,8 @@ class LoginController extends Controller
         return response()->json([
             'isLoggedIn' => Auth::check(),
             'isLineUser' => $user ? $user->isLineUser() : false,
+            'remindTime' => $user ? $user->remind_time : false,
+            'receiveReminder' => $user ? $user->receive_reminder : false,
         ], 200);
     }
 }
