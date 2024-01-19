@@ -28,10 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function (Request $request) {
         return $request->user();
     });
-    Route::get('reminders', [ReminderController::class, 'index']);
     Route::get('favorites', [FavoriteController::class, 'index']);
     Route::post('favorites', [FavoriteController::class, 'store']);
     Route::delete('favorites/{team_id}', [FavoriteController::class, 'destroy']);
+    Route::get('reminders', [ReminderController::class, 'index']);
+    Route::put('receive-reminder', [ReminderController::class, 'updateReceiveReminder']);
     Route::put('remind-time', [ReminderController::class, 'updateRemindTime']);
 });
 

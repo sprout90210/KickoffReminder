@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Game extends Model
 {
@@ -25,23 +26,36 @@ class Game extends Model
         'last_updated',
     ];
 
-    public function competition()
+    public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
     }
 
-    public function season()
+    public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);
     }
 
-    public function homeTeam()
+    public function homeTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'home_team_id');
     }
 
-    public function awayTeam()
+    public function awayTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'away_team_id');
+    }
+
+    public static function getReminders($teamIds)
+    {
+        return self::with(['homeTeam', 'awayTeam', 'competition'])
+            ->where(function ($query) use ($teamIds) {
+                $query->whereIn('home_team_id', $teamIds)
+                    ->orWhereIn('away_team_id', $teamIds);
+            })
+            ->whereIn('status', ['SCHEDULED', 'TIMED'])
+            ->orderBy('utc_date', 'asc')
+            ->limit(30)
+            ->get();
     }
 }

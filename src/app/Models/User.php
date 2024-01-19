@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'line_user_id',
         'remind_time',
+        'receive_reminder',
     ];
 
     /**

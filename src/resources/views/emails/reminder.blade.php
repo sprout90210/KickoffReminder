@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>試合通知</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            color: white;
+            line-height: 1.4;
+            margin: 0;
+            padding: 20px;
+            color: gray;
         }
-        .game-details {
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
+        header {
+            padding: 25px 0;
+            text-align: center;
+            border-bottom: 1px solid gray;
+        }
+        header a {
+            color: #3d4852;
+            font-size: 19px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        h3{
+            text-align: center;
+        }
+        footer {
+            margin: 0 auto;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid gray;
+        }
+        footer p {
+            color: #b0adc5;
+            font-size: 12px;
+            text-align: center;
         }
     </style>
 </head>
+
+<header><a href="{{ config('app.url') }}">KickoffReminder</a></header>
+
 <body>
-    <h2 class="game-details">試合開始が近づいています!</h2>
     <br>
-    <p>{{ $name }}さん</p>
+    <h3>{{ $name }} さん</h3>
     <br>
+    <div>
+        <p>※日本時間</p>
+        <p>{{ $formattedDate }}</p>
+    </div>
     <p>
-        <span>{{ $formattedDate }}</span>
-        <span>
-            ※日本時間
-        </span>
+        <span>{{ $game->competition->name }}</span>
+        <span>{{ $stage }}</span>
     </p>
-    <br>
-    <p>
-        <span>
-            {{ $game->competition->name }}
-        </span>
-        <span>
-            {{ $stage }}
-        </span>
-    </p>
-    <h3>
-        <strong>
-            {{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}
-        </strong>
-    </h3>
+    <h2><strong>{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</strong></h2>
     <br>
 
     <p>{{ $remainingTimeMessage }}</p>
     <br>
+    <p>お見逃しなく！</p>
     <br>
-    <p><a href="{{ config('app.url') }}">Kickoff Reminder</a></p>
+    <br>
 </body>
+<footer>
+    <p>© 2023 KickoffReminder. All rights reserved.</p>
+</footer>
+
 </html>
