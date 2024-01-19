@@ -69,9 +69,7 @@ import TabList from "./TabList.vue";
 import Loading from "./Loading.vue";
 import { ref, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
 
-const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const team = ref();

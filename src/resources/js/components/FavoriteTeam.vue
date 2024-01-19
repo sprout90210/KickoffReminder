@@ -1,13 +1,11 @@
 <template>
-  <div
-    class="rounded-lg border flex flex-col justify-center items-center m-1 p-1 sm:p-2 w-24 sm:w-36 h-28 sm:h-36 text-xxs sm:text-sm text-gray-600"
-  >
-    <p
+  <div class="rounded-lg border flex flex-col justify-center items-center m-1 p-1 sm:p-2 w-24 sm:w-36 h-28 sm:h-36 text-sm text-gray-600">
+    <button
       @click="deleteFavorite"
-      class="mb-4 underline text-red-500 text-xxs sm:text-xs cursor-pointer"
+      class="mb-4 underline text-red-500 text-xs"
     >
       お気に入り解除
-    </p>
+    </button>
     <TeamCard :team="team" />
   </div>
 </template>
@@ -15,10 +13,7 @@
 <script setup>
 import TeamCard from "./TeamCard.vue";
 import FavoritesService from '../modules/FavoritesService.js';
-import { computed } from "vue";
-import { useStore } from "vuex";
 
-const store = useStore();
 const emit = defineEmits(["deleteFavorite"]);
 const props = defineProps({
   team: {
