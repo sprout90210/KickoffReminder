@@ -1,6 +1,9 @@
 <template>
   <div class="flex flex-col flex-grow items-center p-2 sm:px-5">
-    <h1 class="w-full my-3 sm:my-10 p-2 border-b-2 border-gray-400 text-center text-gray-600 font-semibold">お気に入り</h1>
+    <h1 class="mypage-header">
+      <span>お気に入りチーム</span>
+      <router-link to="/reminders" class="absolute bottom-2 right-16 text-blue-600 hover:text-blue-700 text-sm underline">通知リスト</router-link>
+    </h1>
     <Loading v-if="isLoading" />
     <div v-else-if="favorites.length" class="flex flex-wrap justify-center max-w-4xl">
       <FavoriteTeam

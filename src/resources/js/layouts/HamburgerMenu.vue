@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 z-40 duration-300 pt-24 w-5/6 md:w-5/12 h-screen flex flex-col bg-gray-800 text-sm md:text-base text-white"
+    class="fixed top-0 z-40 duration-300 pt-24 w-5/6 md:w-5/12 h-screen flex flex-col bg-gray-800 text-lg text-white"
     :class="
       isMenuOpen
         ? 'left-0 md:left-auto md:right-0'
@@ -14,25 +14,23 @@
     </div>
     
     <ul v-if="isLoggedIn" class="flex flex-col items-center">
-      <li class="my-3 hover:underline">
+      <li class="my-4 hover:underline">
         <router-link to="/favorites" @click="toggleMenu">お気に入りチーム</router-link>
       </li>
-      <li class="my-3 hover:underline">
+      <li class="my-4 hover:underline">
         <router-link to="/reminders" @click="toggleMenu">通知リスト</router-link>
       </li>
-      <li v-if="!isLineUser" class="my-3 hover:underline">
+      <li v-if="!isLineUser" class="my-4 hover:underline">
         <router-link to="/user/edit" @click="toggleMenu">ユーザー情報変更</router-link>
       </li>
-      <li v-if="!isLineUser" class="my-3 hover:underline">
+      <li v-if="!isLineUser" class="my-4 hover:underline">
         <router-link to="/password/edit" @click="toggleMenu">パスワード変更</router-link>
       </li>
-      <li class="my-3 hover:underline">
+      <li class="my-4 hover:underline text-red-600">
         <router-link to="/user/delete" @click="toggleMenu">退会</router-link>
       </li>
-      <li class="my-3">
-        <button @click="logout" type="button" class="cursor-pointer hover:underline">
+      <li class="my-4 hover:underline text-red-600 cursor-pointer" @click="logout">
           ログアウト
-        </button>
       </li>
     </ul>
   </div>

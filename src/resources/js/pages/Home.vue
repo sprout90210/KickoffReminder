@@ -1,18 +1,8 @@
 <template>
   <div>
     <HomeHero />
-    <h2 class="home-section-header text-gray-700 bg-gray-100">通知の受け取り方</h2>
-    <div class="py-1 text-sm lg:text-lg flex flex-col lg:flex-row justify-center items-center bg-gray-100">
-      <Procedure img="/images/procedure1.png">新規登録またはログイン</Procedure>
-      <ArrowDownIcon class="w-12 h-12 m-1 lg:hidden" />
-      <ArrowRightIcon class="w-16 h-16 m-3 hidden lg:block" />
-      <Procedure img="/images/procedure2.png">好きなチームを探す</Procedure>
-      <ArrowDownIcon class="w-12 h-12 m-1 lg:hidden" />
-      <ArrowRightIcon class="w-16 h-16 m-3 hidden lg:block" />
-      <Procedure img="/images/procedure3.png">お気に入り登録を押す</Procedure>
-    </div>
-    <p class="text-center py-7 text-gray-500 text-sm font-bold bg-gray-100">※通知時間は通知リストから設定できます。</p>
-
+    <Directions />
+    
     <div class="bg-home-2 flex flex-col items-center justify-center text-white">
       <div class="flex flex-wrap justify-center my-5 text-lg sm:text-3xl font-bold">
         <p>好きなチームを探して</p>
@@ -55,10 +45,8 @@
 </template>
 
 <script setup>
-import ArrowRightIcon from "../components/icons/ArrowRightIcon.vue";
-import ArrowDownIcon from "../components/icons/ArrowDownIcon.vue";
 import HomeHero from "../components/home/HomeHero.vue";
-import Procedure from "../components/home/Procedure.vue";
+import Directions from "../components/home/Directions.vue";
 import CompetitionLink from "../components/home/CompetitionLink.vue";
 import TeamLink from "../components/home/TeamLink.vue";
 import UpcomingGames from "../components/home/UpcomingGames.vue";

@@ -8,8 +8,8 @@ const favoritesService = {
 			? `/api/favorites/${teamId}`
 			: "/api/favorites";
 		const message = isFavorite.value
-			? "お気に入り登録解除しました。"
-			: "お気に入りに登録しました。";
+			? "お気に入り解除しました。"
+			: "お気に入り登録しました。";
 
 		axios[action](endpoint, { team_id: teamId })
 			.then(() => {
@@ -30,7 +30,7 @@ const favoritesService = {
 			.then(() => {
 				emit("deleteFavorite", teamId);
 				store.dispatch("triggerPopup", {
-					message: "お気に入り登録解除しました。",
+					message: "お気に入り解除しました。",
 				});
 			})
 			.catch((e) => this.handleError(e, null));
