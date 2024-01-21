@@ -29,7 +29,7 @@ export default {
 			commit("setPopupMessage", { message, color });
 			setTimeout(() => {
 				commit("hidePopup");
-			}, 3000);
+			}, 2500);
 		},
 		changeActiveTab({ commit }, tabName) {
 			commit("setActiveTab", tabName);

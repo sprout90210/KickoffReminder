@@ -2,8 +2,8 @@
     <div
       role="alert"
       @click="hidePopup"
-      class="transition-transform opacity-90 z-10 duration-300 p-3.5 mr-20 rounded-md fixed top-20 md:top-24 left-0 text-xs sm:text-sm cursor-pointer"
-      :class="[isShow ? 'translate-x-3 sm:translate-x-10' : '-translate-x-full', backgroundColorClass]"
+      class="transition-transform z-30 duration-300 w-full h-16 md:h-20 fixed top-0 right-0 left-0 flex items-center justify-center text-base sm:text-lg font-bold cursor-pointer text-gray-200"
+      :class="[isShow ? 'translate-y-0 sm:translate-y-0' : '-translate-y-full', backgroundColorClass]"
     >
       {{ message }}
     </div>
@@ -20,13 +20,13 @@ const color = computed(() => store.state.ui.popupColor);
 const backgroundColorClass = computed(() => {
   switch (color.value) {
     case 'red':
-      return 'bg-red-400';
+      return 'bg-red-600';
     case 'blue':
-      return 'bg-blue-300';
+      return 'bg-blue-500';
     case 'green':
-      return 'bg-green-400';
+      return 'bg-green-500';
     default:
-      return 'bg-green-400';
+      return 'bg-green-500';
   }
 });
 
