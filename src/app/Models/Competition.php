@@ -56,7 +56,7 @@ class Competition extends Model
             ->whereIn('status', ['FINISHED', 'IN_PLAY'])
             ->orderBy('utc_date', 'desc')
             ->with(['homeTeam', 'awayTeam', 'competition'])
-            ->limit(50)
+            ->limit(100)
             ->get();
 
         return $results;
@@ -68,7 +68,7 @@ class Competition extends Model
             ->whereIn('status', ['TIMED', 'SCHEDULED'])
             ->orderBy('utc_date', 'asc')
             ->with(['homeTeam', 'awayTeam', 'competition'])
-            ->limit(50)
+            ->limit(100)
             ->get();
 
         return $schedules;
