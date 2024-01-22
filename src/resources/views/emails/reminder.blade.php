@@ -1,69 +1,93 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ja">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>試合通知</title>
     <style>
         body {
-            color: white;
-            line-height: 1.4;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            color: gray;
+            padding: 0;
+            background-color: #f4f4f4;
         }
         header {
-            padding: 25px 0;
+            background-color: #444;
+            color: #fff;
+            padding: 20px 0;
             text-align: center;
-            border-bottom: 1px solid gray;
         }
         header a {
-            color: #3d4852;
-            font-size: 19px;
+            color: #fff;
+            font-size: 24px;
             font-weight: bold;
             text-decoration: none;
         }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
         h3{
             text-align: center;
+            color: #444;
+        }
+        .game-info {
+            background-color: #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .game-info h2 {
+            margin: 10px 0;
         }
         footer {
-            margin: 0 auto;
-            padding: 20px 0;
+            background-color: #444;
+            color: #fff;
             text-align: center;
-            border-top: 1px solid gray;
+            padding: 20px 0;
+            margin-top: 20px;
         }
         footer p {
-            color: #b0adc5;
-            font-size: 12px;
-            text-align: center;
+            font-size: 14px;
         }
     </style>
 </head>
 
-<header><a href="{{ config('app.url') }}">KickoffReminder</a></header>
-
 <body>
-    <br>
-    <h3>{{ $name }} さん</h3>
-    <br>
-    <div>
-        <p>※日本時間</p>
-        <p>{{ $formattedDate }}</p>
+    <header>
+        <a href="{{ config('app.url') }}">Kickoff Reminder</a>
+    </header>
+
+    <div class="container">
+        <br>
+        <h3>{{ $name }} さん</h3>
+        <br>
+        <div class="game-info">
+            <p>※日本時間</p>
+            <p>{{ $formattedDate }}</p>
+            <p>
+                <span>{{ $game->competition->name }}</span>
+                <span>{{ $stage }}</span>
+            </p>
+            <h2><strong>{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</strong></h2>
+            <br>
+            <p>{{ $remainingTimeMessage }}</p>
+            <p>お見逃しなく！</p>
+        </div>
+        <br>
+        <ul>
+            <li>正しくメールが表示されない場合がございます。</li>
+            <li>本メールは、送信専用アドレスからお送りしておりますため、ご返信いただいてもご対応いたしかねますのであらかじめご了承ください。</li>
+            <li>メール配信停止をご希望の場合はお手数ですが<a href="{{ config('app.url') }}">KickoffReminder</a>よりお手続きください。</li>
+        </ul>
     </div>
-    <p>
-        <span>{{ $game->competition->name }}</span>
-        <span>{{ $stage }}</span>
-    </p>
-    <h2><strong>{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</strong></h2>
-    <br>
 
-    <p>{{ $remainingTimeMessage }}</p>
-    <br>
-    <p>お見逃しなく！</p>
-    <br>
-    <br>
+    <footer>
+        <p>© KickoffReminder. All rights reserved.</p>
+    </footer>
 </body>
-<footer>
-    <p>© 2023 KickoffReminder. All rights reserved.</p>
-</footer>
-
 </html>
