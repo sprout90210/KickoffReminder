@@ -2,7 +2,7 @@
   <div class="bg-home-1">
     <h1 class="text-5xl sm:text-8xl font-black">Kickoff Reminder</h1>
     <div class="text-lg sm:text-xl my-12 sm:mt-24 flex flex-col">
-      <p>サッカーのスケジュールを常に把握しよう。</p>
+      <p>サッカーの試合を常に把握しましょう。</p>
       <p>簡単な登録だけで、好きなチームの試合通知が受け取れます。</p>
     </div>
     <div v-if="!isLoggedIn" class="flex flex-wrap items-center justify-center">
@@ -21,6 +21,9 @@ import { useStore } from "vuex";
 const route = useRoute();
 const store = useStore();
 const isLoggedIn = computed(() => store.state.auth.isLoggedIn);
+const loginLine = () => {
+  location.href = "/line/login";
+};
 
 onMounted(() => {
   if (route.query.line_login === "success") {
