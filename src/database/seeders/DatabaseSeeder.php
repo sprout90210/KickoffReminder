@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-
 class DatabaseSeeder extends Seeder
 {
     public function run()
@@ -13,8 +12,6 @@ class DatabaseSeeder extends Seeder
             CompetitionSeeder::class,
             SeasonSeeder::class,
             TeamSeeder::class,
-            GameSeeder::class,
-            StandingSeeder::class,
         ]);
     }
 }
