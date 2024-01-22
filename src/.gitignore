@@ -1,3 +1,7 @@
+/database/seeders/FavoriteSeeder.php
+/database/seeders/StandingSeeder.php
+/database/seeders/GameSeeder.php
+/database/seeders/UserSeeder.php
 /node_modules
 /public/build
 /public/hot
