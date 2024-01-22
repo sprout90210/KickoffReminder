@@ -28,7 +28,7 @@
         <p class="text-red-700">{{ errors.email }}</p>
       </div>
 
-      <div class="flex flex-col h-72 w-full">
+      <div class="flex flex-col my-1 sm:my-3 w-full">
         <label for="contact">お問い合わせ内容</label>
         <textarea
           v-model="contact"
@@ -40,9 +40,7 @@
         <p class="text-red-700">{{ errors.contact }}</p>
       </div>
 
-      <button type="submit" :disabled="isSubmitting" class="custom-submit">
-        {{ buttonText }}
-      </button>
+      <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
   </div>
 </template>
@@ -62,7 +60,7 @@ const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "送信
 
 const schema = object({
   name: string().required("必須項目です"),
-  email: string().email("メールアドレスの形式ではありません"),
+  email: string().required("必須項目です").email("メールアドレスの形式ではありません"),
   contact: string().required("必須項目です"),
 });
 
