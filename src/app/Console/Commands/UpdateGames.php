@@ -59,11 +59,12 @@ class UpdateGames extends Command
                         'status' => $game->status,
                         'stage' => $game->stage,
                         'group' => $game->group,
+                        'matchday' => $game->matchday,
                         'utc_date' => Carbon::parse($game->utcDate)->format('Y-m-d H:i:s'),
                         'last_updated' => Carbon::parse($game->lastUpdated)->format('Y-m-d H:i:s'),
                     ];
                 }
-                Game::upsert($bulkData, ['id'], ['competition_id', 'season_id', 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score', 'status', 'stage', 'group', 'utc_date', 'last_updated']);
+                Game::upsert($bulkData, ['id'], ['competition_id', 'season_id', 'home_team_id', 'away_team_id', 'home_team_score', 'away_team_score', 'status', 'stage', 'group', 'matchday', 'utc_date', 'last_updated']);
 
             } catch (GuzzleException $e) {
                 $this->error("Request failed for competition ID {$competition_id}: {$e->getMessage()}");
