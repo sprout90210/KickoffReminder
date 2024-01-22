@@ -30,7 +30,7 @@
 
       <p class="mt-2">
         <input v-model="remember" id="remember" type="checkbox" />
-        <label for="remember"> ログインしたままにする </label>
+        <label for="remember">ログインしたままにする</label>
       </p>
 
       <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
@@ -40,7 +40,6 @@
       パスワードを忘れの方は
       <router-link to="/password/forgot" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
-
     <p class="my-3">
       アカウントを新規作成する方は
       <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
@@ -97,7 +96,7 @@ const submitForm = handleSubmit(() => {
           receiveReminder: res.data.receiveReminder,
         });
         store.dispatch("triggerPopup", {
-          message: "ログインに成功しました。", color: "green"
+          message: "ログインしました。", color: "green"
         });
         router.push("/");
       })

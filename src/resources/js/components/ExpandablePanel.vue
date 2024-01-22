@@ -78,11 +78,14 @@
     <tr :class="isOpen ? 'table-row' : 'hidden'" class="border-b-2 border-gray-400">
       <td colspan="11">
         <Loading v-if="isLoading" />
-        <NotFound v-else-if="!nextGame" />
-        <div v-else>
-          <p class="text-xxs text-right text-gray-400 pr-3 mt-4 border-b">※日本時間</p>
+        <div v-else-if="nextGame">
+          <p class="flex relative items-center justify-center px-3 py-1 border-b">
+            <span class="text-purple-400 text-sm">Next Match</span>
+            <span class="absolute right-1 text-xxs text-gray-500">※時刻は日本時間です</span>
+          </p>
           <Game :game="nextGame" />
         </div>
+        <NotFound v-else />
       </td>
     </tr>
   </tbody>

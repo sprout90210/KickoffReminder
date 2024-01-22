@@ -30,7 +30,7 @@ export default {
 			commit("setLoggedIn", isLoggedIn);
 			commit("setLineUser", isLineUser);
 			commit("setRemindTime", remindTime);
-			commit("setReceiveReminder", receiveReminder);
+			commit("setReceiveReminder", Boolean(receiveReminder));
 		},
 
 		async checkAuth({ dispatch }) {
@@ -41,7 +41,7 @@ export default {
 						isLoggedIn: res.data.isLoggedIn,
 						isLineUser: res.data.isLineUser,
 						remindTime: res.data.remindTime,
-						receiveReminder: res.data.receiveReminder,
+						receiveReminder: Boolean(res.data.receiveReminder),
 					});
 				})
 				.catch((e) => {

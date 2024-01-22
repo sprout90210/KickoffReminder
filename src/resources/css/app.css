@@ -70,3 +70,7 @@
 .home-section-header {
   @apply py-5 lg:py-7 text-xl text-center font-bold;
 }
+
+.mypage-header {
+  @apply w-full relative my-3 sm:my-10 p-2 border-b-2 border-gray-400 flex justify-center items-center text-gray-600 font-bold text-gray-600 text-lg;
+}

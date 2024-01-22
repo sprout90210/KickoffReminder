@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28 text-xxs sm:text-xs flex flex-col justify-center sm:px-5">
+  <div class="h-28 text-xs flex flex-col justify-center sm:px-5">
     <p class="flex justify-between text-gray-500 p-2">
       <span>
         <router-link
@@ -14,7 +14,7 @@
       <span v-else-if="game.status === 'FINISHED'">試合終了</span>
     </p>
 
-    <div class="h-20 flex items-center justify-center mb-1 sm:text-sm text-gray-700">
+    <div class="h-20 flex items-center justify-center mb-1 text-sm text-gray-700">
       <TeamCard :team="game.home_team" />
 
       <div class="w-20 flex flex-col items-center justify-center pb-4 sm:mx-10">
@@ -25,7 +25,7 @@
           </p>
         </div>
 
-        <div class="mt-1 text-lg font-semibold">
+        <div class="mt-1 text-xl font-bold">
           <p v-if="game.status === 'SCHEDULED'" class="text-sm font-light">時刻未定</p>
           <p v-else-if="game.status === 'TIMED'">{{ kickoff.time }}</p>
           <p v-else-if="game.status === 'IN_PLAY' || game.status === 'FINISHED'">
