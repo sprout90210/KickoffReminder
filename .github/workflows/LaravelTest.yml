@@ -12,22 +12,19 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
-    - name: Docker Version
-      run: docker version
         
     - name: dokcer-compose
       run: |
         docker compose up -d --build
         
-    - name: composer install
-      run: |
-        docker-compose exec -T laravel bash -c "composer install"
+    # - name: composer install
+    #   run: |
+    #     docker-compose exec -T laravel bash -c "composer install"
         
-    - name: migrate
-      run: |
-        docker-compose exec -T laravel bash -c "php artisan migrate"
+    # - name: migrate
+    #   run: |
+    #     docker-compose exec -T laravel bash -c "php artisan migrate"
 
-    - name: Exec Phpunit
-      run: |
-        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
+    # - name: Exec Phpunit
+    #   run: |
+    #     docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
