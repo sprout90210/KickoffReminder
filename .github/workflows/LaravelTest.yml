@@ -20,9 +20,9 @@ jobs:
       run: |
         docker compose up -d --build
         
-    - name: composer install
+    - name: composer version
       run: |
-        docker-compose exec -T laravel bash -c "composer install"
+        docker-compose exec -T laravel bash -c "composer -v"
         
     - name: migrate
       run: |
