@@ -1,4 +1,4 @@
-name: Laravel Test on Pull Request
+name: Laravel Test with Docker Compose
 
 on:
   pull_request:
@@ -6,67 +6,27 @@ on:
       - develop
 
 jobs:
-  run-tests:
+  laravel-test:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: kickoffreminder
-          MYSQL_USER: test
-          MYSQL_PASSWORD: test123
-        ports:
-          - 3306:3306
-
-      redis:
-        image: redis:latest
-        ports:
-          - 6379:6379
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, pdo_mysql
-        tools: composer, phpunit
-
-    - name: Copy .env
-      run: cp src/.env.example src/.env
+    - name: Set up Docker Compose
+      run: docker-compose -f docker-compose.yml up -d
 
     - name: Install Dependencies
-      run: |
-        cd src
-        composer install --prefer-dist --no-progress --no-suggest
+      run: docker exec laravel composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Copy .env
+      run: docker exec laravel cp .env.example .env
 
     - name: Generate Key
-      run: |
-        cd src
-        php artisan key:generate
-
-    - name: Directory Permissions
-      run: |
-        cd src
-        chmod -R 777 storage bootstrap/cache
+      run: docker exec laravel php artisan key:generate
 
     - name: Run Migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: kickoffreminder
-        DB_USERNAME: test
-        DB_PASSWORD: test123
-      run: |
-        cd src
-        php artisan migrate
+      run: docker exec laravel php artisan migrate
 
     - name: Run Tests
-      run: |
-        cd src
-        vendor/bin/phpunit
+      run: docker exec laravel vendor/bin/phpunit
