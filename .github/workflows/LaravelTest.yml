@@ -11,11 +11,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: dokcer-compose Laravel Init
+    - name: Docker Version
+      run: docker version
+        
+    - name: dokcer-compose
       run: |
-        docker-compose up -d
+        # docker-compose build
+        docker-compose up -d --build
         
     - name: composer install
       run: |
@@ -27,4 +31,4 @@ jobs:
 
     - name: Exec Phpunit
       run: |
-        docker-compose exec -T laravel bash -c "vendor/bin/phpunit"
+        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
