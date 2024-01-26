@@ -28,16 +28,16 @@
         <p class="text-red-700">{{ errors.password }}</p>
       </div>
 
-      <p class="mt-2">
+      <p class="my-3 flex items-center">
         <input v-model="remember" id="remember" type="checkbox" />
-        <label for="remember">ログインしたままにする</label>
+        <label for="remember" class="ml-1">ログインしたままにする</label>
       </p>
 
       <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
 
     <p class="mt-3">
-      パスワードを忘れの方は
+      パスワードをお忘れの方は
       <router-link to="/password/forgot" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
     <p class="my-3">
@@ -45,7 +45,7 @@
       <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
 
-    <div class="my-8 py-4 w-full border-t flex flex-col items-center">
+    <div class="my-5 w-full border-t flex flex-col items-center">
       <p class="my-4">外部サービスでログイン</p>
       <button @click="loginLine" class="line-login-link">LINEログイン</button>
     </div>
