@@ -18,7 +18,6 @@ jobs:
         
     - name: dokcer-compose
       run: |
-        # docker-compose build
         docker-compose up -d --build
         
     - name: composer install
