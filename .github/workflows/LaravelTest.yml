@@ -16,6 +16,7 @@ jobs:
     - name: dokcer-compose Laravel Init
       run: |
         docker-compose up -d
+        
     - name: composer install
       run: |
         docker-compose exec -T laravel bash -c "composer install"
