@@ -13,20 +13,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Compose
-      run: docker-compose -f docker-compose.yml up -d
+    - name: dokcer-compose Laravel Init
+      run: |
+        docker-compose up -d
+    - name: composer install
+      run: |
+        docker-compose exec -T laravel bash -c "composer install"
+        
+    - name: migrate
+        docker-compose exec -T laravel bash -c "php artisan migrate"
 
-    - name: Install Dependencies
-      run: docker exec laravel composer install --prefer-dist --no-progress --no-suggest
-
-    - name: Copy .env
-      run: docker exec laravel cp .env.example .env
-
-    - name: Generate Key
-      run: docker exec laravel php artisan key:generate
-
-    - name: Run Migrations
-      run: docker exec laravel php artisan migrate
-
-    - name: Run Tests
-      run: docker exec laravel vendor/bin/phpunit
+    - name: Exec Phpunit
+      run: |
+        docker-compose exec -T laravel bash -c "vendor/bin/phpunit"
