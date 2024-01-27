@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Copy .env file
-      run: cp src/.env.example src/.env
+      run: cp src/.env.example .env
         
     - name: dokcer compose
       run: |
@@ -25,17 +25,17 @@ jobs:
         
     - name: composer install
       run: |
-        docker exec -T laravel bash -c "composer install"
+        docker-compose exec -T laravel bash -c "composer install"
         
     - name: migrate
       run: |
-        docker exec -T laravel bash -c "php artisan migrate"
+        docker-compose exec -T laravel bash -c "php artisan migrate"
 
     - name: Exec Phpunit
       run: |
-        docker exec -T laravel bash -c "php vendor/bin/phpunit"
+        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
 
     - name: view laravel.log
       run: |
-        docker exec -T laravel bash -c "cat storage/logs/laravel.log"
+        docker-compose exec -T laravel bash -c "cat storage/logs/laravel.log"
       if: ${{ failure() }}
