@@ -1,8 +1,8 @@
 <template>
   <div class="custom-container">
     <h1 class="custom-header">退会</h1>
-    <div class="sm:w-96 px-6">
-      <p class="my-3">以下の注意事項をご確認して頂き、同意した上でパスワードを入力、退会するをクリックしてください。</p>
+    <form @submit.prevent="deleteUser" class="custom-form">
+      <p>以下の注意事項をご確認して頂き、同意した上でパスワードを入力、退会するをクリックしてください。</p>
       <p class="text-gray-500 my-3">※外部認証で作成されたアカウントはパスワード入力をせずに退会できます。</p>
       <ol class="list-decimal text-red-600 m-5">
         <li class="my-1">
@@ -12,8 +12,6 @@
           再度サービスを利用される際は、新しくユーザを作成する必要があります。以前のデータを移行することはできません。
         </li>
       </ol>
-    </div>
-    <form @submit.prevent="deleteUser" class="custom-form">
       <div v-if="!isLineUser" class="custom-form-field">
         <label for="password">パスワード</label>
         <input

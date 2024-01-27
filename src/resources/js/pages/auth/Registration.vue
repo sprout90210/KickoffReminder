@@ -43,7 +43,7 @@
       </div>
 
       <div class="custom-form-field">
-        <label for="password_confirmation">もう一度パスワードを入力してください</label>
+        <label for="password_confirmation">パスワードを再入力してください</label>
         <input
           v-model="password_confirmation"
           id="password_confirmation"
@@ -55,7 +55,7 @@
         <p class="text-red-700">{{ errors.password_confirmation }}</p>
       </div>
 
-      <p class="mt-3">
+      <p class="my-3">
         <router-link to="/terms" class="underline text-blue-500 hover:text-orange-600">利用規約</router-link>
         と
         <router-link to="/privacy" class="underline text-blue-500 hover:text-orange-600">プライバシーポリシー</router-link>
@@ -67,12 +67,12 @@
       </button>
     </form>
 
-    <p class="my-3 text-center">
-      既にアカウントをお持ちの場合は
+    <p class="my-5 text-center">
+      既にアカウントをお持ちの方は
       <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
 
-    <div class="mt-3 w-full border-t flex flex-col items-center">
+    <div class="my-5 w-full border-t flex flex-col items-center">
       <p class="my-4">外部サービスでログイン</p>
       <button @click="loginLine" class="line-login-link">LINEログイン</button>
     </div>
