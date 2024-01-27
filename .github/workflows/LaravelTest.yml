@@ -31,3 +31,8 @@ jobs:
     - name: Exec Phpunit
       run: |
         docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
+
+    - name: view laravel.log
+      run: |
+        docker-compose exec -T laravel bash -c "cat storage/logs/laravel.log"
+      if: ${{ failure() }}
