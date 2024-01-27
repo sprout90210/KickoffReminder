@@ -62,18 +62,15 @@ jobs:
         cd src
         chmod -R 777 storage bootstrap/cache
 
-    - name: Configure Database
+    - name: Configure .env
       run: |
         cd src
         echo "DB_CONNECTION=mysql" >> .env
-        echo "DB_HOST=127.0.0.1" >> .env
-        echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=kickoffreminder" >> .env
         echo "DB_USERNAME=test" >> .env
         echo "DB_PASSWORD=test123" >> .env
-        echo "REDIS_HOST=127.0.0.1" >> .env
-        echo "REDIS_PASSWORD=null" >> .env
-        echo "REDIS_PORT=6379" >> .env
+        echo "CACHE_DRIVER=redis" >> .env
+        echo "SESSION_DRIVER=redis" >> .env
 
     - name: Run Migrations
       run: |
@@ -84,7 +81,3 @@ jobs:
       run: |
         cd src
         vendor/bin/phpunit --colors=always
-
-    - name: Tear Down
-      if: always()
-      run: docker-compose down
