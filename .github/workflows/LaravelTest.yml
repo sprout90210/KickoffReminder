@@ -16,23 +16,23 @@ jobs:
     - name: Copy .env file
       run: cp src/.env.example src/.env
         
-    - name: dokcer-compose
+    - name: dokcer compose
       run: |
         docker compose up -d --build
         
     - name: composer install
       run: |
-        docker　compose exec -T laravel bash -c "composer install"
+        docker-compose exec -T laravel bash -c "composer install"
         
     - name: migrate
       run: |
-        docker　compose exec -T laravel bash -c "php artisan migrate"
+        docker-compose exec -T laravel bash -c "php artisan migrate"
 
     - name: Exec Phpunit
       run: |
-        docker　compose exec -T laravel bash -c "php vendor/bin/phpunit"
+        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
 
     - name: view laravel.log
       run: |
-        docker　compose exec -T laravel bash -c "cat storage/logs/laravel.log"
+        docker-compose exec -T laravel bash -c "cat storage/logs/laravel.log"
       if: ${{ failure() }}
