@@ -12,31 +12,79 @@ jobs:
   laravel-test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: kickoffreminder
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test123
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=10s
+          --health-retries=3
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, pdo_mysql
+        tools: composer, phpunit
+
     - name: Copy .env file
       run: cp src/.env.example src/.env
-        
-    - name: docker compose
-      run: |
-        docker compose up -d
-        docker-compose exec -T laravel bash -c "composer install"
-        # docker-compose exec -T laravel bash -c "cp .env.example .env"
-        docker-compose exec -T laravel bash -c "php artisan key:generate"
-        docker-compose exec -T laravel bash -c "php artisan config:cache"
-        docker-compose exec -T laravel bash -c "sleep 200"
 
-    - name: migrate
+    - name: Install Dependencies
       run: |
-        docker-compose exec -T laravel bash -c "php artisan migrate"
+        cd src
+        composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Exec Phpunit
+    - name: Generate Key
       run: |
-        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
+        cd src
+        php artisan key:generate
 
-    - name: view laravel.log
+    - name: Directory Permissions
       run: |
-        docker-compose exec -T laravel bash -c "cat storage/logs/laravel.log"
-      if: ${{ failure() }}
+        cd src
+        chmod -R 777 storage bootstrap/cache
+
+    - name: Configure Database
+      run: |
+        cd src
+        echo "DB_CONNECTION=mysql" >> .env
+        echo "DB_HOST=127.0.0.1" >> .env
+        echo "DB_PORT=3306" >> .env
+        echo "DB_DATABASE=kickoffreminder" >> .env
+        echo "DB_USERNAME=test" >> .env
+        echo "DB_PASSWORD=test123" >> .env
+        echo "REDIS_HOST=127.0.0.1" >> .env
+        echo "REDIS_PASSWORD=null" >> .env
+        echo "REDIS_PORT=6379" >> .env
+
+    - name: Run Migrations
+      run: |
+        cd src
+        php artisan migrate
+
+    - name: Run PHPUnit Tests
+      run: |
+        cd src
+        vendor/bin/phpunit --colors=always
+
+    - name: Tear Down
+      if: always()
+      run: docker-compose down
