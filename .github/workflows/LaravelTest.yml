@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - develop
+  push:
+    branches:
+      - develop
 
 jobs:
   laravel-test:
@@ -22,17 +25,17 @@ jobs:
         
     - name: composer install
       run: |
-        docker-compose exec -T laravel bash -c "composer install"
+        docker exec -T laravel bash -c "composer install"
         
     - name: migrate
       run: |
-        docker-compose exec -T laravel bash -c "php artisan migrate"
+        docker exec -T laravel bash -c "php artisan migrate"
 
     - name: Exec Phpunit
       run: |
-        docker-compose exec -T laravel bash -c "php vendor/bin/phpunit"
+        docker exec -T laravel bash -c "php vendor/bin/phpunit"
 
     - name: view laravel.log
       run: |
-        docker-compose exec -T laravel bash -c "cat storage/logs/laravel.log"
+        docker exec -T laravel bash -c "cat storage/logs/laravel.log"
       if: ${{ failure() }}
