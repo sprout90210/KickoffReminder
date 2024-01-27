@@ -15,12 +15,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Copy .env file
+      run: cp src/.env.example src/.env
         
     - name: docker compose
       run: |
         docker compose up -d
         docker-compose exec -T laravel bash -c "composer install"
-        docker-compose exec -T laravel bash -c "cp .env.example .env"
+        # docker-compose exec -T laravel bash -c "cp .env.example .env"
         docker-compose exec -T laravel bash -c "php artisan key:generate"
         docker-compose exec -T laravel bash -c "php artisan config:cache"
         docker-compose exec -T laravel bash -c "sleep 200"
