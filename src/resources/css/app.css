@@ -16,7 +16,7 @@
 }
 
 .custom-container {
-  @apply my-10 flex flex-col items-center text-xs sm:text-sm text-gray-700 flex-grow;
+  @apply my-10 flex flex-col items-center text-sm text-gray-700 flex-grow;
 }
 .hero-container {
   @apply relative pt-8 pb-16 sm:pb-16 text-gray-700 bg-gradient-to-tr from-gray-300 via-gray-50 to-white;
@@ -33,16 +33,17 @@
 }
 
 .custom-form {
-  @apply flex flex-col items-center px-6 w-full sm:w-96;
+  @apply flex flex-col items-center w-72 sm:w-96 border rounded-lg p-6 my-3;
 }
 .custom-form-field {
-  @apply h-16 flex flex-col my-1 sm:my-3 w-full;
+  @apply h-16 flex flex-col my-1 w-full;
 }
 .custom-input {
-  @apply h-8 sm:h-10 rounded text-xs sm:text-sm;
+  @apply h-8 rounded text-sm w-full;
 }
+
 .custom-header {
-  @apply mb-7 text-xl sm:text-2xl font-bold text-center;
+  @apply mb-7 text-2xl font-bold text-center;
 }
 .section-title {
   @apply text-sm sm:text-lg font-bold mt-12 mb-3;
@@ -55,7 +56,7 @@
 }
 
 .auth-link {
-  @apply py-3 px-7 text-center block rounded duration-200 text-base;
+  @apply py-3 w-36 block rounded duration-200 text-center text-base;
 }
 .registration-link {
   @apply auth-link text-white hover:text-gray-200 border border-white hover:border-gray-300;

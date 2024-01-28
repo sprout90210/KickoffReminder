@@ -18,14 +18,14 @@
       </div>
       <button type="submit" :disabled="isSubmitting" class="custom-submit">{{ buttonText }}</button>
     </form>
-    <div class="mt-3">
-      アカウントの新規作成は
+    <p class="mt-5">
+      アカウント新規作成する方は
       <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
-    </div>
-    <div class="my-3">
-      ログインは
+    </p>
+    <p class="my-3">
+      ログインする方は
       <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
-    </div>
+    </p>
   </div>
 </template>
 
