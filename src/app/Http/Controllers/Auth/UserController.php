@@ -21,6 +21,7 @@ class UserController extends Controller
         ]);
 
         Auth::login($user);
+        $user = $user->fresh();
 
         return response()->json([
             'isLoggedIn' => true,
