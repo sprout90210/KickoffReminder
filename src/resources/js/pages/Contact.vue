@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import handleError from "../modules/handleError.js";
+import handleError from "../modules/HandleError.js";
 import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
