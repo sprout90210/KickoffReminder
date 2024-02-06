@@ -10,7 +10,7 @@ import Terms from "./pages/Terms.vue";
 import Privacy from "./pages/Privacy.vue";
 import Contact from "./pages/Contact.vue";
 import NotFound from "./pages/NotFound.vue";
-import Registration from "./pages/auth/registration.vue";
+import Registration from "./pages/auth/Registration.vue";
 import Login from "./pages/auth/Login.vue";
 import ForgotPassword from "./pages/auth/ForgotPassword.vue";
 import ResetPassword from "./pages/auth/ResetPassword.vue";
