@@ -15,6 +15,9 @@
     
     <ul v-if="isLoggedIn" class="flex flex-col items-center">
       <li class="my-4 hover:underline">
+        <router-link to="/" @click="toggleMenu">ホームに戻る</router-link>
+      </li>
+      <li class="my-4 hover:underline">
         <router-link to="/favorites" @click="toggleMenu">お気に入りチーム</router-link>
       </li>
       <li class="my-4 hover:underline">
@@ -26,7 +29,7 @@
       <li v-if="!isLineUser" class="my-4 hover:underline">
         <router-link to="/password/edit" @click="toggleMenu">パスワード変更</router-link>
       </li>
-      <li class="my-4 hover:underline text-red-600">
+      <li class="my-4 hover:underline">
         <router-link to="/user/delete" @click="toggleMenu">退会</router-link>
       </li>
       <li class="my-4 hover:underline text-red-600 cursor-pointer" @click="logout">
@@ -37,7 +40,6 @@
 </template>
 
 <script setup>
-import handleError from "../modules/HandleError.js";
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -65,7 +67,7 @@ const logout = () => {
       router.push("/");
     })
     .catch((e) => {
-      handleError(e);
+      store.dispatch("handleError", { error: e });
     })
     .finally(() => {
       store.commit("toggleMenu");

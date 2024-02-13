@@ -59,7 +59,6 @@
 </template>
 
 <script setup>
-import handleError from "../modules/HandleError.js";
 import StadiumIcon from "./icons/StadiumIcon.vue";
 import YoutubeIcon from "./icons/YoutubeIcon.vue";
 import TwitterIcon from "./icons/TwitterIcon.vue";
@@ -90,7 +89,6 @@ const getTeam = () => {
       team.value = res.data;
     })
     .catch((e) => {
-      handleError(e);
       router.push("/not-found");
     })
     .finally(() => {
