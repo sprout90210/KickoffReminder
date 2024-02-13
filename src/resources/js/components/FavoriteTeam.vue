@@ -12,7 +12,6 @@
 
 <script setup>
 import TeamCard from "./TeamCard.vue";
-import FavoritesService from '../modules/FavoritesService.js';
 
 const emit = defineEmits(["deleteFavorite"]);
 const props = defineProps({
@@ -23,6 +22,6 @@ const props = defineProps({
 });
 
 const deleteFavorite = () => {
-  FavoritesService.deleteFavorite(props.team.id, emit);
+  emit("deleteFavorite", props.team.id);
 };
 </script>

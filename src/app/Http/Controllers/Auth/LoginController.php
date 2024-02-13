@@ -30,7 +30,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return response()->json(['message' => 'ログイン情報が正しくありません。'], 401);
+        return response()->json(['error' => 'ログイン情報が正しくありません。'], 401);
     }
 
     public function logout(Request $request)

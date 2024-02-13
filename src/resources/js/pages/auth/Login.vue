@@ -53,7 +53,6 @@
 </template>
 
 <script setup>
-import handleAuthError from "../../modules/HandleAuthError.js";
 import { ref, computed } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -95,18 +94,18 @@ const submitForm = handleSubmit(() => {
           remindTime: res.data.remindTime,
           receiveReminder: res.data.receiveReminder,
         });
-        store.dispatch("triggerPopup", {
-          message: "ログインしました。", color: "green"
-        });
+        store.dispatch("triggerPopup", { message: "ログインしました。", color: "green" });
         router.push("/");
       })
       .catch((e) => {
         password.value = "";
         isSubmitting.value = false;
-        handleAuthError(e);
+        store.dispatch("handleAuthError", { error: e });
       });
   });
 });
 
-const loginLine = () => (location.href = "/line/login");
+const loginLine = () => {
+  location.href = "/line/login"
+};
 </script>

@@ -25,11 +25,11 @@ class FavoriteController extends Controller
         $team_id = $request->team_id;
 
         if ($this->isAlreadyFavorited($user_id, $team_id)) {
-            return response()->json(['message' => 'すでにお気に入り登録済みです。'], 409);
+            return response()->json(['error' => 'すでにお気に入り登録済みです。'], 409);
         }
 
         if ($this->isFavoritesLimitReached($user_id)) {
-            return response()->json(['message' => 'お気に入り登録数の上限に達しました。'], 422);
+            return response()->json(['error' => 'お気に入り登録数の上限に達しました。'], 422);
         }
 
         Favorite::create([
@@ -49,7 +49,7 @@ class FavoriteController extends Controller
             return response()->json(['message' => 'お気に入りを解除しました。'], 204);
         }
 
-        return response()->json(['message' => 'お気に入り削除に失敗しました。'], 404);
+        return response()->json(['error' => 'お気に入り解除に失敗しました。'], 404);
     }
 
     protected function isAlreadyFavorited($userId, $teamId)

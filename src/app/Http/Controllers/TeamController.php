@@ -11,7 +11,7 @@ class TeamController extends Controller
         $team = Team::find($teamId);
 
         if (! $team) {
-            return response()->json(['message' => 'データが見つかりませんでした。'], 404);
+            return response()->json(['error' => 'データが見つかりませんでした。'], 404);
         }
 
         return response()->json($team, 200);
@@ -43,7 +43,7 @@ class TeamController extends Controller
         $nextGame = Team::getNextGame($teamId);
 
         if (! $nextGame) {
-            return response()->json(['message' => 'データが見つかりませんでした。'], 404);
+            return response()->json(['error' => 'データが見つかりませんでした。'], 404);
         }
 
         return response()->json($nextGame, 200);

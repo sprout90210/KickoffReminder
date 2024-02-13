@@ -48,7 +48,6 @@
 </template>
 
 <script setup>
-import handleAuthError from "../../modules/HandleAuthError.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -91,7 +90,7 @@ const submitForm = handleSubmit(() => {
     })
     .catch((e) => {
       isSubmitting.value = false;
-      handleAuthError(e);
+      store.dispatch("handleAuthError", { error: e });
     });
 });
 </script>

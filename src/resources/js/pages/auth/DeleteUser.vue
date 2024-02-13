@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import handleAuthError from "../../modules/HandleAuthError.js";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -57,7 +56,7 @@ const deleteUser = () => {
     })
     .catch((e) => {
       isSubmitting.value = false;
-      handleAuthError(e);
+      store.dispatch("handleAuthError", { error: e });
     });
 };
 </script>

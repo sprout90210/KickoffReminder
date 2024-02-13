@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import handleError from "../modules/HandleError.js";
 import TabList from "./TabList.vue";
 import Loading from "./Loading.vue";
 import { ref, computed, watch, onMounted } from "vue";
@@ -43,7 +42,6 @@ const getCompetition = () => {
       competition.value = res.data;
     })
     .catch((e) => {
-      handleError(e);
       router.push("/not-found");
     })
     .finally(() => {

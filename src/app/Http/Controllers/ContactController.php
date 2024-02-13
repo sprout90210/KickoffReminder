@@ -20,7 +20,7 @@ class ContactController extends Controller
         } catch (\Exception $e) {
             Log::error('Mail sending failed: '.$e->getMessage());
 
-            return response()->json(['message' => 'お問合せ送信に失敗しました。'], 500);
+            return response()->json(['error' => 'お問合せ送信に失敗しました。'], 500);
         }
     }
 }

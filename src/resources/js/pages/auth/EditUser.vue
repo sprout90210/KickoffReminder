@@ -38,7 +38,6 @@
 </template>
 
 <script setup>
-import handleError from "../../modules/HandleError.js";
 import { ref, computed, onMounted } from "vue";
 import { useField, useForm } from "vee-validate";
 import { object, string, ref as yupRef } from "yup";
@@ -76,7 +75,7 @@ const submitForm = handleSubmit(() => {
     })
     .catch((e) => {
       isSubmitting.value = false;
-      handleError(e);
+      store.dispatch("handleAuthError", { error: e });
     });
 });
 
@@ -88,7 +87,7 @@ const getUserData = () => {
       email.value = res.data.email;
     })
     .catch((e) => {
-      handleError(e);
+      store.dispatch("handleError", { error: e });
     });
 };
 

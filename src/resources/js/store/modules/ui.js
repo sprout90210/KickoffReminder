@@ -31,8 +31,29 @@ export default {
 				commit("hidePopup");
 			}, 2500);
 		},
+
 		changeActiveTab({ commit }, tabName) {
 			commit("setActiveTab", tabName);
+		},
+
+		handleError({ commit, dispatch }, { error }) {
+			let errorMessage = "エラーが発生しました。後でもう一度お試しください。";
+			let color = "red";
+			if (error.response.status) {
+				switch (error.response.status) {
+					case 401:
+					case 419:
+					case 403:
+						errorMessage = "ログインしてください。";
+						commit("setLoggedIn", false);
+						break;
+					default:
+						errorMessage =
+							error.response.data?.error ??
+							"エラーが発生しました。後でもう一度お試しください。";
+				}
+			}
+			dispatch("triggerPopup", { message: errorMessage, color: color });
 		},
 	},
 };
