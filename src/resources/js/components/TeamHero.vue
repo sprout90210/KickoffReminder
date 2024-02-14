@@ -3,7 +3,7 @@
     <Loading v-if="isLoading" />
     <div v-else class="flex flex-col sm:flex-row justify-center items-center">
       <div class="hero-img-container">
-        <img :src="generateImgUrlDev(team.crest)" alt="crest" class="custom-img" />
+        <img :src="crestUrl" alt="crest" class="custom-img" />
       </div>
       <div class="flex flex-col items-center sm:mx-10">
         <h1 class="my-2 sm:my-6 text-lg lg:text-2xl font-semibold">{{ team.name }}</h1>
@@ -75,11 +75,7 @@ const team = ref();
 const isLoading = ref(true);
 const isFavorite = ref(false);
 const teamId = computed(() => route.params.teamId);
-
-const generateImgUrlDev = (ImgName) => {
-  const ImgUrl = "/images/crest/" + ImgName;
-  return ImgUrl;
-};
+const crestUrl = computed(() => `https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/crest/${team.value.crest}`);
 
 const getTeam = () => {
   isLoading.value = true;

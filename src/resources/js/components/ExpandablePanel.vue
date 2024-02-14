@@ -35,9 +35,9 @@
               : 'hover:underline'
           "
         >
-          <div class="w-6 h-6 mr-2 flex items-center">
+          <div class="w-6 h-6 mr-2 custom-img-container">
             <img
-              :src="generateCrestUrlDev(standing.team.crest)"
+              :src="crestUrl"
               alt="crest"
               class="custom-img"
             />
@@ -99,18 +99,19 @@ import NotFound from "./NotFound.vue";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 
-const route = useRoute();
-const isOpen = ref(false);
-const isLoading = ref(true);
-const nextGame = ref();
-const teamId = computed(() => route.params.teamId);
-
 const props = defineProps({
   standing: {
     type: Object,
     required: true,
   },
 });
+
+const route = useRoute();
+const isOpen = ref(false);
+const isLoading = ref(true);
+const nextGame = ref();
+const teamId = computed(() => route.params.teamId);
+const crestUrl = computed(() => `https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/crest/${props.standing.team.crest}` );
 
 const toggle = () => {
   isOpen.value = !isOpen.value;
@@ -128,10 +129,5 @@ const toggle = () => {
         isLoading.value = false;
       });
   }
-};
-
-const generateCrestUrlDev = (crest) => {
-  const crestUrl = "/images/crest/" + crest;
-  return crestUrl;
 };
 </script>

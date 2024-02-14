@@ -66,7 +66,6 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: name } = useField("name");
 const { value: email } = useField("email");
 const { value: contact } = useField("contact");

@@ -13,9 +13,7 @@
         @delete-favorite="deleteFavorite"
       />
     </div>
-    <p v-else class="text-gray-400 my-16 text-lg">
-      お気に入りチームを見つけましょう！
-    </p>
+    <p v-else class="text-gray-400 my-16 text-lg">お気に入りチームを見つけましょう！</p>
     <router-link to="/" class="text-blue-400 hover:text-blue-500 my-10 text-sm underline">ホームに戻る</router-link>
   </div>
 </template>
