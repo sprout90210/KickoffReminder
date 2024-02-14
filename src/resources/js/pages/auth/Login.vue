@@ -62,6 +62,7 @@ import { useRoute, useRouter } from "vue-router";
 const store = useStore();
 const router = useRouter();
 const isSubmitting = ref(false);
+const remember = ref(false);
 const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "ログイン"));
 
 const schema = object({
@@ -72,10 +73,8 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: email } = useField("email");
 const { value: password } = useField("password");
-const remember = ref(false);
 
 const submitForm = handleSubmit(() => {
   isSubmitting.value = true;

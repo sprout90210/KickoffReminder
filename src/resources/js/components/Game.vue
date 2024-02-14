@@ -52,6 +52,8 @@ const props = defineProps({
   } 
 });
 
+const kickoff = computed(() => formatDateAndTime(props.game.utc_date));
+
 const formatDateAndTime = (utcDate) => {
   const localDateTime = new Date(utcDate);
   localDateTime.setHours(localDateTime.getHours() + 9);
@@ -65,5 +67,4 @@ const formatDateAndTime = (utcDate) => {
     time: `${hours}:${minutes}`,
   };
 };
-const kickoff = computed(() => formatDateAndTime(props.game.utc_date));
 </script>

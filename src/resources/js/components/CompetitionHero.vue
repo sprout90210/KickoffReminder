@@ -4,7 +4,7 @@
     <div v-else class="flex flex-row sm:flex-row justify-center items-center">
       <div class="hero-img-container">
         <img
-          :src="generateImgUrlDev(competition.emblem)"
+          :src="emblemUrl"
           alt="emblem"
           class="custom-img"
         />
@@ -28,11 +28,7 @@ const router = useRouter();
 const competition = ref();
 const isLoading = ref(true);
 const competitionId = computed(() => route.params.competitionId);
-
-const generateImgUrlDev = (ImgName) => {
-  const ImgUrl = "/images/emblem/" + ImgName;
-  return ImgUrl;
-};
+const emblemUrl = computed(() => `https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/emblem/${competition.value.emblem}` );
 
 const getCompetition = () => {
   isLoading.value = true;

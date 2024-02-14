@@ -70,7 +70,6 @@ const schema = object({
 const { errors, handleSubmit } = useForm({
   validationSchema: schema,
 });
-
 const { value: current_password } = useField("current_password");
 const { value: new_password } = useField("new_password");
 const { value: new_password_confirmation } = useField("new_password_confirmation");

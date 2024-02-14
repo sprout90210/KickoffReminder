@@ -29,9 +29,7 @@
       />
     </div>
 
-    <h2 class="home-section-header text-white bg-gradient-to-l from-blue-900 to-stone-800">
-      日本人所属チーム
-    </h2>
+    <h2 class="home-section-header text-white bg-gradient-to-l from-blue-900 to-stone-800">日本人所属チーム</h2>
     <div class="flex flex-wrap justify-around">
       <TeamLink
         v-for="team in japaneseTeams"

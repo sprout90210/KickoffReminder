@@ -5,7 +5,9 @@
       class="h-full w-full hover:scale-110 transition-transform duration-300 flex flex-col justify-center items-center"
     >
       <p class="font-bold text-xs lg:text-sm">{{ competition.name}}</p>
-      <img :src="emblemUrl" alt="emblem" class="w-14 h-14 lg:w-20 lg:h-20 m-3" />
+      <div class="w-16 h-16 lg:h-20 lg:w-20 m-2 custom-img-container">
+        <img :src="emblemUrl" alt="emblem" class="custom-img" />
+      </div>
     </router-link>
   </div>
 </template>
@@ -19,5 +21,6 @@ const props = defineProps({
     required: true,
   },
 });
-const emblemUrl = computed(() => `images/emblem/${props.competition.id}.png`);
+
+const emblemUrl = computed(() => `https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/emblem/${props.competition.id}.png`);
 </script>

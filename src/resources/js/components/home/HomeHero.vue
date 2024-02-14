@@ -21,6 +21,7 @@ import { useStore } from "vuex";
 const route = useRoute();
 const store = useStore();
 const isLoggedIn = computed(() => store.state.auth.isLoggedIn);
+
 const loginLine = () => {
   location.href = "/line/login";
 };

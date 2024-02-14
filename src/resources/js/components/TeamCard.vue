@@ -5,7 +5,7 @@
       :to="{ name: 'Team', params: { teamId: team.id } }"
       class="flex flex-col items-center hover:underline"
     >
-      <div class="w-8 h-8 sm:w-12 sm:h-12 mb-1 flex items-center">
+      <div class="w-8 h-8 sm:w-12 sm:h-12 mb-1 custom-img-container">
         <img
           :src="crestUrl"
           alt="crest"
@@ -27,5 +27,6 @@ const props = defineProps({
     type: Object,
   }
 });
-const crestUrl = computed(() => { return "/images/crest/" + props.team.crest; });
+
+const crestUrl = computed(() => `https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/crest/${props.team.crest}`);
 </script>
