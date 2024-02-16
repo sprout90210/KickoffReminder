@@ -1,7 +1,7 @@
 <template>
   <div class="hero-container">
     <Loading v-if="isLoading" />
-    <div v-else class="flex flex-row sm:flex-row justify-center items-center">
+    <div v-else class="flex flex-col sm:flex-row justify-center items-center">
       <div class="hero-img-container">
         <img
           :src="emblemUrl"
