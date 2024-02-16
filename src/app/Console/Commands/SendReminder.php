@@ -17,9 +17,10 @@ class SendReminder extends Command
 
     protected $description = 'Send reminder for users favorite team games';
 
+    protected $hasErrors = false;
+
     public function handle()
     {
-        $hasErrors = false;
         $lineService = new LineMessagingService();
         $reminderTimes = [1, 15, 60, 180];
 
@@ -52,7 +53,7 @@ class SendReminder extends Command
             }
         }
 
-        if ($hasErrors) {
+        if ($this->hasErrors) {
             return 1;
         } else {
             return 0;
@@ -110,7 +111,7 @@ class SendReminder extends Command
                 $lineService->sendMessage($user->line_user_id, $message);
             } catch (\Exception $e) {
                 Log::error('LINE message sending failed: '.$e->getMessage());
-                $hasErrors = true;
+                $this->hasErrors = true;
             }
 
         } else {
@@ -124,7 +125,7 @@ class SendReminder extends Command
                 ]));
             } catch (\Exception $e) {
                 Log::error('Mail sending failed: '.$e->getMessage());
-                $hasErrors = true;
+                $this->hasErrors = true;
             }
         }
     }
