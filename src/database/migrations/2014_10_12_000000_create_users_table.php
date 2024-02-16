@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('line_user_id')->unique()->nullable();
             $table->unsignedInteger('remind_time')->default(15);
