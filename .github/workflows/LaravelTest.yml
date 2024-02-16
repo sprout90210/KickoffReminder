@@ -4,9 +4,7 @@ on:
   pull_request:
     branches:
       - develop
-  push:
-    branches:
-      - develop
+      - main
 
 jobs:
   laravel-test:
@@ -81,3 +79,8 @@ jobs:
       run: |
         cd src
         vendor/bin/phpunit --colors=always
+
+    - name: Run PHPStan
+      run: |
+        cd src
+        ./vendor/bin/phpstan analyse --memory-limit=2G

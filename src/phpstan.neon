@@ -10,7 +10,8 @@ parameters:
     level: 5
 
     ignoreErrors:
-        - '#Unsafe usage of new static#'
+        - '#Access to an undefined property Laravel\\Socialite\\Contracts\\User::\$id\.#'
+        - '#Access to an undefined property Laravel\\Socialite\\Contracts\\User::\$name\.#'
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php
