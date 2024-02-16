@@ -8,7 +8,7 @@
         <p>好きなチームを探して</p>
         <p>お気に入り登録しよう！</p>
       </div>
-      <p class="text-sm font-light">※ユーザー登録が必要です。</p>
+      <p class="text-sm font-light">※アカウント登録が必要です。</p>
     </div>
 
     <h2 class="home-section-header text-white bg-gradient-to-l from-fuchsia-900 to-gray-900">リーグから探す</h2>
@@ -48,6 +48,31 @@ import Directions from "../components/home/Directions.vue";
 import CompetitionLink from "../components/home/CompetitionLink.vue";
 import TeamLink from "../components/home/TeamLink.vue";
 import UpcomingGames from "../components/home/UpcomingGames.vue";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+
+const route = useRoute();
+const store = useStore();
+
+onMounted(() => {
+  if (route.query.line_login === "success") {
+    store.dispatch("triggerPopup", {
+      message: "LINEログインに成功しました。",
+      color: "green",
+    });
+  } else if (route.query.line_login === "faild") {
+    store.dispatch("triggerPopup", {
+      message: "LINEログインに失敗しました。",
+      color: "red",
+    });
+  } else if (route.query.token === "invalid") {
+    store.dispatch("triggerPopup", {
+      message: "無効なトークンです。",
+      color: "red",
+    });
+  }
+});
 
 const competitions = [
   { id: 2021, name: "プレミアリーグ" },
