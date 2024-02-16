@@ -18,12 +18,12 @@ class EmailVerificationController extends Controller
         $pendingUser = PendingUser::create([
             'email' => $request->email,
             'token' => Str::random(60),
-            'expires_at' => now()->addMinutes(15),
         ]);
 
         Mail::send(new VerifyEmail($pendingUser));
 
         return response()->noContent();
+        
     }
 
     public function verify($token)
