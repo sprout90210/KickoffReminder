@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>試合通知</title>
+    <title>アカウント登録申し込み確認メール</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,44 +14,28 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-
         header {
             background-color: #444;
             color: #fff;
             padding: 20px 0;
             text-align: center;
         }
-
         header a {
             color: #fff;
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
         }
-
         .container {
             width: 80%;
             margin: auto;
             overflow: hidden;
             padding: 0 20px;
         }
-
         h3 {
             text-align: center;
             color: #444;
         }
-
-        .game-info {
-            background-color: #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .game-info h2 {
-            margin: 10px 0;
-        }
-
         footer {
             background-color: #444;
             color: #fff;
@@ -59,7 +43,6 @@
             padding: 20px 0;
             margin-top: 20px;
         }
-
         footer p {
             font-size: 14px;
         }
@@ -67,31 +50,22 @@
 </head>
 
 <body>
-    <header>
-        <a href="{{ config('app.url') }}">Kickoff Reminder</a>
-    </header>
+    <header><a href="{{ config('app.url') }}">Kickoff Reminder</a></header>
 
     <div class="container">
-        <br>
-        <h3>{{ $name }} さん</h3>
-        <br>
-        <div class="game-info">
-            <p>※日本時間</p>
-            <p>{{ $formattedDate }}</p>
-            <p>
-                <span>{{ $game->competition->name }}</span>
-                <span>{{ $stage }}</span>
-            </p>
-            <h2><strong>{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</strong></h2>
-            <br>
-            <p>{{ $remainingTimeMessage }}</p>
-            <p>お見逃しなく！</p>
-        </div>
-        <br>
+        <h2>アカウント登録申し込み確認メール</h2>
+
+        <p>現時点ではアカウント登録は完了しておりません。</p>
+
+        <p>下記のURLをクリックし、登録を進めてください。</p>
+        <a href="{{ url('/verify-email/'.$token) }}">{{ url('/verify-email/'.$token) }}</a>
+        <br><br>
+
         <ul>
+            <li>この認証メールの有効期限は1時間です。1時間を経過した場合、アカウント登録をはじめからやりなおしてください。</li>
             <li>正しくメールが表示されない場合がございます。</li>
             <li>このメールは、送信専用メールアドレスから配信されています。ご返信いただいてもお答えできませんので、ご了承ください。</li>
-            <li>メール配信停止をご希望の場合はお手数ですが<a href="{{ config('app.url') }}">KickoffReminder</a>よりお手続きください。</li>
+            <li>このメールにお心当たりのない方は、本メールを破棄してください。</li>
         </ul>
     </div>
 

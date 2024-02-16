@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('email/verify', [EmailVerificationController::class, 'sendVerificationEmail']);
 Route::post('register', [UserController::class, 'store']);
 
 Route::get('check', [LoginController::class, 'check']);
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout']);
 
 Route::prefix('password')->group(function () {
