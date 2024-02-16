@@ -33,11 +33,11 @@
     </form>
     <div class="mt-3">
       アカウントを新規作成する方は
-      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'EmailVerificationRequest' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </div>
     <div class="my-3">
       ログインする方は
-      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'Login' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </div>
   </div>
 </template>
@@ -88,6 +88,7 @@ const submitForm = handleSubmit(() => {
     })
     .catch((e) => {
       isSubmitting.value = false;
+      console.log(e)
       store.dispatch("handleAuthError", { error: e });
     });
 });

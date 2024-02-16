@@ -122,7 +122,7 @@
       <h2 class="section-title">第11条（個人情報の取扱い）</h2>
       <p>
         当事務局は，本サービスの利用によって取得する個人情報については、
-        <router-link to="/privacy" class="underline">プライバシーポリシー</router-link>
+        <router-link :to="{ name: 'Privacy' }" class="underline">プライバシーポリシー</router-link>
         に従い適切に取り扱うものとします。
       </p>
 

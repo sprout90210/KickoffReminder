@@ -19,7 +19,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertStatus(201); // ユーザー登録が成功、ステータスコード 201 を確認
+        $response->assertStatus(201); // アカウント登録が成功、ステータスコード 201 を確認
 
         $this->assertAuthenticated();
     }
@@ -35,7 +35,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertStatus(422); // ユーザー登録が失敗、ステータスコード 422 を確認
+        $response->assertStatus(422); // アカウント登録が失敗、ステータスコード 422 を確認
     }
 
     public function test_registration_fails_with_weak_password()
@@ -47,6 +47,6 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'weak',
         ]);
 
-        $response->assertStatus(422); // ユーザー登録が失敗、ステータスコード 422 を確認
+        $response->assertStatus(422); // アカウント登録が失敗、ステータスコード 422 を確認
     }
 }

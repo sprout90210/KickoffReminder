@@ -8,29 +8,29 @@
     "
   >
     <div v-if="!isLoggedIn" class="flex flex-wrap flex-col md:flex-row my-10 justify-center items-center">
-      <router-link to="/registration" @click="toggleMenu" class="registration-link m-3">新規登録</router-link>
-      <router-link to="/login" @click="toggleMenu" class="login-link m-3">ログイン</router-link>
+      <router-link :to="{ name: 'EmailVerificationRequest' }" @click="toggleMenu" class="registration-link m-3">新規登録</router-link>
+      <router-link :to="{ name: 'Login' }" @click="toggleMenu" class="login-link m-3">ログイン</router-link>
       <button @click="loginLine" class="line-login-link m-3">LINEログイン</button>
     </div>
     
     <ul v-if="isLoggedIn" class="flex flex-col items-center">
       <li class="my-4 hover:underline">
-        <router-link to="/" @click="toggleMenu">ホームに戻る</router-link>
+        <router-link :to="{ name: 'Home' }" @click="toggleMenu">ホームに戻る</router-link>
       </li>
       <li class="my-4 hover:underline">
-        <router-link to="/favorites" @click="toggleMenu">お気に入りチーム</router-link>
+        <router-link :to="{ name: 'Favorites' }" @click="toggleMenu">お気に入りチーム</router-link>
       </li>
       <li class="my-4 hover:underline">
-        <router-link to="/reminders" @click="toggleMenu">通知リスト</router-link>
+        <router-link :to="{ name: 'Reminders' }" @click="toggleMenu">通知リスト</router-link>
       </li>
       <li v-if="!isLineUser" class="my-4 hover:underline">
-        <router-link to="/user/edit" @click="toggleMenu">ユーザー情報変更</router-link>
+        <router-link :to="{ name: 'EditUser' }" @click="toggleMenu">ユーザー情報変更</router-link>
       </li>
       <li v-if="!isLineUser" class="my-4 hover:underline">
-        <router-link to="/password/edit" @click="toggleMenu">パスワード変更</router-link>
+        <router-link :to="{ name: 'EditPassword' }" @click="toggleMenu">パスワード変更</router-link>
       </li>
       <li class="my-4 hover:underline">
-        <router-link to="/user/delete" @click="toggleMenu">退会</router-link>
+        <router-link :to="{ name: 'DeleteUser' }" @click="toggleMenu">退会</router-link>
       </li>
       <li class="my-4 hover:underline text-red-600 cursor-pointer" @click="logout">
           ログアウト

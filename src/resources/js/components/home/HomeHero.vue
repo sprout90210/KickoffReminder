@@ -6,8 +6,8 @@
       <p>簡単な登録だけで、好きなチームの試合通知が受け取れます。</p>
     </div>
     <div v-if="!isLoggedIn" class="flex flex-wrap items-center justify-center">
-      <router-link to="/registration" class="registration-link m-3 sm:m-3">新規登録</router-link>
-      <router-link to="/login" class="login-link m-3 sm:m-3">ログイン</router-link>
+      <router-link :to="{ name: 'EmailVerificationRequest' }" class="registration-link m-3 sm:m-3">新規登録</router-link>
+      <router-link :to="{ name: 'Login' }" class="login-link m-3 sm:m-3">ログイン</router-link>
       <button @click="loginLine" class="line-login-link m-2 sm:m-3">LINEログイン</button>
     </div>
   </div>
@@ -15,28 +15,12 @@
 
 <script setup>
 import { computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
-const route = useRoute();
 const store = useStore();
 const isLoggedIn = computed(() => store.state.auth.isLoggedIn);
 
 const loginLine = () => {
   location.href = "/line/login";
 };
-
-onMounted(() => {
-  if (route.query.line_login === "success") {
-    store.dispatch("triggerPopup", {
-      message: "LINEログインに成功しました。",
-      color: "green",
-    });
-  } else if (route.query.line_login === "faild") {
-    store.dispatch("triggerPopup", {
-      message: "LINEログインに失敗しました。",
-      color: "red",
-    });
-  }
-});
 </script>

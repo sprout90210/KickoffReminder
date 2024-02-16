@@ -38,11 +38,11 @@
 
     <p class="mt-3">
       パスワードをお忘れの方は
-      <router-link to="/password/forgot" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'ForgotPassword' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
     <p class="my-3">
       アカウントを新規作成する方は
-      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'EmailVerificationRequest' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
 
     <div class="my-5 w-full border-t flex flex-col items-center">

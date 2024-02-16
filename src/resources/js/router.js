@@ -17,6 +17,8 @@ import ResetPassword from "./pages/auth/ResetPassword.vue";
 import EditUser from "./pages/auth/EditUser.vue";
 import EditPassword from "./pages/auth/EditPassword.vue";
 import DeleteUser from "./pages/auth/DeleteUser.vue";
+import EmailVerificationRequest from "./pages/auth/EmailVerificationRequest.vue";
+import EmailVerificationSent from "./pages/auth/EmailVerificationSent.vue";
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -35,6 +37,16 @@ const router = createRouter({
 			path: "/teams/:teamId",
 			name: "Team",
 			component: Team,
+		},
+		{
+			path: "/email/verification/request",
+			name: "EmailVerificationRequest",
+			component: EmailVerificationRequest,
+		},
+		{
+			path: "/email/verification/sent",
+			name: "EmailVerificationSent",
+			component: EmailVerificationSent,
 		},
 		{
 			path: "/registration",
@@ -118,7 +130,7 @@ router.beforeEach((to, from, next) => {
 		"Favorites",
 		"Reminders",
 	];
-	const noAuthPages = ["Login", "Registration", "ForgotPassword"];
+	const noAuthPages = ["Login", "Registration", "ForgotPassword", "EmailVerificationRequest", "EmailVerificationSent"];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);
 

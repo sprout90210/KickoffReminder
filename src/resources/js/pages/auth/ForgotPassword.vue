@@ -20,11 +20,11 @@
     </form>
     <p class="mt-5">
       アカウント新規作成する方は
-      <router-link to="/registration" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'EmailVerificationRequest' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
     <p class="my-3">
       ログインする方は
-      <router-link to="/login" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'Login' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
   </div>
 </template>

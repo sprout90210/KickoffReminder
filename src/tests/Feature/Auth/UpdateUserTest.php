@@ -20,9 +20,9 @@ class UpdateUserTest extends TestCase
             'email' => 'updated@example.com',
         ]);
 
-        $response->assertStatus(200); // ユーザー情報変更が成功、ステータスコード 200 を確認
+        $response->assertStatus(200); // アカウント情報変更が成功、ステータスコード 200 を確認
 
-        // ユーザーのデータが更新されたことを確認
+        // アカウントのデータが更新されたことを確認
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'name' => 'Updated Name',
@@ -40,6 +40,6 @@ class UpdateUserTest extends TestCase
             'email' => 'invalid-email', //　無効なemail
         ]);
 
-        $response->assertStatus(422); // ユーザー情報変更が失敗、ステータスコード 422 を確認
+        $response->assertStatus(422); // アカウント情報変更が失敗、ステータスコード 422 を確認
     }
 }
