@@ -17,7 +17,7 @@
     <div class="h-20 flex items-center justify-center mb-1 text-sm text-gray-700">
       <TeamCard :team="game.home_team" />
 
-      <div class="w-20 flex flex-col items-center justify-center pb-4 sm:mx-10">
+      <div class="w-24 flex flex-col items-center justify-center pb-4 sm:mx-10">
         <div calss="font-light">
           <p v-if="game.status === 'IN_PLAY'" class="font-light text-green-500">試合中</p>
           <p v-else>

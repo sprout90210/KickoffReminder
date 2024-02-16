@@ -1,5 +1,5 @@
 <template>
-  <div class="h-56 w-56 p-2 border border-gray-400 rounded-lg flex flex-col items-center text-gray-700">
+  <div class="h-56 w-56 p-2 border border-gray-400 rounded-lg flex flex-col items-center text-gray-700 shadow-lg shadow-gray-500/50">
     <h3 class="text-base font-bold mb-1">
       <slot></slot>
     </h3>

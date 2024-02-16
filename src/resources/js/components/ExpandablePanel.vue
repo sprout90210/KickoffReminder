@@ -14,7 +14,7 @@
         :class="
           isOpen
             ? 'bg-purple-900 text-white'
-            : 'bg-zinc-100 text-gray-400 hover:bg-fuchsia-500 hover:text-white'
+            : 'bg-zinc-100 text-gray-400 md:hover:bg-fuchsia-500 md:hover:text-white'
         "
       >
         <div class="transform transition-transform h-full w-full flex justify-center items-center">

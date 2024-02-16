@@ -1,5 +1,5 @@
 <template>
-  <div class="w-24 sm:w-32 text-gray-600 flex items-center justify-center flex-col">
+  <div class="w-32 text-gray-600 flex items-center justify-center flex-col">
     <router-link
       v-if="team"
       :to="{ name: 'Team', params: { teamId: team.id } }"

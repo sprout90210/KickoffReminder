@@ -1,10 +1,10 @@
 <template>
   <p class="text-base cursor-pointer my-2">
-    <button v-if="!isFavorite" @click="toggleFavorite" type="submit" :disabled="isSubmitting" class="underline text-gray-500 hover:text-yellow-600">
+    <button v-if="!isFavorite" @click="toggleFavorite" type="submit" :disabled="isSubmitting" class="underline text-gray-500 md:hover:text-yellow-600">
       <span> &#9734; </span>
-      <span class="hover:underline">お気に入り登録</span>
+      <span class="underline">お気に入り登録</span>
     </button>
-    <button v-if="isFavorite" @click="toggleFavorite" type="submit" :disabled="isSubmitting" class="underline text-yellow-600 hover:text-gray-500">
+    <button v-if="isFavorite" @click="toggleFavorite" type="submit" :disabled="isSubmitting" class="underline text-yellow-600 md:hover:text-gray-500">
       <span> &#9733; </span>
       <span class="underline">お気に入り登録済み</span>
     </button>
