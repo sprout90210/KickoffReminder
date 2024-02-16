@@ -32,7 +32,7 @@
     </form>
     <p class="my-3 text-center">
       退会する方は
-      <router-link to="/user/delete" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
+      <router-link :to="{ name: 'DeleteUser' }" class="underline text-blue-500 hover:text-orange-600">こちら</router-link>
     </p>
   </div>
 </template>

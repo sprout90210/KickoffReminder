@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-grow items-center p-2 sm:px-5">
     <h1 class="mypage-header">
-      <router-link to="/favorites" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-sm underline">お気に入り</router-link>
+      <router-link :to="{ name: 'Favorites' }" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-sm underline">お気に入り</router-link>
       <span>試合通知リスト</span>
       <span class="absolute right-1 bottom-2 text-gray-400 text-xs font-light">※日本時間</span>
     </h1>
@@ -26,7 +26,7 @@
     <Loading v-if="isLoading" />
     <Games v-else-if="games.length" :games="games" />
     <p v-else class="text-gray-400 my-16 text-lg">試合通知を受け取りましょう！</p>
-    <router-link to="/" class="text-blue-400 hover:text-blue-500 my-10 text-sm underline">ホームに戻る</router-link>
+    <router-link :to="{ name: 'Home' }" class="text-blue-400 hover:text-blue-500 my-10 text-sm underline">ホームに戻る</router-link>
   </div>
 </template>
 

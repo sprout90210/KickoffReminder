@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="inset-0 z-20 h-16 md:h-20 text-white flex items-center justify-center bg-gray-800">
-      <router-link to="/" class="p-1 block text-lg md:text-3xl font-bold">
+      <router-link :to="{ name: 'Home' }" class="p-1 block text-lg md:text-3xl font-bold">
         Kickoff Reminder
       </router-link>
       <button
@@ -14,8 +14,8 @@
     </header>
     <div
       v-if="isMenuOpen"
-      class="fixed inset-0 bg-black bg-opacity-70 z-30"
       @click="toggleMenu"
+      class="fixed inset-0 bg-black bg-opacity-70 z-30"
     ></div>
     <HamburgerMenu />
   </div>

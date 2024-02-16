@@ -23,9 +23,9 @@ class DeleteUserTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response->assertStatus(204); // ユーザー削除が成功、ステータスコード 204 を確認
+        $response->assertStatus(204); // アカウント削除が成功、ステータスコード 204 を確認
 
-        // ユーザーが削除されたことを確認
+        // アカウントが削除されたことを確認
         $this->assertDatabaseMissing('users', [
             'id' => $user->id,
         ]);
@@ -43,9 +43,9 @@ class DeleteUserTest extends TestCase
             'password' => 'invalid-password', // 無効なパスワード
         ]);
 
-        $response->assertStatus(403); // ユーザー削除が失敗、ステータスコード 403 を確認
+        $response->assertStatus(403); // アカウント削除が失敗、ステータスコード 403 を確認
 
-        // ユーザーが削除されていないことを確認
+        // アカウントが削除されていないことを確認
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
         ]);
@@ -66,9 +66,9 @@ class DeleteUserTest extends TestCase
             'password' => null,
         ]);
 
-        $response->assertStatus(204); // ユーザー削除が成功、ステータスコード 204 を確認
+        $response->assertStatus(204); // アカウント削除が成功、ステータスコード 204 を確認
 
-        // ユーザーが削除されたことを確認
+        // アカウントが削除されたことを確認
         $this->assertDatabaseMissing('users', [
             'id' => $user->id,
         ]);
