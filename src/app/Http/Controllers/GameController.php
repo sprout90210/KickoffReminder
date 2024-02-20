@@ -11,7 +11,7 @@ class GameController extends Controller
         $upcomingGames = Game::whereIn('status', ['IN_PLAY', 'TIMED'])
             ->with(['homeTeam', 'awayTeam', 'competition'])
             ->orderBy('utc_date', 'asc')
-            ->limit(10)
+            ->limit(20)
             ->get();
 
         return response()->json($upcomingGames, 200);

@@ -2,8 +2,8 @@
     <div
       role="alert"
       @click="hidePopup"
-      class="transition-transform z-30 duration-300 w-full h-16 md:h-20 fixed top-0 right-0 left-0 flex items-center justify-center text-base sm:text-lg font-bold cursor-pointer text-gray-200"
-      :class="[isShow ? 'translate-y-0 sm:translate-y-0' : '-translate-y-full', backgroundColorClass]"
+      class="transition-transform z-20 duration-300 w-full h-16 md:h-20 fixed top-0 right-0 left-0 px-12 flex items-center justify-center text-base sm:text-lg font-bold cursor-pointer text-gray-200"
+      :class="[isShow ? 'translate-y-0' : '-translate-y-full', backgroundColorClass]"
     >
       {{ message }}
     </div>
