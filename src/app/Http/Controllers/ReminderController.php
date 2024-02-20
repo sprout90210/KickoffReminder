@@ -15,7 +15,11 @@ class ReminderController extends Controller
         $favoriteTeamIds = $user->favorites->pluck('team_id');
         $reminders = Game::getReminders($favoriteTeamIds);
 
-        return response()->json(['reminders' => $reminders], 200);
+        return response()->json([
+            'receiveReminder' => $user->receive_reminder,
+            'remindTime' => $user->remind_time,
+            'reminders' => $reminders
+        ], 200);
     }
 
     public function updateReceiveReminder(UpdateReceiveReminderRequest $request)
