@@ -57,20 +57,11 @@ const store = useStore();
 
 onMounted(() => {
   if (route.query.line_login === "success") {
-    store.dispatch("triggerPopup", {
-      message: "LINEログインに成功しました。",
-      color: "green",
-    });
+    store.dispatch("triggerPopup", { message: "LINEログインに成功しました。", color: "green" });
   } else if (route.query.line_login === "faild") {
-    store.dispatch("triggerPopup", {
-      message: "LINEログインに失敗しました。",
-      color: "red",
-    });
+    store.dispatch("triggerPopup", { message: "LINEログインに失敗しました。", color: "red" });
   } else if (route.query.token === "invalid") {
-    store.dispatch("triggerPopup", {
-      message: "無効なトークンです。",
-      color: "red",
-    });
+    store.dispatch("triggerPopup", { message: "無効なトークンです。", color: "red" });
   }
 });
 

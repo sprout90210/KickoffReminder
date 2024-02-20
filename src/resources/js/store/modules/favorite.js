@@ -10,17 +10,17 @@ export default {
 			switch (error.response.status) {
 				case 401:
 				case 419:
-					commit("setLoggedIn", false);
+					commit("logout");
 					errorMessage = "ログインが必要です。";
 					break;
-				case 409:
+				case 409: //すでに登録済みの場合
 					isFavorite.value = true;
 					errorMessage =
 						error.response.data?.error ??
 							"エラーが発生しました。後でもう一度お試しください。";
-						color = "blue";
+					color = "blue";
 					break;
-				case 429:
+				case 429: //試行回数が過多の場合
 					break;
 				default:
 					errorMessage =

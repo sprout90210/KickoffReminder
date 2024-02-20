@@ -76,7 +76,6 @@ const sendVerificationMail = handleSubmit(() => {
       })
       .catch((e) => {
         isSubmitting.value = false;
-        console.log(e.response.data.message)
         store.dispatch("handleAuthError", { error: e });
       });
   });

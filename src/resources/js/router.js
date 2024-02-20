@@ -135,13 +135,10 @@ router.beforeEach((to, from, next) => {
 	const noAuthRequired = noAuthPages.includes(to.name);
 
 	if (authRequired && !isLoggedIn) {
-		next({ path: "/login" });
+		next({ path: "/" });
 	} else if (noAuthRequired && isLoggedIn) {
 		next({ path: "/" });
-	} else if (
-		(to.name === "EditUser" || to.name === "EditPassword") &&
-		isLineUser
-	) {
+	} else if ((to.name === "EditUser" || to.name === "EditPassword") && isLineUser) {
 		next({ path: "/" });
 	} else {
 		next();

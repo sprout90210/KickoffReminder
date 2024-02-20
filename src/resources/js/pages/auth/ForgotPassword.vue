@@ -41,9 +41,7 @@ const store = useStore();
 const isSubmitting = ref(false);
 const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "送信"));
 const schema = object({
-  email: string()
-    .required("メールアドレスを入力してください")
-    .email("メールアドレスの形式ではありません"),
+  email: string().required("メールアドレスを入力してください").email("メールアドレスの形式ではありません"),
 });
 
 const { errors, handleSubmit } = useForm({

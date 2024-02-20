@@ -8,7 +8,7 @@
 
     <div class="flex items-center text-sm text-gray-600 mb-8">
       <select
-        @change="updateRemindTime"
+        @change="changeRemindTime"
         v-model="remindTime"
         id="remindTime"
         class="h-9 w-32 text-sm mx-5 text-gray-600 px-2 rounded shadow-lg shadow-gray-600/40 hover:cursor-pointer"
@@ -50,15 +50,14 @@ const receiveReminder = computed({
   set: value => store.commit("setReceiveReminder", value) 
 });
 
-const updateRemindTime = () => {
+const changeRemindTime = () => {
   axios
     .put("/api/remind-time", { remindTime: remindTime.value })
     .then((res) => {
       store.dispatch("triggerPopup", { message: "通知時間を変更しました。", color: "green" });
     })
     .catch((e) => {
-      store.commit("setReceiveReminder", !remindTime.value);
-      store.dispatch("handleError", { error: e });
+      store.dispatch("handleError", { error: e, router: router });
     });
 };
 
@@ -70,7 +69,7 @@ const toggleReceiveReminder = () => {
     })
     .catch((e) => {
       store.commit("setReceiveReminder", !receiveReminder.value);
-      store.dispatch("handleError", { error: e });
+      store.dispatch("handleError", { error: e, router: router });
     });
 };
 
@@ -78,9 +77,13 @@ const getReminders = () => {
   isLoading.value = true;
   axios
     .get("/api/reminders")
-    .then((res) => { games.value = res.data.reminders; })
+    .then((res) => {
+      games.value = res.data.reminders;
+      receiveReminder.value = res.data.receiveReminder;
+      remindTime.value = res.data.remindTime;
+    })
     .catch((e) => {
-      store.dispatch("handleAuthError", { error: e })
+      store.dispatch("handleError", { error: e, router: router });
     })
     .finally(() => { isLoading.value = false; });
 };
