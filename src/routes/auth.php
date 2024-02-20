@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('email/verify', [EmailVerificationController::class, 'sendVerificationEmail']);
 Route::post('register', [UserController::class, 'store']);
-
-Route::get('check', [LoginController::class, 'check']);
 Route::post('login', [LoginController::class, 'login'])->name('login');
-Route::post('logout', [LoginController::class, 'logout']);
+Route::get('check', [LoginController::class, 'check']);
 
 Route::prefix('password')->group(function () {
     Route::post('forgot', [PasswordController::class, 'sendResetLink']);
@@ -20,6 +18,7 @@ Route::prefix('password')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout', [LoginController::class, 'logout']);
     Route::put('user', [UserController::class, 'update']);
     Route::delete('user', [UserController::class, 'destroy']);
 });

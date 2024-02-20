@@ -36,24 +36,30 @@ export default {
 			commit("setActiveTab", tabName);
 		},
 
-		handleError({ commit, dispatch }, { error }) {
+		handleError({ commit, dispatch }, { error, router }) {
 			let errorMessage = "エラーが発生しました。後でもう一度お試しください。";
-			let color = "red";
-			if (error.response.status) {
+			if (error.response && error.response.status) {
 				switch (error.response.status) {
 					case 401:
 					case 419:
-					case 403:
 						errorMessage = "ログインしてください。";
-						commit("setLoggedIn", false);
+						dispatch("triggerPopup", { message: errorMessage, color: "red" });
+						commit("logout");
+						router.push("/login");
+						break;
+					case 422: //バリデーションエラー
+						errorMessage = 
+							error.response.data?.message ??
+							"入力情報に誤りがあります。";
+						dispatch("triggerPopup", { message: errorMessage, color: "red" });
 						break;
 					default:
 						errorMessage =
 							error.response.data?.error ??
 							"エラーが発生しました。後でもう一度お試しください。";
+						dispatch("triggerPopup", { message: errorMessage, color: "red" });
 				}
 			}
-			dispatch("triggerPopup", { message: errorMessage, color: color });
 		},
 	},
 };

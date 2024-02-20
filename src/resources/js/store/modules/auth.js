@@ -9,6 +9,10 @@ export default {
 		setLoggedIn(state, status) {
 			state.isLoggedIn = status;
 		},
+		logout(state) {
+			state.isLoggedIn = false;
+			state.isLineUser = false;
+		},
 		setLineUser(state, status) {
 			state.isLineUser = status;
 		},
@@ -16,7 +20,7 @@ export default {
 			state.receiveReminder = !state.receiveReminder;
 		},
 		setReceiveReminder(state, status) {
-			state.receiveReminder = status;
+			state.receiveReminder = Boolean(status);
 		},
 		setRemindTime(state, value) {
 			state.remindTime = value;
@@ -30,7 +34,7 @@ export default {
 			commit("setLoggedIn", isLoggedIn);
 			commit("setLineUser", isLineUser);
 			commit("setRemindTime", remindTime);
-			commit("setReceiveReminder", Boolean(receiveReminder));
+			commit("setReceiveReminder", receiveReminder);
 		},
 
 		async checkAuth({ dispatch }) {
@@ -41,7 +45,7 @@ export default {
 						isLoggedIn: res.data.isLoggedIn,
 						isLineUser: res.data.isLineUser,
 						remindTime: res.data.remindTime,
-						receiveReminder: Boolean(res.data.receiveReminder),
+						receiveReminder: res.data.receiveReminder,
 					});
 				})
 				.catch((e) => {
@@ -55,14 +59,13 @@ export default {
 
 		handleAuthError({ commit, dispatch }, { error }) {
 			let errorMessage = "エラーが発生しました。後でもう一度お試しください。";
-			let color = "red";
-			if (error.response.status) {
+			if (error.response && error.response.status) {
 				switch (error.response.status) {
-					case 419:
+					case 419: 
 						errorMessage = "ログインしてください。";
-						commit("setLoggedIn", false);
+						commit("logout");
 						break;
-					case 422:
+					case 422: //バリデーションエラー
 						errorMessage = 
 							error.response.data?.message ??
 							"入力情報に誤りがあります。";
@@ -73,7 +76,7 @@ export default {
 							"エラーが発生しました。後でもう一度お試しください。";
 				}
 			}
-			dispatch("triggerPopup", { message: errorMessage, color: color });
+			dispatch("triggerPopup", { message: errorMessage, color: "red" });
 		},
 	},
 };
