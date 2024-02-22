@@ -8,11 +8,11 @@
 
 .bg-home-1 {
   @apply bg-cover bg-center flex flex-col items-center justify-center text-white h-[35rem] sm:h-[45rem] p-5 sm:p-10;
-  background-image: url("https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/images/bg2.jpeg");
+  background-image: url("images/bg2.jpeg");
 }
 .bg-home-2 {
   @apply bg-cover bg-center h-40 sm:h-60;
-  background-image: url("https://kickoffreminder-bucket.s3.ap-northeast-1.amazonaws.com/images/home.jpeg");
+  background-image: url("images/home.jpeg");
 }
 
 .custom-container {
