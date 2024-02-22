@@ -32,7 +32,7 @@ class UpdatePasswordRequest extends FormRequest
                     }
                 },
             ],
-            'new_password' => ['required', 'string', 'min:6', 'confirmed'],
+            'new_password' => ['required', 'string', 'min:6', 'confirmed', 'regex:/^[A-Za-z0-9]+$/'],
         ];
     }
 }
