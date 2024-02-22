@@ -8,7 +8,7 @@
           v-model="password"
           id="password"
           type="password"
-          placeholder="最低6文字必要です"
+          placeholder="6文字以上の半角英数字"
           autocomplete="new-password"
           required
           class="custom-input"
@@ -57,7 +57,8 @@ const email = computed(() => router.currentRoute.value.query.email);
 const token = computed(() => router.currentRoute.value.query.token);
 
 const schema = object({
-  password: string().required("パスワードを入力してください").min(6, "最低6文字必要です"),
+  password: string().required("パスワードを入力してください").min(6, "最低6文字必要です")
+    .matches(/^[A-Za-z0-9]+$/, "半角英数字のみ使用できます"),
   password_confirmation: string()
     .required("パスワードを再入力してください")
     .oneOf([yupRef("password"), null], "パスワードが一致しません"),

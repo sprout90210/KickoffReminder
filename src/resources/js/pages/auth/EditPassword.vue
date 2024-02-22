@@ -21,7 +21,7 @@
           v-model="new_password"
           id="new_password"
           type="password"
-          placeholder="最低6文字必要です"
+          placeholder="6文字以上の半角英数字"
           autocomplete="new-password"
           required
           class="custom-input"
@@ -61,7 +61,8 @@ const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "パス
 
 const schema = object({
   current_password: string().required("現在のパスワードを入力してください").min(6, "最低6文字必要です"),
-  new_password: string().required("新しいパスワードを入力してください").min(6, "最低6文字必要です"),
+  new_password: string().required("新しいパスワードを入力してください").min(6, "最低6文字必要です")
+    .matches(/^[A-Za-z0-9]+$/, "半角英数字のみ使用できます"),
   new_password_confirmation: string()
     .required("新しいパスワードを再入力してください")
     .oneOf([yupRef("new_password"), null], "パスワードが一致しません"),
