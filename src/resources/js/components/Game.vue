@@ -3,6 +3,7 @@
     <p class="flex justify-between text-gray-500 p-2">
       <span>
         <router-link
+          v-if="game.competition"
           :to="{ name: 'Competition', params: { competitionId: game.competition.id } }"
           class="mr-4 hover:underline"
         >
