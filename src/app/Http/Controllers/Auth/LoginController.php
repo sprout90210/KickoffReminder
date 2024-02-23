@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
-        $remember = $request->filled('remember');
+        $remember = $request->input('remember', false);
         $request->session()->invalidate();
 
         if (Auth::attempt($credentials, $remember)) {
