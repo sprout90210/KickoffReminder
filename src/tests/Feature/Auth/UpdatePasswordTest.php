@@ -14,17 +14,17 @@ class UpdatePasswordTest extends TestCase
     public function testPasswordUpdate()
     {
         $user = User::factory()->create([
-            'password' => Hash::make('old_password'),
+            'password' => Hash::make('oldpassword'),
         ]);
 
         $response = $this->actingAs($user)->putJson('/api/password/', [
-            'current_password' => 'old_password',
-            'new_password' => 'new_password',
-            'new_password_confirmation' => 'new_password',
+            'current_password' => 'oldpassword',
+            'new_password' => 'newpassword',
+            'new_password_confirmation' => 'newpassword',
         ]);
 
         $response->assertStatus(200);
 
-        $this->assertTrue(Hash::check('new_password', $user->fresh()->password));
+        $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
     }
 }

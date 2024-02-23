@@ -20,12 +20,12 @@ class ResetPasswordTest extends TestCase
         $response = $this->postJson('/api/password/reset', [
             'email' => $user->email,
             'token' => $token,
-            'password' => 'new_password',
-            'password_confirmation' => 'new_password',
+            'password' => 'newpassword',
+            'password_confirmation' => 'newpassword',
         ]);
 
         $response->assertStatus(200);
 
-        $this->assertTrue(Hash::check('new_password', $user->fresh()->password));
+        $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
     }
 }
