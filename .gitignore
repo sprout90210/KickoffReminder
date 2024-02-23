@@ -1,6 +1,7 @@
 /docker/db/data/*
 /docker/phpmyadmin/*
 .env
+document
 .vscode/
 src/public/images/
 src/database/seeders/GameSeeder.php
