@@ -70,7 +70,7 @@
     </div>
 
     <footer>
-        <p>© KickoffReminder. All rights reserved.</p>
+        <p>© Kickoff Reminder. All rights reserved.</p>
     </footer>
 </body>
 

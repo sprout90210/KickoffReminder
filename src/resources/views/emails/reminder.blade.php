@@ -91,12 +91,12 @@
         <ul>
             <li>正しくメールが表示されない場合がございます。</li>
             <li>このメールは、送信専用メールアドレスから配信されています。ご返信いただいてもお答えできませんので、ご了承ください。</li>
-            <li>メール配信停止をご希望の場合はお手数ですが<a href="{{ config('app.url') }}">KickoffReminder</a>よりお手続きください。</li>
+            <li>メール配信停止をご希望の場合はお手数ですが<a href="{{ config('app.url') }}">Kickoff Reminder</a>よりお手続きください。</li>
         </ul>
     </div>
 
     <footer>
-        <p>© KickoffReminder. All rights reserved.</p>
+        <p>© Kickoff Reminder. All rights reserved.</p>
     </footer>
 </body>
 
