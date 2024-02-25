@@ -10,12 +10,16 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('command:insertTeams')->monthly();
+        $schedule->command('command:updateSeasons')->weekly();
+        $schedule->command('command:updateStandings')->cron('5,15,25,35,45,55 * * * *');
+        $schedule->command('command:updateGames')->everyTenMinutes();
+        $schedule->command('command:sendReminder')->everyMinute();
+
     }
 
     /**

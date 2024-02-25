@@ -23,13 +23,16 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_DATABASE=footballreminder
+      - DB_DATABASE=kickoffreminder
       - DB_USERNAME=test
       - DB_PASSWORD=test123
     env_file:
       - ./src/.env
     ports:
       - 5173:5173
+    depends_on:
+      - db
+      - redis
 
   db:
     container_name: db
@@ -38,7 +41,7 @@ services:
       - 3306:3306
     restart: always
     environment:
-      MYSQL_DATABASE: footballreminder
+      MYSQL_DATABASE: kickoffreminder
       MYSQL_USER: test
       MYSQL_PASSWORD: test123
       MYSQL_ROOT_PASSWORD: root
@@ -47,7 +50,7 @@ services:
     
   pma:
     container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
+    image: arm64v8/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
@@ -59,3 +62,12 @@ services:
       - ./docker/phpmyadmin/sessions:/sessions
     depends_on:
       - db
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - "./docker/redis/data:/data"
+    command: redis-server

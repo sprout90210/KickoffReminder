@@ -1,0 +1,19 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    # The level 9 is the highest level
+    level: 5
+
+    ignoreErrors:
+        - '#Access to an undefined property Laravel\\Socialite\\Contracts\\User::\$id\.#'
+        - '#Access to an undefined property Laravel\\Socialite\\Contracts\\User::\$name\.#'
+
+    excludePaths:
+        - ./*/*/FileToBeExcluded.php
+
+    checkMissingIterableValueType: false

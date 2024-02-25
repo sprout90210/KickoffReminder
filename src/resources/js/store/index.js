@@ -1,20 +1,14 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import auth from "./modules/auth";
+import ui from "./modules/ui";
+import favorite from "./modules/favorite";
 
 const store = createStore({
-    state() {
-        return {
-        }
-    },
+	modules: {
+		auth,
+		ui,
+		favorite,
+	},
+});
 
-    mutations: {
-    },
-
-    actions: {
-
-
-    },
-
-
-})
-
-export default store
+export default store;
