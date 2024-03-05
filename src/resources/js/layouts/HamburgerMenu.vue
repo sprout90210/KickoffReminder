@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 z-40 duration-300 pt-16 md:pt-20 w-2/3 md:w-5/12 h-screen flex flex-col bg-gray-800 text-lg text-white"
+    class="fixed inset-y-0 z-40 duration-300 pt-16 md:pt-20 w-2/3 md:w-5/12 h-screen flex flex-col bg-gray-800 text-lg text-white"
     :class="
       isMenuOpen
         ? 'left-0 md:left-auto md:right-0'
@@ -13,7 +13,7 @@
       <button @click="loginLine" class="line-login-link m-3">LINEログイン</button>
     </div>
     
-    <ul v-if="isLoggedIn" class="flex flex-col items-center">
+    <ul v-else-if="isLoggedIn" class="flex flex-col items-center">
       <li class="my-4 hover:underline">
         <router-link :to="{ name: 'Home' }" @click="toggleMenu">ホームに戻る</router-link>
       </li>
