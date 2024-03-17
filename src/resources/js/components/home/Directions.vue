@@ -13,7 +13,7 @@
         <Procedure img="/images/line_qr.png">公式LINEを友達追加</Procedure>
       </div>
     </div>
-    <p class="text-center mt-7 mb-2 text-gray-500 text-sm font-bold">※ 通知時間は通知リストから設定できます。</p>
+    <p class="text-center mt-7 mb-2 text-gray-500 text-sm font-bold">※ 通知設定はリマインダーから変更できます。</p>
     <p class="text-center mb-7 text-gray-500 text-sm font-bold">※ LINEで通知を受け取りたい方は、LINEログインしてください。</p>
   </div>
 </template>

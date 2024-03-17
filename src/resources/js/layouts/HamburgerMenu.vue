@@ -21,7 +21,7 @@
         <router-link :to="{ name: 'Favorites' }" @click="toggleMenu">お気に入りチーム</router-link>
       </li>
       <li class="my-4 hover:underline">
-        <router-link :to="{ name: 'Reminders' }" @click="toggleMenu">通知リスト</router-link>
+        <router-link :to="{ name: 'Reminders' }" @click="toggleMenu">リマインダー</router-link>
       </li>
       <li v-if="!isLineUser" class="my-4 hover:underline">
         <router-link :to="{ name: 'EditUser' }" @click="toggleMenu">ユーザー情報変更</router-link>
