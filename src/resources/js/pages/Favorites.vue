@@ -2,7 +2,7 @@
   <div class="flex flex-col flex-grow items-center p-2 sm:px-5">
     <h1 class="mypage-header">
       <span>お気に入りチーム</span>
-      <router-link :to="{ name: 'Reminders' }" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-sm underline">通知リスト</router-link>
+      <router-link :to="{ name: 'Reminders' }" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-sm underline">リマインダー</router-link>
     </h1>
     <Loading v-if="isLoading" />
     <div v-else-if="favorites.length" class="flex flex-wrap justify-center max-w-4xl">
