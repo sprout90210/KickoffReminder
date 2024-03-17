@@ -31,6 +31,7 @@ class SendReminder extends Command
             // 通知する試合を取得
             $gamesToRemind = Game::where('utc_date', '>=', $startOfMinute)
                 ->where('utc_date', '<=', $endOfMinute)
+                ->where('status', '=', 'TIMED')
                 ->with('homeTeam', 'awayTeam', 'competition')
                 ->get();
 
