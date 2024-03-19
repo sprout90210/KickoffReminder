@@ -27,13 +27,7 @@ class RegistrationTest extends TestCase
             'token' => 'valid_token',
         ]);
 
-        $response->assertStatus(201)
-                ->assertJson([
-                    'isLoggedIn' => true,
-                    'isLineUser' => false,
-                    'remindTime' => 15,
-                    'receiveReminder' => true,
-                ]);
+        $response->assertStatus(201);
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',

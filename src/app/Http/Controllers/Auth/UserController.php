@@ -39,12 +39,7 @@ class UserController extends Controller
                 Auth::login($user);
             });
 
-            return response()->json([
-                'isLoggedIn' => true,
-                'isLineUser' => false,
-                'remindTime' => 15,
-                'receiveReminder' => true,
-            ], 201);
+            return response()->json(['message' => 'アカウントを作成しました。'], 201);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());

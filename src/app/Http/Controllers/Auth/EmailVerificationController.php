@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\SendVerificationEmailRequest;
 use App\Mail\VerifyEmail;
 use App\Models\PendingUser;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class EmailVerificationController extends Controller
@@ -23,7 +24,6 @@ class EmailVerificationController extends Controller
         Mail::send(new VerifyEmail($pendingUser));
 
         return response()->noContent();
-        
     }
 
     public function verify($token)
@@ -33,8 +33,8 @@ class EmailVerificationController extends Controller
             ->first();
 
         if (!$pendingUser) {
-            return redirect('/?token=invalid');
+            return redirect(URL::to('/?token=invalid'));
         }
-        return redirect('/registration?email=' . urlencode($pendingUser->email) . '&token=' . $token);
+        return redirect(URL::to('/registration?email=' . urlencode($pendingUser->email) . '&token=' . $token));
     }
 }

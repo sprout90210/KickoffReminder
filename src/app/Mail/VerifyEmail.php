@@ -26,7 +26,6 @@ class VerifyEmail extends Mailable
                     ->subject('メールアドレスの認証')
                     ->view('emails.verify')
                     ->with([
-                        'name' => $this->pendingUser->name,
                         'token' => $this->pendingUser->token,
                     ]);
     }
