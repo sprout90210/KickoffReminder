@@ -67,7 +67,7 @@ const logout = () => {
       router.push("/");
     })
     .catch((e) => {
-      store.dispatch("handleError", { error: e, router: router });
+      store.dispatch("handleError", { e: e });
     })
     .finally(() => {
       store.commit("toggleMenu");

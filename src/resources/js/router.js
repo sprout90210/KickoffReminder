@@ -130,7 +130,13 @@ router.beforeEach((to, from, next) => {
 		"Favorites",
 		"Reminders",
 	];
-	const noAuthPages = ["Login", "Registration", "ForgotPassword", "EmailVerificationRequest", "EmailVerificationSent"];
+	const noAuthPages = [
+		"Login",
+		"Registration",
+		"ForgotPassword",
+		"EmailVerificationRequest",
+		"EmailVerificationSent"
+	];
 	const authRequired = authRequiredPages.includes(to.name);
 	const noAuthRequired = noAuthPages.includes(to.name);
 
