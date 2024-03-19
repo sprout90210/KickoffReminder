@@ -32,11 +32,10 @@ class UpdateGames extends Command
      */
     public function handle()
     {
-        $token = config('services.api.X_AUTH_TOKEN');
         $client = new Client([
             'base_uri' => 'http://api.football-data.org/v4/',
             'headers' => [
-                'X-Auth-Token' => $token,
+                'X-Auth-Token' => config('services.api.X_AUTH_TOKEN'),
             ],
         ]);
         $hasErrors = false;
