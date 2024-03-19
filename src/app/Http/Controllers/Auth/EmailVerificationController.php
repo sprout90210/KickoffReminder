@@ -32,9 +32,10 @@ class EmailVerificationController extends Controller
             ->where('created_at', '>', now()->subMinutes(60))
             ->first();
 
-        if (!$pendingUser) {
+        if (! $pendingUser) {
             return redirect(URL::to('/?token=invalid'));
         }
-        return redirect(URL::to('/registration?email=' . urlencode($pendingUser->email) . '&token=' . $token));
+
+        return redirect(URL::to('/registration?email='.urlencode($pendingUser->email).'&token='.$token));
     }
 }

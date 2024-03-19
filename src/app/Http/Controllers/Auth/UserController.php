@@ -23,7 +23,7 @@ class UserController extends Controller
                 ->where('created_at', '>', now()->subMinutes(60))
                 ->first();
 
-            if (!$pendingUser) {
+            if (! $pendingUser) {
                 return response()->json(['error' => '無効なトークンまたはメールアドレスです。'], 400);
             }
 
@@ -33,7 +33,7 @@ class UserController extends Controller
                     'email' => $pendingUser->email,
                     'password' => Hash::make($request->password),
                 ]);
-        
+
                 $pendingUser->delete();
 
                 Auth::login($user);
@@ -43,6 +43,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+
             return response()->json(['error' => 'アカウントの作成に失敗しました。'], 400);
         }
     }
@@ -65,6 +66,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+
             return response()->json(['error' => '情報更新中にエラーが発生しました。'], 500);
         }
     }
@@ -84,6 +86,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+
             return response()->json(['error' => 'エラーが発生しました。'], 500);
         }
     }
