@@ -57,25 +57,28 @@ export default {
 				});
 		},
 
-		handleAuthError({ commit, dispatch }, { error }) {
-			let errorMessage = "エラーが発生しました。後でもう一度お試しください。";
-			if (error.response && error.response.status) {
-				switch (error.response.status) {
-					case 419: 
-						errorMessage = "ログインしてください。";
+		handleError({ commit, dispatch }, { e }) {
+			const defaultMessage = "エラーが発生しました。後でもう一度お試しください。";
+			let errorMessage = defaultMessage;
+
+			if (e.response && e.response.status) {
+				switch (e.response.status) {
+					case 401: //入力情報エラー
+						errorMessage = e.response.data?.error ?? "ログインしてください。";
 						commit("logout");
 						break;
-					case 422: //バリデーションエラー
-						errorMessage = 
-							error.response.data?.message ??
-							"入力情報に誤りがあります。";
+					case 419: //token切れ
+						errorMessage = "セッション切れのため、ページをリロードします。";
+						setTimeout(() => location.reload(), 1000); // 1秒後にリロード
+						break;
+					case 422: //バリデーション
+						errorMessage = e.response.data?.message ?? "入力情報に誤りがあります。";
 						break;
 					default:
-						errorMessage =
-							error.response.data?.error ??
-							"エラーが発生しました。後でもう一度お試しください。";
+						errorMessage = e.response.data?.error ?? defaultMessage;
 				}
 			}
+
 			dispatch("triggerPopup", { message: errorMessage, color: "red" });
 		},
 	},

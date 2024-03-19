@@ -99,7 +99,7 @@ const submitForm = handleSubmit(() => {
       .catch((e) => {
         password.value = "";
         isSubmitting.value = false;
-        store.dispatch("handleAuthError", { error: e });
+        store.dispatch("handleError", { e: e });
       });
   });
 });

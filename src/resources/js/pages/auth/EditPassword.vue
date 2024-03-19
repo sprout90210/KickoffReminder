@@ -90,7 +90,7 @@ const submitForm = handleSubmit(() => {
     })
     .catch((e) => {
       isSubmitting.value = false;
-      store.dispatch("handleError", { error: e, router: router });
+      store.dispatch("handleError", { e: e });
     });
 });
 </script>

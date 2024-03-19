@@ -105,7 +105,7 @@ const sendVerificationMail = handleSubmit(() => {
       })
       .catch((e) => {
         isSubmitting.value = false;
-        store.dispatch("handleAuthError", { error: e });
+        store.dispatch("handleError", { e: e });
       });
   });
 });
