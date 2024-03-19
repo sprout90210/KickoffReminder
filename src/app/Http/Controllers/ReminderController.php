@@ -18,7 +18,7 @@ class ReminderController extends Controller
         return response()->json([
             'receiveReminder' => $user->receive_reminder,
             'remindTime' => $user->remind_time,
-            'reminders' => $reminders
+            'reminders' => $reminders,
         ], 200);
     }
 

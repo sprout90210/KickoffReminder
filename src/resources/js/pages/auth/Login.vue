@@ -88,8 +88,8 @@ const submitForm = handleSubmit(() => {
       .post("/api/login", credentials)
       .then((res) => {
         store.dispatch("userStatusUpdate", {
-          isLoggedIn: res.data.isLoggedIn,
-          isLineUser: res.data.isLineUser,
+          isLoggedIn: true,
+          isLineUser: false,
           remindTime: res.data.remindTime,
           receiveReminder: res.data.receiveReminder,
         });

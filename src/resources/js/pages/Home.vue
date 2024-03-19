@@ -48,6 +48,7 @@ import Directions from "../components/home/Directions.vue";
 import CompetitionLink from "../components/home/CompetitionLink.vue";
 import TeamLink from "../components/home/TeamLink.vue";
 import UpcomingGames from "../components/home/UpcomingGames.vue";
+import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 

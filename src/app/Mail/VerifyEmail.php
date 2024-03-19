@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class VerifyEmail extends Mailable
@@ -23,11 +20,10 @@ class VerifyEmail extends Mailable
     public function build()
     {
         return $this->to($this->pendingUser->email)
-                    ->subject('メールアドレスの認証')
-                    ->view('emails.verify')
-                    ->with([
-                        'name' => $this->pendingUser->name,
-                        'token' => $this->pendingUser->token,
-                    ]);
+            ->subject('メールアドレスの認証')
+            ->view('emails.verify')
+            ->with([
+                'token' => $this->pendingUser->token,
+            ]);
     }
 }
