@@ -2,12 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .subtitle::before,
+  .subtitle::after {
+    content: '—'; /* 長いダッシュ */
+    @apply text-gray-300 m-2 inline-block;
+  }
+}
+
 .text-xxs {
   font-size: 0.625rem; /* 10px */
 }
 
 .bg-home-1 {
-  @apply bg-cover bg-center flex flex-col items-center justify-center text-white h-[35rem] sm:h-[45rem] p-5 sm:p-10;
+  @apply bg-cover bg-center text-white h-[30rem] sm:h-[35rem] p-5 sm:p-10 flex flex-col items-center justify-center;
   background-image: url("images/bg2.jpeg");
 }
 .bg-home-2 {
