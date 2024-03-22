@@ -20,9 +20,6 @@ class LoginController extends Controller
             $user = Auth::user();
 
             return response()->json([
-                'message' => 'ログインに成功しました。',
-                'isLoggedIn' => true,
-                'isLineUser' => false,
                 'receiveReminder' => $user->receive_reminder,
                 'remindTime' => $user->remind_time,
             ], 200);

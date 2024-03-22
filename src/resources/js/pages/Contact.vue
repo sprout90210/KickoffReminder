@@ -85,7 +85,7 @@ const submitForm = handleSubmit(() => {
     })
     .catch((e) => {
       isSubmitting.value = false;
-      store.dispatch("handleError", { error: e });
+      store.dispatch("handleError", { e: e });
     });
 });
 </script>

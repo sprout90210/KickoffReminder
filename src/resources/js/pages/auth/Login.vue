@@ -88,8 +88,8 @@ const submitForm = handleSubmit(() => {
       .post("/api/login", credentials)
       .then((res) => {
         store.dispatch("userStatusUpdate", {
-          isLoggedIn: res.data.isLoggedIn,
-          isLineUser: res.data.isLineUser,
+          isLoggedIn: true,
+          isLineUser: false,
           remindTime: res.data.remindTime,
           receiveReminder: res.data.receiveReminder,
         });
@@ -99,7 +99,7 @@ const submitForm = handleSubmit(() => {
       .catch((e) => {
         password.value = "";
         isSubmitting.value = false;
-        store.dispatch("handleAuthError", { error: e });
+        store.dispatch("handleError", { e: e });
       });
   });
 });

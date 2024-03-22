@@ -95,17 +95,17 @@ const sendVerificationMail = handleSubmit(() => {
       .post("/api/register", userData)
       .then((res) => {
         store.dispatch("userStatusUpdate", {
-          isLoggedIn: res.data.isLoggedIn,
-          isLineUser: res.data.isLineUser,
-          remindTime: res.data.remindTime,
-          receiveReminder: res.data.receiveReminder,
+          isLoggedIn: true,
+          isLineUser: false,
+          remindTime: 15,
+          receiveReminder: true,
         });
         store.dispatch("triggerPopup", { message: "アカウントを作成しました。", color: "green" });
         router.push("/");
       })
       .catch((e) => {
         isSubmitting.value = false;
-        store.dispatch("handleAuthError", { error: e });
+        store.dispatch("handleError", { e: e });
       });
   });
 });

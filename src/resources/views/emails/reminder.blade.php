@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>試合通知</title>
+    <title>試合のお知らせ</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -79,7 +79,7 @@
             <p>※日本時間</p>
             <p>{{ $formattedDate }}</p>
             <p>
-                <span>{{ $game->competition->name }}</span>
+                <span>{{ $game->competition->name ?? '' }}</span>
                 <span>{{ $stage }}</span>
             </p>
             <h2><strong>{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</strong></h2>

@@ -5,28 +5,32 @@ export default {
 	},
 	actions: {
 		handleFavoriteError({ commit, dispatch }, { error, isFavorite }) {
-			let errorMessage = "エラーが発生しました。後でもう一度お試しください。";
+			const defaultMessage = "エラーが発生しました。後でもう一度お試しください。";
+			let errorMessage = defaultMessage;
 			let color = "red";
-			switch (error.response.status) {
-				case 401:
-				case 419:
-					commit("logout");
-					errorMessage = "ログインが必要です。";
-					break;
-				case 409: //すでに登録済みの場合
-					isFavorite.value = true;
-					errorMessage =
-						error.response.data?.error ??
-							"エラーが発生しました。後でもう一度お試しください。";
-					color = "blue";
-					break;
-				case 429: //試行回数が過多の場合
-					break;
-				default:
-					errorMessage =
-						error.response.data?.error ??
-							"エラーが発生しました。後でもう一度お試しください。";
+
+			if (error.response && error.response.status) {
+				switch (error.response.status) {
+					case 401: //未認証
+						errorMessage = "ログインしてください。";
+						commit("logout");
+						break;
+					case 419: //token切れ
+						errorMessage = "セッション切れのため、ページをリロードします。";
+						setTimeout(() => location.reload(), 1000); // 1秒後にリロード
+						break;
+					case 409: //登録済み
+						isFavorite.value = true;
+						errorMessage = error.response.data?.error ?? defaultMessage;
+						color = "blue";
+						break;
+					case 429: //試行回数過多
+						break;
+					default:
+						errorMessage = error.response.data?.error ?? defaultMessage;
+				}
 			}
+
 			dispatch("triggerPopup", { message: errorMessage, color: color });
 		},
 	},

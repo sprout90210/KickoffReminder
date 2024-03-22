@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Socialite;
 
 class LineLoginController extends Controller
@@ -19,7 +20,7 @@ class LineLoginController extends Controller
         try {
             $line_user = Socialite::driver('line')->user();
 
-            $user = User::firstOrCreate(
+            $user = User::updateOrCreate(
                 ['line_user_id' => $line_user->id],
                 ['name' => $line_user->name]
             );
@@ -29,6 +30,8 @@ class LineLoginController extends Controller
             return redirect('/?line_login=success');
 
         } catch (\Exception $e) {
+            Log::error('LINE login error: '.$e->getMessage());
+
             return redirect('/?line_login=failed');
         }
     }

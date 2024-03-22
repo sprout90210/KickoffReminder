@@ -23,14 +23,16 @@ class SendReminder extends Command
     {
         $lineService = new LineMessagingService();
         $reminderTimes = [1, 15, 60, 180];
+        $now = Carbon::now('UTC');
 
         foreach ($reminderTimes as $minute) {
-            $startOfMinute = Carbon::now('UTC')->addMinutes($minute)->startOfMinute();
-            $endOfMinute = Carbon::now('UTC')->addMinutes($minute)->endOfMinute();
+            $timePoint = $now->copy()->addMinutes($minute);
+            $startOfMinute = $timePoint->copy()->startOfMinute();
+            $endOfMinute = $timePoint->copy()->endOfMinute();
 
             // 通知する試合を取得
-            $gamesToRemind = Game::where('utc_date', '>=', $startOfMinute)
-                ->where('utc_date', '<=', $endOfMinute)
+            $gamesToRemind = Game::whereBetween('utc_date', [$startOfMinute, $endOfMinute])
+                ->where('status', '=', 'TIMED')
                 ->with('homeTeam', 'awayTeam', 'competition')
                 ->get();
 
@@ -38,7 +40,8 @@ class SendReminder extends Command
                 // 通知するユーザーを取得
                 $usersToRemind = User::whereHas('favorites', function ($query) use ($game) {
                     $query->whereIn('team_id', [$game->home_team_id, $game->away_team_id]);
-                })->where('remind_time', $minute)
+                })
+                    ->where('remind_time', $minute)
                     ->where('receive_reminder', true)
                     ->get();
 
@@ -47,6 +50,7 @@ class SendReminder extends Command
                 $stage = $this->getStage($game);
                 $remainingTimeMessage = $this->getRemainingTimeMessage($minute);
 
+                //　リマインダー送信
                 foreach ($usersToRemind as $user) {
                     $this->sendReminder($user, $lineService, $game, $formattedDate, $stage, $remainingTimeMessage);
                 }
@@ -62,17 +66,12 @@ class SendReminder extends Command
 
     private function getStage($game)
     {
-        $stageTranslations = [
-            'LAST_16' => 'ベスト16',
-            'QUARTER_FINALS' => '準々決勝',
-            'SEMI_FINALS' => '準決勝',
-            'FINAL' => '決勝',
-        ];
-
-        if ($game->competition->competition_type === 'LEAGUE') {
-            return '第'.$game->matchday.'節';
-        } elseif ($game->competition->competition_type === 'CUP') {
-            return $stageTranslations[$game->stage] ?? '';
+        if (isset($game->competition)) {
+            if ($game->competition->competition_type === 'LEAGUE' && isset($game->matchday)) {
+                return '第'.$game->matchday.'節';
+            } elseif ($game->competition->competition_type === 'CUP' && isset($game->stage)) {
+                return $game->stage;
+            }
         }
 
         return '';
@@ -80,16 +79,22 @@ class SendReminder extends Command
 
     private function getRemainingTimeMessage($minute)
     {
-        switch ($minute) {
-            case 1:
-                return 'まもなく試合が始まります！';
-            case 60:
-                return '残り1時間でキックオフ！';
-            case 180:
-                return '残り3時間でキックオフ！';
-            default:
-                return '残り'.$minute.'分でキックオフ！';
+        if ($minute == 1) {
+            return 'まもなく試合が始まります！';
+        } elseif ($minute < 60) {
+            return 'あと'.$minute.'分でキックオフ！';
+        } elseif ($minute >= 60) {
+            $hours = floor($minute / 60);
+            $minutes = $minute % 60;
+            $timeText = $hours.'時間';
+            if ($minutes > 0) {
+                $timeText .= $minutes.'分';
+            }
+
+            return 'あと'.$timeText.'でキックオフ！';
         }
+
+        return '';
     }
 
     private function buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage)
@@ -107,10 +112,12 @@ class SendReminder extends Command
     {
         if ($user->line_user_id) {
             $message = $this->buildLineMessage($user, $game, $formattedDate, $stage, $remainingTimeMessage);
+
             try {
                 $lineService->sendMessage($user->line_user_id, $message);
             } catch (\Exception $e) {
                 Log::error('LINE message sending failed: '.$e->getMessage());
+
                 $this->hasErrors = true;
             }
 
@@ -125,6 +132,7 @@ class SendReminder extends Command
                 ]));
             } catch (\Exception $e) {
                 Log::error('Mail sending failed: '.$e->getMessage());
+
                 $this->hasErrors = true;
             }
         }

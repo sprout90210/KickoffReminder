@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User;
 use App\Models\PendingUser;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,13 +27,7 @@ class RegistrationTest extends TestCase
             'token' => 'valid_token',
         ]);
 
-        $response->assertStatus(201)
-                ->assertJson([
-                    'isLoggedIn' => true,
-                    'isLineUser' => false,
-                    'remindTime' => 15,
-                    'receiveReminder' => true,
-                ]);
+        $response->assertStatus(201);
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
@@ -55,7 +49,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $response->assertStatus(400)
-                ->assertJson(['error' => '無効なトークンまたはメールアドレスです。']);
+            ->assertJson(['error' => '無効なトークンまたはメールアドレスです。']);
     }
 
     public function test_registration_fails_with_duplicate_email()

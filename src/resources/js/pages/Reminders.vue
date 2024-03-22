@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col flex-grow items-center p-2 sm:px-5">
     <h1 class="mypage-header">
-      <router-link :to="{ name: 'Favorites' }" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-sm underline">お気に入り</router-link>
-      <span>試合通知リスト</span>
+      <router-link :to="{ name: 'Favorites' }" class="absolute bottom-2 left-1 md:left-14 text-blue-600 hover:text-blue-700 text-xs sm:text-sm underline">お気に入り</router-link>
+      <span>リマインダー</span>
       <span class="absolute right-1 bottom-2 text-gray-400 text-xs font-light">※日本時間</span>
     </h1>
 
@@ -11,7 +11,7 @@
         @change="changeRemindTime"
         v-model="remindTime"
         id="remindTime"
-        class="h-9 w-32 text-sm mx-5 text-gray-600 px-2 rounded shadow-lg shadow-gray-600/40 hover:cursor-pointer"
+        class="h-9 w-32 text-sm mr-5 text-gray-600 px-2 rounded shadow-lg shadow-gray-600/40 hover:cursor-pointer"
       >
         <option value="1">試合開始直前</option>
         <option value="15">試合15分前</option>
@@ -19,7 +19,7 @@
         <option value="180">試合3時間前</option>
       </select>
 
-      <label for="receiveReminder" class="mr-1 text-sm text-gray-600 hover:cursor-pointer">通知を受け取る</label>
+      <label for="receiveReminder" class="mx-1 text-sm text-gray-600 hover:cursor-pointer">通知を受け取る</label>
       <input v-model="receiveReminder" @change="toggleReceiveReminder" type="checkbox" id="receiveReminder" class="hover:cursor-pointer">
     </div>
 
@@ -57,7 +57,7 @@ const changeRemindTime = () => {
       store.dispatch("triggerPopup", { message: "通知時間を変更しました。", color: "green" });
     })
     .catch((e) => {
-      store.dispatch("handleError", { error: e, router: router });
+      store.dispatch("handleError", { e: e });
     });
 };
 
@@ -69,7 +69,7 @@ const toggleReceiveReminder = () => {
     })
     .catch((e) => {
       store.commit("setReceiveReminder", !receiveReminder.value);
-      store.dispatch("handleError", { error: e, router: router });
+      store.dispatch("handleError", { e: e });
     });
 };
 
@@ -83,7 +83,7 @@ const getReminders = () => {
       remindTime.value = res.data.remindTime;
     })
     .catch((e) => {
-      store.dispatch("handleError", { error: e, router: router });
+      store.dispatch("handleError", { e: e });
     })
     .finally(() => { isLoading.value = false; });
 };

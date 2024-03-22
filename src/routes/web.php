@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\LineLoginController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\LineLoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('line/login', [LineLoginController::class, 'redirectToLine']);
