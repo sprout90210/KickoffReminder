@@ -15,12 +15,12 @@
 }
 
 .bg-home-1 {
-  @apply bg-cover bg-center text-white h-[30rem] sm:h-[35rem] p-5 sm:p-10 flex flex-col items-center justify-center;
-  background-image: url("images/bg2.jpeg");
+  @apply bg-cover bg-center text-white h-[30rem] sm:h-[40rem] p-5 sm:p-10 flex flex-col items-center justify-center;
+  background-image: url("/public/images/bg2.jpeg");
 }
 .bg-home-2 {
   @apply bg-cover bg-center h-40 sm:h-60;
-  background-image: url("images/home.jpeg");
+  background-image: url("/public/images/home.jpeg");
 }
 
 .custom-container {

@@ -13,10 +13,11 @@
         id="remindTime"
         class="h-9 w-32 text-sm mr-5 text-gray-600 px-2 rounded shadow-lg shadow-gray-600/40 hover:cursor-pointer"
       >
-        <option value="1">試合開始直前</option>
+        <option value="1">試合直前</option>
         <option value="15">試合15分前</option>
         <option value="60">試合1時間前</option>
         <option value="180">試合3時間前</option>
+        <option value="360">試合6時間前</option>
       </select>
 
       <label for="receiveReminder" class="mx-1 text-sm text-gray-600 hover:cursor-pointer">通知を受け取る</label>
