@@ -22,7 +22,7 @@ class SendReminder extends Command
     public function handle()
     {
         $lineService = new LineMessagingService();
-        $reminderTimes = [1, 15, 60, 180];
+        $reminderTimes = [1, 15, 60, 180, 360];
         $now = Carbon::now('UTC');
 
         foreach ($reminderTimes as $minute) {

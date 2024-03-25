@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-y-0 z-40 duration-300 pt-16 md:pt-20 w-2/3 md:w-5/12 h-screen flex flex-col bg-gray-800 text-lg text-white"
+    class="fixed inset-y-0 z-40 duration-300 pt-16 md:pt-20 w-2/3 md:w-5/12 flex flex-col bg-gray-800 text-lg text-white"
     :class="
       isMenuOpen
         ? 'left-0 md:left-auto md:right-0'
