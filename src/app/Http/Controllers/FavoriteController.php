@@ -46,7 +46,7 @@ class FavoriteController extends Controller
         $deleted = Favorite::where('user_id', $user_id)->where('team_id', $team_id)->delete();
 
         if ($deleted > 0) {
-            return response()->json(['message' => 'お気に入りを解除しました。'], 204);
+            return response()->json(['message' => 'お気に入りを解除しました。'], 200);
         }
 
         return response()->json(['error' => 'お気に入り解除に失敗しました。'], 404);

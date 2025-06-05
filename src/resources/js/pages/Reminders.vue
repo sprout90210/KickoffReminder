@@ -58,7 +58,7 @@ const changeRemindTime = () => {
       store.dispatch("triggerPopup", { message: "通知時間を変更しました。", color: "green" });
     })
     .catch((e) => {
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     });
 };
 
@@ -70,7 +70,7 @@ const toggleReceiveReminder = () => {
     })
     .catch((e) => {
       store.commit("setReceiveReminder", !receiveReminder.value);
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     });
 };
 
@@ -84,7 +84,7 @@ const getReminders = () => {
       remindTime.value = res.data.remindTime;
     })
     .catch((e) => {
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     })
     .finally(() => { isLoading.value = false; });
 };

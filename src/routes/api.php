@@ -14,7 +14,7 @@ Route::prefix('teams/{teamId}')->group(function () {
     Route::get('standings', [TeamController::class, 'getStandings']);
     Route::get('results', [TeamController::class, 'getResults']);
     Route::get('schedules', [TeamController::class, 'getSchedules']);
-    Route::get('nextGame', [TeamController::class, 'getNextGame']);
+    Route::get('next-game', [TeamController::class, 'getNextGame']);
 });
 
 Route::prefix('competitions/{competitionId}')->group(function () {

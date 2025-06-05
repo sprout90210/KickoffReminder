@@ -44,7 +44,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
-            return response()->json(['error' => 'アカウントの作成に失敗しました。'], 400);
+            return response()->json(['error' => 'アカウントの作成に失敗しました。'], 500);
         }
     }
 
