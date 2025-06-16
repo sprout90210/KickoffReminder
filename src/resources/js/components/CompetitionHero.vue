@@ -20,7 +20,7 @@
 <script setup>
 import TabList from "./TabList.vue";
 import Loading from "./Loading.vue";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
