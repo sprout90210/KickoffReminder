@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
+use App\Services\GameService;
+use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
 {
-    public function getUpcomingGames()
-    {
-        $upcomingGames = Game::whereIn('status', ['IN_PLAY', 'TIMED'])
-            ->with(['homeTeam', 'awayTeam', 'competition'])
-            ->orderBy('utc_date', 'asc')
-            ->limit(20)
-            ->get();
+    private GameService $gameService;
 
+    public function __construct(GameService $gameService)
+    {
+        $this->gameService = $gameService;
+    }
+
+    public function getUpcomingGames(): JsonResponse
+    {
+        $upcomingGames = $this->gameService->getUpcomingGames();
         return response()->json($upcomingGames, 200);
     }
 }

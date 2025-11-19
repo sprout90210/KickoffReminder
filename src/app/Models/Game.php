@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\GameStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,36 +28,40 @@ class Game extends Model
         'last_updated',
     ];
 
+    protected $casts = [
+        'status' => GameStatus::class,
+    ];
+
+
+    /**
+     * @return BelongsTo<\App\Models\Competition, self>
+     */
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Season, self>
+     */
     public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Team, self>
+     */
     public function homeTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'home_team_id');
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Team, self>
+     */
     public function awayTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'away_team_id');
-    }
-
-    public static function getReminders($teamIds)
-    {
-        return self::with(['homeTeam', 'awayTeam', 'competition'])
-            ->where(function ($query) use ($teamIds) {
-                $query->whereIn('home_team_id', $teamIds)
-                    ->orWhereIn('away_team_id', $teamIds);
-            })
-            ->whereIn('status', ['SCHEDULED', 'TIMED'])
-            ->orderBy('utc_date', 'asc')
-            ->limit(30)
-            ->get();
     }
 }

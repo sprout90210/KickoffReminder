@@ -26,16 +26,25 @@ class Standing extends Model
         'points',
     ];
 
+    /**
+     * @return BelongsTo<\App\Models\Team, self>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Competition, self>
+     */
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Season, self>
+     */
     public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);

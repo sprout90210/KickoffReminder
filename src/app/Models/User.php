@@ -40,9 +40,12 @@ class User extends Authenticatable
 
     public function isLineUser(): bool
     {
-        return ! is_null($this->line_user_id);
+        return !is_null($this->line_user_id);
     }
 
+    /**
+     * @return HasMany<\App\Models\Favorite>
+     */
     public function favorites(): HasMany
     {
         return $this->hasMany(Favorite::class);

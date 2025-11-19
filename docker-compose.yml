@@ -20,6 +20,7 @@ services:
       dockerfile: ./docker/laravel/Dockerfile
     volumes:
       - ./src:/var/www/app
+      - ./docker/laravel/php.ini:/usr/local/etc/php/conf.d/xdebug.ini
     environment:
       - DB_HOST=db
       - DB_PORT=3306
@@ -30,6 +31,7 @@ services:
       - ./src/.env
     ports:
       - 5173:5173
+      - 9003:9003
     depends_on:
       - db
       - redis
@@ -37,6 +39,7 @@ services:
   db:
     container_name: db
     image: mysql:8.0
+    platform: linux/arm64
     ports:
       - 3306:3306
     restart: always
@@ -46,7 +49,7 @@ services:
       MYSQL_PASSWORD: test123
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./docker/db/data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     
   pma:
     container_name: phpmyadmin
@@ -56,10 +59,9 @@ services:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=root
+      - PHP_SESSION_SAVE_PATH=/tmp
     ports:
       - 8080:80
-    volumes:
-      - ./docker/phpmyadmin/sessions:/sessions
     depends_on:
       - db
 
@@ -71,3 +73,6 @@ services:
     volumes:
       - "./docker/redis/data:/data"
     command: redis-server
+  
+volumes:
+  db_data:

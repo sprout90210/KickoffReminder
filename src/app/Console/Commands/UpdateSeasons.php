@@ -2,70 +2,51 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Season;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use App\Enums\CommandStatus;
+use App\Services\UpdateSeasonsService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
 class UpdateSeasons extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'command:updateSeasons';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Update seasons from external API';
+
+    private UpdateSeasonsService $service;
+
+    public function __construct(UpdateSeasonsService $service)
+    {
+        parent::__construct();
+        $this->service = $service;
+    }
 
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
-        $client = new Client([
-            'base_uri' => 'http://api.football-data.org/v4/',
-            'headers' => [
-                'X-Auth-Token' => config('services.api.X_AUTH_TOKEN'),
-            ],
-        ]);
-        $hasErrors = false;
-        $competition_ids = [2001, 2002, 2014, 2015, 2019, 2021];
+        $this->info("UpdateSeasons: Start updating seasons...");
+        
+        try {
+            $hasErrors = $this->service->update();
 
-        foreach ($competition_ids as $competition_id) {
-            try {
-                $res = $client->get("competitions/{$competition_id}");
-                $res_json = json_decode($res->getBody());
-                $seasons = $res_json->seasons;
-                $bulkData = [];
-                foreach ($seasons as $season) {
-                    $bulkData[] = [
-                        'id' => $season->id,
-                        'competition_id' => $res_json->id,
-                        'start_date' => $season->startDate,
-                        'end_date' => $season->endDate,
-                    ];
-                }
-                Season::upsert($bulkData, ['id'], ['competition_id', 'start_date', 'end_date']);
-
-            } catch (GuzzleException $e) {
-                $this->error('リクエストに失敗しました: '.$e->getMessage());
-                Log::error('UpdateSeasons failed', [
-                    'exception' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ]);
-                $hasErrors = true;
+            if ($hasErrors) {
+                $this->warn("UpdateSeasons: Completed with some errors.");
+                return CommandStatus::PARTIAL_FAILURE->code();
             }
-        }
 
-        return $hasErrors ? 1 : 0;
+            $this->info("UpdateSeasons: All seasons updated successfully!");
+            return CommandStatus::SUCCESS->code();
+
+        } catch (\Throwable $e) {
+            $this->error("UpdateSeasons: Unexpected error occurred.");
+            Log::critical("UpdateSeasons: Fatal Error", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return CommandStatus::FAILURE->code();
+        }
     }
 }

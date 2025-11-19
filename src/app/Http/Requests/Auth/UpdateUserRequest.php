@@ -28,7 +28,8 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                'unique:users,email,'.$this->user()->id,
+                'unique:users,email,' . ($this->user()?->id ?? 0),
+
             ],
         ];
     }

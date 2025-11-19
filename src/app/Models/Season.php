@@ -18,16 +18,25 @@ class Season extends Model
         'competition_id',
     ];
 
+    /**
+     * @return BelongsTo<\App\Models\Competition, self>
+     */
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
     }
 
+    /**
+     * @return HasMany<\App\Models\Standing>
+     */
     public function standings(): HasMany
     {
         return $this->hasMany(Standing::class);
     }
 
+    /**
+     * @return HasMany<\App\Models\Game>
+     */
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);
