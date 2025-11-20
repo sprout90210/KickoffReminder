@@ -13,7 +13,7 @@ const upcomingGames = ref([]);
 
 const getUpcomingGames = () => {
   axios
-    .get("/api/upcoming-games")
+    .get("/api/games/upcoming")
     .then((res) => {
       upcomingGames.value = res.data;
     });

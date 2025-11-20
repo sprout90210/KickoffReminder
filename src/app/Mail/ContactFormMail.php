@@ -10,15 +10,22 @@ class ContactFormMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $formData;
+    /** @var array<string, mixed> */
+    protected array $formData;
 
-    protected $name;
+    /** @var string */
+    protected string $name;
 
-    protected $fromEmail;
+    /** @var string */
+    protected string $fromEmail;
 
-    protected $toEmail;
+    /** @var string */
+    protected string $toEmail;
 
-    public function __construct($formData)
+    /**
+     * @param array<string, mixed> $formData
+     */
+    public function __construct(array $formData)
     {
         $this->formData = $formData;
         $this->name = config('mail.from.name');
@@ -26,7 +33,7 @@ class ContactFormMail extends Mailable
         $this->toEmail = config('mail.to.developer_address');
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->to($this->toEmail)
             ->from($this->fromEmail, $this->name)

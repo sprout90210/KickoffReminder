@@ -14,7 +14,7 @@ Route::prefix('teams/{teamId}')->group(function () {
     Route::get('standings', [TeamController::class, 'getStandings']);
     Route::get('results', [TeamController::class, 'getResults']);
     Route::get('schedules', [TeamController::class, 'getSchedules']);
-    Route::get('nextGame', [TeamController::class, 'getNextGame']);
+    Route::get('next-game', [TeamController::class, 'getNextGame']);
 });
 
 Route::prefix('competitions/{competitionId}')->group(function () {
@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('remind-time', [ReminderController::class, 'updateRemindTime']);
 });
 
-Route::get('upcoming-games', [GameController::class, 'getUpcomingGames']);
+Route::get('games/upcoming', [GameController::class, 'getUpcomingGames']);
 Route::post('contact', [ContactController::class, 'send']);
 
 require __DIR__.'/auth.php';

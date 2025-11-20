@@ -10,15 +10,23 @@ class GameReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $name;
+    /** @var string */
+    protected string $name;
 
-    protected $fromEmail;
+    /** @var string */
+    protected string $fromEmail;
 
-    protected $toEmail;
+    /** @var string */
+    protected string $toEmail;
 
-    protected $reminder;
+    /** @var array<string, mixed> */
+    protected array $reminder;
 
-    public function __construct($toEmail, $reminder)
+    /**
+     * @param string $toEmail
+     * @param array<string, mixed> $reminder
+     */
+    public function __construct(string $toEmail, array $reminder)
     {
         $this->name = config('mail.from.name');
         $this->fromEmail = config('mail.from.address');
@@ -26,7 +34,7 @@ class GameReminderMail extends Mailable
         $this->reminder = $reminder;
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->to($this->toEmail)
             ->from($this->fromEmail, $this->name)

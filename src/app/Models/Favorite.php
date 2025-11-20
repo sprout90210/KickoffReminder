@@ -15,11 +15,17 @@ class Favorite extends Model
         'team_id',
     ];
 
+    /**
+     * @return BelongsTo<\App\Models\User, self>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<\App\Models\Team, self>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);

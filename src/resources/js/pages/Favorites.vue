@@ -49,7 +49,7 @@ const getFavorites = () => {
       favorites.value = res.data;
     })
     .catch((e) => {
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     })
     .finally(() => {
       isLoading.value = false;

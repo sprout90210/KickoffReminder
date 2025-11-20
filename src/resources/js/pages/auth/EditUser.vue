@@ -46,6 +46,7 @@ import { useRouter } from "vue-router";
 
 const store = useStore();
 const router = useRouter();
+const successColor = "green";
 const isSubmitting = ref(false);
 const buttonText = computed(() => (isSubmitting.value ? "送信中..." : "変更"));
 
@@ -69,12 +70,12 @@ const submitForm = handleSubmit(() => {
   axios
     .put("/api/user", userData)
     .then((res) => {
-      store.dispatch("triggerPopup", { message: "ユーザー情報を変更しました。", color: "green" });
+      store.dispatch("triggerPopup", { message: "ユーザー情報を変更しました。", color: successColor });
       router.push("/");
     })
     .catch((e) => {
       isSubmitting.value = false;
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     });
 });
 
@@ -86,7 +87,7 @@ const getUserData = () => {
       email.value = res.data.email;
     })
     .catch((e) => {
-      store.dispatch("handleError", { e: e });
+      store.dispatch("handleError", { error: e });
     });
 };
 

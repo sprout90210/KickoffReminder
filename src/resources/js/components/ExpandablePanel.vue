@@ -118,7 +118,7 @@ const toggle = () => {
   if (!nextGame.value) {
     isLoading.value = true;
     axios
-      .get(`/api/teams/${props.standing.team_id}/nextGame`)
+      .get(`/api/teams/${props.standing.team_id}/next-game`)
       .then((res) => {
         nextGame.value = res.data;
       })

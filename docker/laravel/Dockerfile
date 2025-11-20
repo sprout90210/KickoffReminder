@@ -19,7 +19,7 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
   && npm install -g npm@10.2.2
 
 COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
-COPY ./docker/laravel/php.ini /usr/local/etc/php/
+COPY ./docker/laravel/php.ini /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./docker/laravel/crontab /etc/cron.d/laravel-cron
 COPY ./src /var/www/app
 

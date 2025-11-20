@@ -7,7 +7,7 @@ parameters:
         - app
 
     # The level 9 is the highest level
-    level: 5
+    level: 8
 
     ignoreErrors:
         - '#Access to an undefined property Laravel\\Socialite\\Contracts\\User::\$id\.#'
@@ -16,4 +16,8 @@ parameters:
     excludePaths:
         - ./*/*/FileToBeExcluded.php
 
+    checkGenericClassInNonGenericObjectType: true
+    checkMissingTypehints: true
+    checkUninitializedProperties: true
+    reportUnmatchedIgnoredErrors: true
     checkMissingIterableValueType: false
