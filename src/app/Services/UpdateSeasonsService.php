@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Constants;
+use App\Exceptions\TooManyRequestsException;
 use App\Models\Season;
 use App\Infrastructure\Api\FootballApiClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -33,12 +34,11 @@ class UpdateSeasonsService
     {
         $hasErrors = false;
 
-        foreach (Constants::COMPETITION_IDS as $competition_id) {
+        foreach (Constants::COMPETITION_IDS as $competitionId) {
 
             try {
-                $res = $this->footballApi->get("competitions/{$competition_id}");
+                $res = $this->footballApi->get("competitions/{$competitionId}");
                 $resJson = json_decode($res->getBody()->getContents());
-
                 $seasons = $resJson->seasons;
                 $bulkData = [];
 
@@ -57,20 +57,25 @@ class UpdateSeasonsService
                     ['competition_id', 'start_date', 'end_date']
                 );
 
-            } catch (GuzzleException $e) {
-                Log::error("UpdateSeasons: API error for comp_id {$competition_id}", [
+            } catch (TooManyRequestsException $e) {
+                Log::warning("UpdateSeasonsService: Rate limit exceeded", [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
+                throw $e;
 
+            } catch (GuzzleException $e) {
+                Log::error("UpdateSeasonsService: API error for comp_id {$competitionId}", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
                 $hasErrors = true;
 
             } catch (\Throwable $e) {
-                Log::critical("UpdateSeasons: unexpected error for comp_id {$competition_id}", [
+                Log::critical("UpdateSeasonsService: unexpected error for comp_id {$competitionId}", [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
-
                 $hasErrors = true;
             }
         }

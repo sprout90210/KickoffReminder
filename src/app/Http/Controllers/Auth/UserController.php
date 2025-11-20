@@ -65,8 +65,11 @@ class UserController extends Controller
 
             return response()->json(['message' => 'アカウントを作成しました。'], 201);
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('User registration failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return response()->json(['error' => 'アカウントの作成に失敗しました。'], 500);
         }
     }
@@ -85,11 +88,10 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request): JsonResponse
     {
         try {
-            /** @var array{name:string, email:string} $data */
-            $data = $request->validated();
+            /** @var User|null $user */
             $user = $request->user();
 
-            if (!$user instanceof User) {
+            if (!$user) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
 
@@ -98,12 +100,15 @@ class UserController extends Controller
                 return response()->json(['error' => '外部ログインをしているユーザー情報は変更できません。'], 403);
             }
 
-            $user->update($data);
+            $user->update($request->validated());
 
             return response()->json(['message' => 'ユーザー情報が更新されました。'], 200);
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('User update failed', [
+                'error' => $e->getMessage(),
+                'user_id' => $user->id ?? null,
+            ]);
             return response()->json(['error' => '情報更新中にエラーが発生しました。'], 500);
         }
     }
@@ -123,9 +128,10 @@ class UserController extends Controller
     public function destroy(Request $request): JsonResponse
     {
         try {
+            /** @var User|null $user */
             $user = $request->user();
 
-            if (!$user instanceof User) {
+            if (!$user) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
 
@@ -140,8 +146,11 @@ class UserController extends Controller
 
             return response()->json(['message' => 'アカウントを削除しました.'], 204);
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('User deletion failed', [
+                'error' => $e->getMessage(),
+                'user_id' => $user->id ?? null,
+            ]);
             return response()->json(['error' => 'エラーが発生しました。'], 500);
         }
     }

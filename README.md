@@ -48,8 +48,8 @@
     - Vue Router 4.2.4
     - Tailwind CSS
 - バックエンド
-    - PHP 8.2.17
-    - Laravel 9.52.16
+    - PHP 8.2.29
+    - Laravel 10.49.1
 - AWS
     - VPC
     - EC2

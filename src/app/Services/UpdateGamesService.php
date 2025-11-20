@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Constants\Constants;
+use App\Exceptions\TooManyRequestsException;
 use App\Models\Game;
-use Carbon\Carbon;
 use App\Infrastructure\Api\FootballApiClient;
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 
@@ -36,14 +37,12 @@ class UpdateGamesService
     {
         $hasErrors = false;
 
-        foreach (Constants::COMPETITION_IDS as $competition_id) {
-
+        foreach (Constants::COMPETITION_IDS as $competitionId) {
             try {
-                $res = $this->footballApi->get("competitions/{$competition_id}/matches");
+                $res = $this->footballApi->get("competitions/{$competitionId}/matches");
 
                 /** @var array $games */
-                $games = json_decode($res->getBody())->matches;
-
+                $games = json_decode($res->getBody()->getContents())->matches;
                 $bulkData = [];
 
                 foreach ($games as $game) {
@@ -66,7 +65,7 @@ class UpdateGamesService
 
                 Game::upsert(
                     $bulkData,
-                    ['id'], // unique key
+                    ['id'],
                     [
                         'competition_id',
                         'season_id',
@@ -83,19 +82,25 @@ class UpdateGamesService
                     ]
                 );
 
+            } catch (TooManyRequestsException $e) {
+                Log::warning("UpdateGamesService: Rate limit exceeded", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                throw $e;
+
             } catch (GuzzleException $e) {
-                Log::error("UpdateGames: API error for comp_id {$competition_id}", [
+                Log::error("UpdateGamesService: API error for comp_id {$competitionId}", [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
                 $hasErrors = true;
 
             } catch (\Throwable $e) {
-                Log::critical("UpdateGames: unexpected error for comp_id {$competition_id}", [
+                Log::critical("UpdateGamesService: unexpected error for comp_id {$competitionId}", [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
-
                 $hasErrors = true;
             }
         }

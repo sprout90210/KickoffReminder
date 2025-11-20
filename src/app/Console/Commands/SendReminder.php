@@ -44,16 +44,16 @@ class SendReminder extends Command
      */
     public function handle(): int
     {
-        $this->info("Start sending reminders...");
+        $this->info("SendReminderService: Start sending reminders...");
 
         $hasErrors = $this->sendReminderService->execute();
 
         if ($hasErrors) {
-            $this->warn("Completed with errors.");
+            $this->warn("SendReminderService: Completed with errors.");
             return CommandStatus::PARTIAL_FAILURE->code();
         }
 
-        $this->info("All reminders processed successfully!");
+        $this->info("SendReminderService: All reminders processed successfully!");
         return CommandStatus::SUCCESS->code();
     }
 

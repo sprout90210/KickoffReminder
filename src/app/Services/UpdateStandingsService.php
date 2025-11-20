@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Constants\Constants;
+use App\Exceptions\TooManyRequestsException;
 use App\Models\Standing;
 use App\Infrastructure\Api\FootballApiClient;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class UpdateStandingsService
@@ -33,21 +35,18 @@ class UpdateStandingsService
     {
         $hasErrors = false;
 
-        foreach (Constants::COMPETITION_IDS as $competition_id) {
-
+        foreach (Constants::COMPETITION_IDS as $competitionId) {
             try {
-                $res = $this->footballApi->get("competitions/{$competition_id}/standings");
-
-                $resJson   = json_decode($res->getBody());
+                $res = $this->footballApi->get("competitions/{$competitionId}/standings");
+                $resJson  = json_decode($res->getBody()->getContents());
                 $standings = $resJson->standings[0]->table;
-
                 $bulkData = [];
 
                 foreach ($standings as $standing) {
                     $bulkData[] = [
                         'season_id'        => $resJson->season->id,
                         'position'         => $standing->position,
-                        'competition_id'   => $competition_id,
+                        'competition_id'   => $competitionId,
                         'team_id'          => $standing->team->id,
                         'played_games'     => $standing->playedGames,
                         'won'              => $standing->won,
@@ -77,11 +76,28 @@ class UpdateStandingsService
                     ]
                 );
 
+            } catch (TooManyRequestsException $e) {
+                Log::warning("UpdateStandingsService: Rate limit exceeded", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                throw $e;
+
             } catch (GuzzleException $e) {
+                Log::error('UpdateStandingsService: Guzzle Error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                $hasErrors = true;
+
+            } catch (\Throwable $e) {
+                Log::critical("UpdateStandingsService: unexpected error for comp_id {$competitionId}", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
                 $hasErrors = true;
             }
         }
-
         return $hasErrors;
     }
 }

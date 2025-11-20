@@ -41,10 +41,7 @@ class FavoriteController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return response()->json(
-            $this->favoriteService->getFavorites($user->id),
-            200
-        );
+        return response()->json($this->favoriteService->getFavorites($user->id), 200);
     }
 
     /**

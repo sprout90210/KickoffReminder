@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Constants;
+use App\Exceptions\TooManyRequestsException;
 use App\Models\Team;
 use App\Infrastructure\Api\FootballApiClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -45,23 +46,21 @@ class InsertTeamsService
         $hasErrors = false;
 
         foreach (Constants::COMPETITION_IDS as $competitionId) {
-
             try {
-
                 // 外部APIから JSON を取得
-                $response = $this->footballApi->get("competitions/{$competitionId}/teams");
-                if ($response->getStatusCode() !== 200) {
+                $res = $this->footballApi->get("competitions/{$competitionId}/teams");
+                if ($res->getStatusCode() !== 200) {
                     throw new \RuntimeException("競技ID {$competitionId} の API レスポンスが 200 ではありません");
                 }
                 
-                $json = json_decode($response->getBody());
-                if (json_last_error() !== JSON_ERROR_NONE || !isset($json->teams)) {
+                $resJson = json_decode($res->getBody()->getContents());
+                if (json_last_error() !== JSON_ERROR_NONE || !isset($resJson->teams)) {
                     throw new \RuntimeException("競技ID {$competitionId} の JSON が不正です");
                 }
                 
                 // DB 保存処理
-                DB::transaction(function () use ($json) {
-                    foreach ($json->teams as $team) {
+                DB::transaction(function () use ($resJson) {
+                    foreach ($resJson->teams as $team) {
                         Team::firstOrCreate(
                             ['id' => $team->id],
                             [
@@ -78,16 +77,35 @@ class InsertTeamsService
                     }
                 });
 
+            } catch (TooManyRequestsException $e) {
+                Log::warning("InsertTeamsService: Rate limit exceeded", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                throw $e;
+
             } catch (GuzzleException $e) {
                 $hasErrors = true;
-                Log::error('InsertTeams Guzzle Error', ['error' => $e->getMessage()]);
+                Log::error('InsertTeamsService: Guzzle Error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
                 continue;
 
             } catch (\RuntimeException $e) {
                 $hasErrors = true;
-                Log::error('InsertTeams Runtime Error', ['error' => $e->getMessage()]);
+                Log::error('InsertTeamsService: Runtime Error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
                 continue;
 
+            } catch (\Throwable $e) {
+                Log::critical("InsertTeamsService: unexpected error for comp_id {$competitionId}", [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                continue;
             }
         }
         return $hasErrors;

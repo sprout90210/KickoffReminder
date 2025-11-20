@@ -28,22 +28,22 @@ class UpdateStandings extends Command
      */
     public function handle(): int
     {
-        $this->info("Start updating standings...");
+        $this->info("UpdateStandings: Start updating standings...");
         
         try {
             $hasErrors = $this->service->update();
 
             if ($hasErrors) {
-                $this->warn("Completed with some errors.");
+                $this->warn("UpdateStandings: Completed with some errors.");
                 return CommandStatus::PARTIAL_FAILURE->code();
             }
 
-            $this->info("All standings updated successfully!");
+            $this->info("UpdateStandings: All standings updated successfully!");
             return CommandStatus::SUCCESS->code();
 
         } catch (\Throwable $e) {
-            $this->error("Unexpected error occurred.");
-            Log::critical("UpdateStandings Fatal Error", [
+            $this->error("UpdateStandings: Unexpected error occurred.");
+            Log::critical("UpdateStandings: UpdateStandings Fatal Error", [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);

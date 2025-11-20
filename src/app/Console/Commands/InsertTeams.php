@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Enums\CommandStatus;
+use App\Exceptions\TooManyRequestsException;
 use App\Services\InsertTeamsService;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +40,10 @@ class InsertTeams extends Command
 
             $this->info('InsertTeams: All teams inserted successfully!');
             return CommandStatus::SUCCESS->code();
+
+        } catch (TooManyRequestsException $e) {
+            $this->warn("InsertTeams: Rate limit exceeded. Stopping this run.");
+            return CommandStatus::PARTIAL_FAILURE->code();
 
         } catch (\Throwable $e) {
             $this->error('InsertTeams: Unexpected error occurred.');
